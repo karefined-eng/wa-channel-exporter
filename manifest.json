@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "WhatsApp Channel Exporter",
+  "version": "1.0.0",
+  "description": "Export broadcast channel posts from WhatsApp Web to JSONL/ZIP archives.",
+  "author": "wa-channel-exporter",
+  "icons": {
+    "16":  "assets/icon16.png",
+    "48":  "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16":  "assets/icon16.png",
+      "48":  "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "WhatsApp Channel Exporter"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["src/content/whatsapp-content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "downloads",
+    "activeTab",
+    "scripting",
+    "alarms"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/core/*", "src/shared/*", "src/lib/*"],
+      "matches": ["https://web.whatsapp.com/*"]
+    }
+  ]
+}

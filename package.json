@@ -1,0 +1,27 @@
+{
+  "name": "wa-channel-exporter",
+  "version": "1.0.0",
+  "description": "Chrome Extension – WhatsApp Channel Exporter (Manifest V3)",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "eslint src/**/*.js"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "puppeteer": "^25.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "whatsapp",
+    "exporter",
+    "manifest-v3"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "author": "",
+  "type": "commonjs"
+}
