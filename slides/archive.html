@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { width: 1280px; min-height: 720px; background: #FFFFFF; color: #1E293B; padding-top: 60px; padding-left: 80px; padding-right: 80px; font-family: Arial, sans-serif; position: relative; }
+        .eyebrow { font: 700 14px ui-monospace, monospace; color: #EA580C; letter-spacing: 0.1em; text-transform: uppercase; }
+        .title { margin-top: 20px; font: 700 42px ui-monospace, monospace; letter-spacing: -0.02em; border-bottom: 1px solid #1E293B; padding-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 40px; margin-top: 40px; }
+        .left-col { grid-column: 1 / 4; border-right: 1px solid #CBD5E1; padding-right: 40px; }
+        .right-col { grid-column: 4 / 7; }
+        .section-header { font: 700 12px ui-monospace, monospace; color: #EA580C; margin-bottom: 15px; text-transform: uppercase; }
+        pre { background: #F8FAFC; border: 1px solid #E2E8F0; padding: 20px; font: 400 13px/1.5 ui-monospace, monospace; color: #334155; overflow: hidden; }
+        .table-container { margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { text-align: left; border-bottom: 2px solid #1E293B; padding: 10px 5px; font: 700 12px ui-monospace, monospace; }
+        td { border-bottom: 1px solid #E2E8F0; padding: 12px 5px; line-height: 1.4; }
+        .metric-box { display: inline-block; background: #1E293B; color: #FFFFFF; padding: 2px 8px; font: 700 12px ui-monospace, monospace; margin-right: 5px; }
+        .footer-note { position: absolute; bottom: 40px; left: 80px; font-size: 12px; color: #64748B; border-top: 1px solid #CBD5E1; width: 1120px; padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="eyebrow">07 / DATA ARCHITECTURE</div>
+        <h1 class="title">Archive output makes missing items visible.</h1>
+        
+        <div class="grid">
+            <div class="left-col">
+                <div class="section-header">Versioned JSONL Schema</div>
+                <pre>
+{
+  "schemaVersion": 2,
+  "postId": "stable-id",
+  "publishedAt": {
+    "raw": "3:00 PM, 8/19/2026",
+    "iso": "2026-08-19",
+    "status": "parsed"
+  },
+  "text": "...",
+  "media": [{
+    "type": "image",
+    "status": "downloaded|failed",
+    "filename": "media-1-1.png",
+    "sha256": "..."
+  }]
+}</pre>
+            </div>
+            
+            <div class="right-col">
+                <div class="section-header">ZIP Manifest & Reconciliation</div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>METRIC</th>
+                                <th>RECONCILIATION LOGIC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="metric-box">POSTS</span></td>
+                                <td>Distinguish between <b>Observed</b>, <b>Included</b> (date-filtered), and <b>Excluded</b>.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="metric-box">MEDIA</span></td>
+                                <td>Classify as <b>Downloaded</b>, <b>Unavailable</b> (expired), or <b>Failed</b> (error).</td>
+                            </tr>
+                            <tr>
+                                <td><span class="metric-box">INTEGRITY</span></td>
+                                <td>Deterministic SHA-256 hashes for all successfully retrieved media files.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="metric-box">AUDIT</span></td>
+                                <td>Explicit <code>manifest.json</code> mapping every record to its local file or failure code.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            The archive is designed for auditability. Never claim "complete" when the boundary was not reached or media failures remain unexplained.
+        </div>
+    </div>
+</body>
+</html>

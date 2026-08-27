@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>WA Channel Exporter</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<main class="shell">
+  <div class="eyebrow">WA CHANNEL EXPORTER <span class="version">v1.3.0</span></div>
+  <h1>Archive the Channel you can see.</h1>
+  <p class="lede">Preserve this month’s ministry or community updates locally. The scan loads history incrementally and reports whether the boundary was reached.</p>
+  <section class="card status-card" aria-live="polite"><div class="status-dot" id="statusDot"></div><div><strong id="statusTitle">Ready to scan</strong><span id="statusDetail">Open a WhatsApp Channel, set a date range, then scan.</span></div></section>
+  <section class="filters card"><div class="field"><label for="startDate">From</label><input id="startDate" type="date"></div><div class="field"><label for="endDate">Through</label><input id="endDate" type="date"></div></section>
+  <div class="scan-controls"><button class="primary" id="scanButton">Scan history</button><button class="cancel hidden" id="cancelButton">Cancel</button></div>
+  <section class="summary hidden" id="summary" aria-live="polite"><div><span id="postCount">0</span><small>included posts</small></div><div><span id="mediaCount">0</span><small>media observed</small></div><div><span id="observedCount">0</span><small>posts observed</small></div><div><span id="failedCount">0</span><small>unavailable items</small></div></section>
+  <div class="progress-wrap hidden" id="progressWrap"><div class="progress-label"><span id="progressLabel">Preparing…</span><span id="progressValue">0%</span></div><progress id="progressBar" max="100" value="0"></progress></div>
+  <div class="actions hidden" id="actions"><button class="secondary" id="jsonButton">Download JSONL</button><button class="secondary" id="zipButton">Download ZIP archive</button><button class="secondary" id="receiptButton">Download archive receipt</button></div>
+  <button class="diagnostic" id="diagnosticButton">Copy redacted diagnostic</button>
+  <p class="hint">The scan stops at the requested start boundary, when WhatsApp stops making progress, or when you cancel. Unknown dates remain visible in diagnostics and are excluded from date-filtered output by default.</p>
+  <footer>Local-first. No post content is uploaded by this extension.</footer>
+</main>
+<script src="../vendor/jszip.min.js"></script><script type="module" src="popup.js"></script>
+</body></html>

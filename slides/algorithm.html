@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      .slide-container { 
+        width: 1280px; 
+        min-height: 720px; 
+        background: #FFFFFF; 
+        color: #1E293B; 
+        font-family: 'Inter', sans-serif;
+        position: relative;
+      }
+      .header-section {
+        padding-top: 60px;
+        padding-left: 80px;
+        border-bottom: 1px solid #1E293B;
+        padding-bottom: 20px;
+      }
+      .eyebrow {
+        font-family: ui-monospace, monospace;
+        font-weight: 700;
+        font-size: 16px;
+        color: #EA580C;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .title {
+        font-family: ui-monospace, monospace;
+        font-weight: 700;
+        font-size: 42px;
+        margin-top: 10px;
+        letter-spacing: -0.02em;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        /* removed fixed height to let content size naturally */
+      }
+      .main-column {
+        grid-column: 1 / 5;
+        padding-top: 20px; /* reduced from 40px to save vertical space */
+        padding-left: 80px;
+        border-right: 1px solid #1E293B;
+      }
+      .side-column {
+        grid-column: 5 / 7;
+        padding-top: 20px; /* reduced */
+        padding-left: 40px;
+      }
+      .section-title {
+        font-family: ui-monospace, monospace;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 12px; /* reduced */
+        color: #EA580C;
+      }
+      .logic-box {
+        border: 1px solid #1E293B;
+        padding: 16px; /* reduced from 20px */
+        margin-bottom: 12px; /* reduced from 20px */
+        width: 700px;
+      }
+      .logic-box h3 {
+        font-family: ui-monospace, monospace;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .logic-box p {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .metric-box {
+        border: 1px solid #1E293B;
+        padding: 10px; /* reduced */
+        margin-bottom: 10px; /* reduced */
+        width: 350px;
+        background: #F8FAFC;
+      }
+      .metric-box strong {
+        display: block;
+        font-family: ui-monospace, monospace;
+        font-size: 14px;
+        color: #EA580C;
+        margin-bottom: 5px;
+      }
+      .metric-box span {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .footer-note {
+        position: absolute;
+        bottom: 40px;
+        left: 80px;
+        font-size: 12px;
+        color: #64748B;
+      }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header-section">
+            <div class="eyebrow">07 / Technical Strategy</div>
+            <h1 class="title">The infinite-scroll algorithm needs proof, not optimism</h1>
+        </div>
+        <div class="content-grid">
+            <div class="main-column">
+                <div class="section-title">CORE EXECUTION LOGIC</div>
+                <div class="logic-box">
+                    <h3>01. STABILIZATION &amp; MUTATION</h3>
+                    <p>Observe layout changes and require two consecutive stable scans before advancing. This prevents partial captures during WhatsApp Web's asynchronous DOM updates.</p>
+                </div>
+                <div class="logic-box">
+                    <h3>02. DETERMINISTIC FINGERPRINTING</h3>
+                    <p>Combine Channel identity, normalized timestamps, text hashes, and media metadata to ensure virtualization never creates duplicate records in the final archive.</p>
+                </div>
+                <div class="logic-box">
+                    <h3>03. DEDUPLICATION &amp; ORDERING</h3>
+                    <p>Maintain a global seen-set while preserving first-seen order. If dates are unknown, records are flagged for manual review rather than silent exclusion.</p>
+                </div>
+            </div>
+            <div class="side-column">
+                <div class="section-title">GUARDRAILS &amp; STATES</div>
+                <div class="metric-box">
+                    <strong>MAX THRESHOLDS</strong>
+                    <span>Capped iterations, wall-clock time, and unchanged-height detection to prevent infinite loops.</span>
+                </div>
+                <div class="metric-box">
+                    <strong>USER CONTROL</strong>
+                    <span>Explicit cancellation support with immediate partial-state preservation.</span>
+                </div>
+                <div class="metric-box">
+                    <strong>COMPLETENESS STATES</strong>
+                    <span>Boundary Reached, No Progress, Timed Out, Canceled, or Partial (Unavailable Updates).</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-note">Technical Specification: Infinite-Scroll Traversal v1.2</div>
+    </div>
+</body>
+</html>

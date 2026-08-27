@@ -1,0 +1,26 @@
+{
+  "fixture": "/home/ubuntu/upload/web.whatsapp.com__1787683949156.html",
+  "originalHeader": 0,
+  "originalMessages": 0,
+  "fallbackText": 41,
+  "fallbackMedia": 115,
+  "channel": "ABEDNEGO LOMAZAH, EVERLASTING...",
+  "postCount": 40,
+  "mediaCount": 50,
+  "diagnostics": {
+    "selectors": {
+      "header": "[data-testid=\"conversation-header\"], header, [role=\"banner\"]",
+      "title": "[data-testid=\"conversation-header\"] span[dir=\"auto\"], header span[dir=\"auto\"], span[dir=\"auto\"][title]",
+      "messageRoots": "[data-pre-plain-text], [data-testid=\"msg-container\"], [data-testid^=\"conv-msg-\"]",
+      "text": "[data-testid=\"selectable-text\"], [data-testid=\"last-msg-status\"], span[dir=\"ltr\"], span[dir=\"auto\"]",
+      "media": "img[src], video[src], audio[src], a[href]"
+    },
+    "directMessageRoots": 0,
+    "fallbackMessageRoots": 40,
+    "timestampNodes": 0,
+    "mediaNodes": 115,
+    "url": "file:///home/ubuntu/upload/web.whatsapp.com__1787683949156.html"
+  },
+  "failures": []
+}
+browser fixture extraction: PASS

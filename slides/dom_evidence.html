@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #FFFFFF;
+            color: #1E293B;
+            font-family: Arial, sans-serif;
+            padding-top: 60px;
+            padding-left: 80px;
+            padding-right: 80px;
+            position: relative;
+        }
+        .eyebrow {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 700;
+            font-size: 14px;
+            color: #EA580C;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .title {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 700;
+            font-size: 36px;
+            margin-top: 20px;
+            line-height: 1.2;
+            border-bottom: 1px solid #1E293B;
+            padding-bottom: 20px;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        .insight-block {
+            border-top: 1px solid #CBD5E1;
+            padding-top: 20px;
+        }
+        .insight-title {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 700;
+            font-size: 18px;
+            color: #EA580C;
+            margin-bottom: 15px;
+        }
+        .insight-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #334155;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #1E293B;
+            font-size: 14px;
+            color: #64748B;
+        }
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E2E8F0;
+            font-size: 16px;
+        }
+        .metric-box {
+            display: inline-block;
+            background: #1E293B;
+            color: #FFFFFF;
+            padding: 2px 8px;
+            font-weight: 700;
+        }
+        .status-fail { color: #EF4444; font-weight: 700; }
+        .status-pass { color: #10B981; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="eyebrow">03 / DOM ANALYSIS</div>
+        <h2 class="title">Live DOM evidence changed the selector strategy</h2>
+        
+        <div class="content-grid">
+            <div class="left-pane">
+                <div class="insight-block">
+                    <h3 class="insight-title">THE FAILURE OF BRITTLE SELECTORS</h3>
+                    <p class="insight-text">
+                        The Abednego Lomazah fixture revealed that <strong>data-testid</strong> and <strong>timestamp attributes</strong> are not reliable in current Channel views. Original selectors returned zero matches, necessitating a shift to layered heuristics.
+                    </p>
+                </div>
+                <div class="insight-block" style="margin-top: 40px;">
+                    <h3 class="insight-title">IDENTITY CORRECTION</h3>
+                    <p class="insight-text">
+                        Active-cell-first logic was implemented to prevent misidentifying the target. The system now correctly distinguishes the open Channel from recommended alternatives like "Fabrizio Romano".
+                    </p>
+                </div>
+            </div>
+            
+            <div class="right-pane">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>SELECTOR FAMILY</th>
+                            <th>MATCHES</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Original Header</td>
+                            <td><span class="metric-box">0</span></td>
+                            <td class="status-fail">FAIL</td>
+                        </tr>
+                        <tr>
+                            <td>Original Message Roots</td>
+                            <td><span class="metric-box">0</span></td>
+                            <td class="status-fail">FAIL</td>
+                        </tr>
+                        <tr>
+                            <td>Fallback Text Spans</td>
+                            <td><span class="metric-box">41</span></td>
+                            <td class="status-pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>Fallback Media Nodes</td>
+                            <td><span class="metric-box">115</span></td>
+                            <td class="status-pass">PASS</td>
+                        </tr>
+                        <tr>
+                            <td>Channel List Cells</td>
+                            <td><span class="metric-box">67</span></td>
+                            <td class="status-pass">PASS</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px; font-size: 14px; color: #64748B; line-height: 1.4;">
+                    * Verified against live WhatsApp Web Channel snapshot (Aug 25, 2026). Telemetry and fixture-based validation are now release-critical.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

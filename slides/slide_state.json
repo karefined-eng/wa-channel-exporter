@@ -1,0 +1,113 @@
+{
+  "project_info": {
+    "title": "WA Channel Exporter",
+    "created": 1787746387.555,
+    "last_updated": 1787746652.656,
+    "total_slides": 10
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "state": "edited",
+      "pageNum": 1
+    },
+    {
+      "id": "promise",
+      "state": "edited",
+      "pageNum": 2
+    },
+    {
+      "id": "architecture",
+      "state": "edited",
+      "pageNum": 3
+    },
+    {
+      "id": "dom_evidence",
+      "state": "edited",
+      "pageNum": 4
+    },
+    {
+      "id": "test_results",
+      "state": "edited",
+      "pageNum": 5
+    },
+    {
+      "id": "load_loop",
+      "state": "edited",
+      "pageNum": 6
+    },
+    {
+      "id": "algorithm",
+      "state": "edited",
+      "pageNum": 7
+    },
+    {
+      "id": "archive",
+      "state": "edited",
+      "pageNum": 8
+    },
+    {
+      "id": "deployment",
+      "state": "edited",
+      "pageNum": 9
+    },
+    {
+      "id": "next_step",
+      "state": "edited",
+      "pageNum": 10
+    }
+  ],
+  "outline": [
+    {
+      "id": "cover",
+      "title": "WA Channel Exporter",
+      "summary": "From DOM snapshot to trustworthy Channel archive. Architecture, verified test results, deployment plan, and infinite-scroll strategy."
+    },
+    {
+      "id": "promise",
+      "title": "The product promise must be measurable",
+      "summary": "Position the product as a user-invoked, local-first Channel archive assistant with explicit completeness reporting.",
+      "image_plan": "/home/ubuntu/upload/pasted_file_DHep1L_image.png - Shows the actual WA Channel Exporter popup UI overlaying WhatsApp Web, illustrating the popup state and controls discussed in Slide 2."
+    },
+    {
+      "id": "architecture",
+      "title": "The MV3 architecture keeps capture local and explicit",
+      "summary": "Show the popup, content layer, service worker, export core, and narrow permission boundary."
+    },
+    {
+      "id": "dom_evidence",
+      "title": "Live DOM evidence changed the selector strategy",
+      "summary": "Explain the original selector failures, fallback signals, and active-cell-first identity correction."
+    },
+    {
+      "id": "test_results",
+      "title": "The automated browser-style suite now passes",
+      "summary": "Present the Puppeteer fixture results, extracted counts, and the boundary between extraction proof and history completeness."
+    },
+    {
+      "id": "load_loop",
+      "title": "Complete history capture is a controlled load loop",
+      "summary": "Outline the August-to-present infinite-scroll algorithm from date-range setup through boundary detection."
+    },
+    {
+      "id": "algorithm",
+      "title": "The infinite-scroll algorithm needs proof, not optimism",
+      "summary": "Detail stabilization, fingerprints, deduplication, guardrails, cancellation, and completeness states."
+    },
+    {
+      "id": "archive",
+      "title": "Archive output makes missing items visible",
+      "summary": "Show the versioned JSONL and ZIP manifest design with explicit media statuses and reconciliation counts."
+    },
+    {
+      "id": "deployment",
+      "title": "Deployment is a staged release, not a single upload",
+      "summary": "Lay out internal test, reliability beta, store readiness, and paid-positioning stages with rollback triggers."
+    },
+    {
+      "id": "next_step",
+      "title": "The next build should convert the strategy into acceptance tests",
+      "summary": "Close with the implementation decision: build the controlled load loop and prove complete date-bounded traversal before publishing broad claims."
+    }
+  ]
+}

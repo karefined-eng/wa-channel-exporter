@@ -1,0 +1,4 @@
+node_modules/
+dist/
+wa-channel-exporter.zip
+.DS_Store

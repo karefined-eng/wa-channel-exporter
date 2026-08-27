@@ -1,0 +1,120 @@
+const SELECTORS = {
+  header: '[data-testid="conversation-header"], header, [role="banner"]',
+  title: '[data-testid="conversation-header"] span[dir="auto"], header span[dir="auto"], span[dir="auto"][title]',
+  messageRoots: '[data-pre-plain-text], [data-testid="msg-container"], [data-testid^="conv-msg-"]',
+  text: '[data-testid="selectable-text"], [data-testid="last-msg-status"], span[dir="ltr"], span[dir="auto"]',
+  media: 'img[src], video[src], audio[src], a[href]'
+};
+const session = { root: null, canceled: false, lastSignature: "", steps: 0 };
+const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
+
+function channelName() {
+  const headerCandidate = document.querySelector('header span[dir="auto"][title], [data-testid="conversation-header"] span[dir="auto"][title]');
+  const activeCellCandidate = document.querySelector('[data-testid="cell-frame-title"] span[dir="auto"][title], [data-testid="cell-frame-title"] span[dir="auto"]');
+  const followerContainer = [...document.querySelectorAll('div[role="button"], header, [data-testid="conversation-header"]')].find((node) => /followers?/i.test(node.textContent || ""));
+  const candidate = headerCandidate || activeCellCandidate || followerContainer?.querySelector('span[dir="auto"][title], span[dir="auto"]') || document.querySelector(SELECTORS.title);
+  return clean(candidate?.getAttribute("title") || candidate?.textContent) || "WhatsApp Channel";
+}
+
+function findScrollRoot() {
+  if (session.root?.isConnected) return session.root;
+  const preferred = [...document.querySelectorAll('[data-testid="conversation-panel-messages"], [role="main"], [tabindex="-1"]')]
+    .filter((node) => node.scrollHeight - node.clientHeight > 40 && node.clientHeight > 120)
+    .sort((a, b) => (b.scrollHeight - b.clientHeight) - (a.scrollHeight - a.clientHeight))[0];
+  if (preferred) return (session.root = preferred);
+  const candidates = [...document.querySelectorAll('div')].filter((node) => {
+    const style = getComputedStyle(node);
+    return node.clientHeight > 120 && node.scrollHeight - node.clientHeight > 80 && /(auto|scroll)/.test(style.overflowY);
+  }).sort((a, b) => (b.scrollHeight - b.clientHeight) - (a.scrollHeight - a.clientHeight));
+  return (session.root = candidates[0] || document.scrollingElement);
+}
+
+function messageRoots() {
+  const direct = [...document.querySelectorAll(SELECTORS.messageRoots)];
+  if (direct.length) return [...new Set(direct)];
+  const textNodes = [...document.querySelectorAll('span[dir="ltr"][title], span[dir="ltr"]')]
+    .filter((node) => clean(node.textContent).length > 0)
+    .filter((node) => !node.closest('[role="navigation"], [role="listitem"]'));
+  return [...new Set(textNodes.map((node) => node.closest('[data-testid="cell-frame-secondary"], [tabindex="-1"], div') || node))];
+}
+
+function parseDisplayedTime(root) {
+  const raw = root.getAttribute("data-pre-plain-text") || root.querySelector("[data-pre-plain-text]")?.getAttribute("data-pre-plain-text") || root.getAttribute("title") || "";
+  return clean(raw);
+}
+
+function parseDate(raw) {
+  const match = String(raw || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (!match) return { iso: "", status: "unknown" };
+  const [, month, day, year] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 || date.getDate() !== Number(day)) return { iso: "", status: "unknown" };
+  return { iso: date.toISOString().slice(0, 10), status: "parsed" };
+}
+
+function mediaCandidates(root) {
+  const seen = new Set();
+  return [...root.querySelectorAll(SELECTORS.media)].map((item) => {
+    const tag = item.tagName.toLowerCase();
+    const url = item.currentSrc || item.src || item.href || "";
+    const width = Number(item.naturalWidth || item.videoWidth || item.getAttribute("width") || item.style.width?.replace("px", "") || 0);
+    const height = Number(item.naturalHeight || item.videoHeight || item.getAttribute("height") || item.style.height?.replace("px", "") || 0);
+    const isPixelGif = /^data:image\/gif;base64,R0lGODlhAQABA/.test(url);
+    const isDocumentLink = tag === "a" && /\.(pdf|docx?|xlsx?|pptx?|zip|txt|csv)([?#]|$)/i.test(url);
+    const isVisibleMedia = tag !== "img" || width >= 80 || height >= 80 || item.getAttribute("data-media-type") || item.closest("[data-testid*='media'], [data-testid*='image'], [data-testid*='video']");
+    if (!url || seen.has(url) || isPixelGif || (!isDocumentLink && !isVisibleMedia)) return null;
+    seen.add(url);
+    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "page-blob" : "page-url" };
+  }).filter(Boolean);
+}
+
+function parsePost(root, index) {
+  const media = mediaCandidates(root).map((item, mediaIndex) => ({ ...item, filename: `media-${index + 1}-${mediaIndex + 1}` }));
+  const textNode = root.querySelector(SELECTORS.text);
+  const publishedAt = parseDisplayedTime(root);
+  return { id: root.getAttribute("data-id") || root.id || `derived-${index + 1}`, channel: channelName(), publishedAt, date: parseDate(publishedAt), text: clean(textNode?.getAttribute("title") || textNode?.textContent || root.textContent), media };
+}
+
+function collectPosts() {
+  const roots = messageRoots();
+  const posts = roots.map(parsePost).filter((post) => post.text || post.media.length);
+  return { channel: channelName(), posts, diagnostics: { selectors: SELECTORS, directMessageRoots: document.querySelectorAll(SELECTORS.messageRoots).length, fallbackMessageRoots: roots.length, timestampNodes: document.querySelectorAll("[data-pre-plain-text]").length, mediaNodes: document.querySelectorAll(SELECTORS.media).length, acceptedMediaNodes: roots.reduce((count, root) => count + mediaCandidates(root).length, 0), ignoredMediaNodes: Math.max(0, document.querySelectorAll(SELECTORS.media).length - roots.reduce((count, root) => count + mediaCandidates(root).length, 0)), url: location.href.split("?")[0] } };
+}
+
+const signature = (posts) => posts.map((post) => `${post.id}|${post.publishedAt}|${post.text.slice(0, 80)}|${post.media.length}`).join("\n");
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function stabilize(root, timeoutMs = 2500) {
+  const started = Date.now(); let previous = `${root.scrollHeight}:${root.scrollTop}:${messageRoots().length}`; let stable = 0;
+  while (Date.now() - started < timeoutMs) {
+    await wait(350);
+    const current = `${root.scrollHeight}:${root.scrollTop}:${messageRoots().length}`;
+    if (current === previous) { stable += 1; if (stable >= 2) return true; } else { stable = 0; previous = current; }
+  }
+  return false;
+}
+async function scanStep({ startDate = "", stepPx = 650 } = {}) {
+  const root = findScrollRoot();
+  if (!root) throw new Error("Could not locate the WhatsApp Web message scroll container.");
+  const before = collectPosts();
+  const beforeTop = root.scrollTop;
+  const beforeHeight = root.scrollHeight;
+  root.scrollTop = Math.max(0, beforeTop - stepPx);
+  const stable = await stabilize(root);
+  const after = collectPosts();
+  const earliest = after.posts.map((post) => post.date.iso).filter(Boolean).sort()[0] || "";
+  const sig = signature(after.posts);
+  const noProgress = root.scrollTop === beforeTop && root.scrollHeight === beforeHeight && sig === session.lastSignature;
+  session.lastSignature = sig; session.steps += 1;
+  return { ...after, step: session.steps, stable, scroll: { top: root.scrollTop, height: root.scrollHeight, viewport: root.clientHeight, atTop: root.scrollTop <= 4 }, earliestDate: earliest, boundaryReached: Boolean(startDate && earliest && earliest < startDate), noProgress, postsChanged: sig !== signature(before.posts) };
+}
+
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  (async () => {
+    if (message?.type === "COLLECT_POSTS") sendResponse({ ok: true, ...collectPosts() });
+    else if (message?.type === "SCAN_RESET") { session.root = null; session.canceled = false; session.lastSignature = ""; session.steps = 0; sendResponse({ ok: true }); }
+    else if (message?.type === "SCAN_CANCEL") { session.canceled = true; sendResponse({ ok: true }); }
+    else if (message?.type === "FETCH_MEDIA") { const url = String(message.url || ""); if (!/^(blob:|https:\/\/)/.test(url)) throw new Error("Unsupported media URL."); const response = await fetch(url, { credentials: "include" }); if (!response.ok) throw new Error(`Media request failed with HTTP ${response.status}.`); sendResponse({ ok: true, mime: response.headers.get("content-type") || "application/octet-stream", buffer: await response.arrayBuffer() }); }
+    else if (message?.type === "SCAN_STEP") { if (session.canceled) return sendResponse({ ok: false, state: "canceled" }); sendResponse({ ok: true, ...(await scanStep(message)) }); }
+  })().catch((error) => sendResponse({ ok: false, error: error.message || "Collector failed." }));
+  return true;
+});

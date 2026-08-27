@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { margin: 0; }
+        .slide-container { 
+            width: 1280px; 
+            min-height: 720px; 
+            background: #FFFFFF; 
+            color: #1E293B; 
+            font-family: Arial, sans-serif; 
+            padding: 60px 80px 0;
+            position: relative;
+        }
+        .eyebrow { 
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace; 
+            font-weight: 700; 
+            font-size: 14px; 
+            color: #EA580C; 
+            letter-spacing: 0.1em; 
+            text-transform: uppercase;
+        }
+        .title { 
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace; 
+            font-weight: 700; 
+            font-size: 38px; 
+            margin-top: 15px; 
+            letter-spacing: -0.02em;
+            border-bottom: 1px solid #1E293B;
+            padding-bottom: 20px;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            column-gap: 30px; 
+            margin-top: 40px; 
+        }
+        .process-col { grid-column: 1 / 4; border-right: 1px solid #CBD5E1; padding-right: 30px; }
+        .detail-col { grid-column: 4 / 7; }
+        
+        .step { margin-top: 25px; }
+        .step-num { 
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace; 
+            font-weight: 700; 
+            font-size: 12px; 
+            color: #EA580C; 
+            display: inline-block;
+            border: 1px solid #EA580C;
+            padding: 2px 8px;
+            margin-bottom: 10px;
+        }
+        .step-title { font-weight: 700; font-size: 18px; margin-bottom: 8px; }
+        .step-desc { font-size: 15px; line-height: 1.5; color: #475569; }
+
+        .box { 
+            border: 1px solid #1E293B; 
+            padding: 20px; 
+            margin-top: 25px; 
+        }
+        .box-header { 
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace; 
+            font-weight: 700; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            margin-bottom: 15px;
+            color: #EA580C;
+        }
+        .list-item { 
+            font-size: 15px; 
+            line-height: 1.6; 
+            margin-top: 10px; 
+            display: flex;
+            align-items: flex-start;
+        }
+        .list-item::before { 
+            content: "—"; 
+            margin-right: 10px; 
+            color: #EA580C; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="eyebrow">05 / History Strategy</div>
+        <h2 class="title">Complete history capture is a controlled load loop.</h2>
+        
+        <div class="grid">
+            <div class="process-col">
+                <div class="step" style="margin-top: 0;">
+                    <div class="step-num">STEP 01</div>
+                    <div class="step-title">Initialize Date Boundary</div>
+                    <div class="step-desc">Set explicit From/Through dates (e.g., 1 August to Present). Capture the current viewport as the starting boundary.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">STEP 02</div>
+                    <div class="step-title">Controlled Upward Traversal</div>
+                    <div class="step-desc">Locate the scroll container. Trigger small upward increments and wait for DOM stabilization after each mutation.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">STEP 03</div>
+                    <div class="step-title">Incremental Extraction</div>
+                    <div class="step-desc">Extract, fingerprint, and deduplicate posts. Normalize human-readable dates into machine-readable ISO formats.</div>
+                </div>
+            </div>
+            
+            <div class="detail-col">
+                <div class="box" style="margin-top: 0;">
+                    <div class="box-header">Boundary Conditions</div>
+                    <div class="list-item">Stop when the oldest observed post is strictly before the start boundary.</div>
+                    <div class="list-item">Report "Boundary Not Reached" if scrolling stops before the target date.</div>
+                    <div class="list-item">Handle ambiguous dates (e.g., "Yesterday") by pinning to the scan timestamp.</div>
+                </div>
+                
+                <div class="box">
+                    <div class="box-header">Safety Guardrails</div>
+                    <div class="list-item">Maximum iteration count to prevent infinite loops on DOM errors.</div>
+                    <div class="list-item">Unchanged-height threshold to detect end-of-history or loading stalls.</div>
+                    <div class="list-item">Explicit user cancellation to stop long-running historical scans.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container { 
+            width: 1280px; 
+            min-height: 720px; 
+            background: #FFFFFF; 
+            color: #1E293B; 
+            padding-top: 60px; 
+            padding-left: 80px; 
+            padding-right: 80px; 
+            font-family: Arial, sans-serif; 
+            position: relative; 
+        }
+        .eyebrow { 
+            font: 700 14px ui-monospace, monospace; 
+            color: #EA580C; 
+            letter-spacing: 0.1em; 
+            text-transform: uppercase; 
+        }
+        .title { 
+            margin-top: 20px; 
+            font: 700 42px ui-monospace, monospace; 
+            letter-spacing: -0.02em; 
+            border-bottom: 1px solid #1E293B; 
+            padding-bottom: 20px; 
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            column-gap: 40px; 
+            margin-top: 40px; 
+        }
+        .left-col { 
+            grid-column: 1 / 5; 
+            border-right: 1px solid #CBD5E1; 
+            padding-right: 40px; 
+        }
+        .right-col { 
+            grid-column: 5 / 7; 
+        }
+        .section-header { 
+            font: 700 12px ui-monospace, monospace; 
+            color: #EA580C; 
+            margin-bottom: 20px; 
+            text-transform: uppercase; 
+        }
+        .roadmap-item { 
+            margin-bottom: 30px; 
+            padding-left: 20px; 
+            border-left: 2px solid #EA580C; 
+        }
+        .roadmap-title { 
+            font: 700 18px ui-monospace, monospace; 
+            margin-bottom: 8px; 
+        }
+        .roadmap-desc { 
+            font-size: 16px; 
+            line-height: 1.5; 
+            color: #475569; 
+        }
+        .decision-box { 
+            background: #1E293B; 
+            color: #FFFFFF; 
+            padding: 30px; 
+            height: 100%; 
+        }
+        .decision-label { 
+            font: 700 12px ui-monospace, monospace; 
+            color: #EA580C; 
+            margin-bottom: 20px; 
+            text-transform: uppercase; 
+        }
+        .decision-text { 
+            font: 700 24px/1.3 ui-monospace, monospace; 
+            letter-spacing: -0.02em; 
+        }
+        .footer-rule { 
+            position: absolute; 
+            bottom: 80px; 
+            left: 80px; 
+            width: 170px; 
+            height: 8px; 
+            background: #EA580C; 
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="eyebrow">10 / NEXT STEPS</div>
+        <h1 class="title">The next build should convert the strategy into acceptance tests.</h1>
+        
+        <div class="grid">
+            <div class="left-col">
+                <div class="section-header">Implementation Roadmap</div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-title">01. SCROLL STATE MACHINE</div>
+                    <div class="roadmap-desc">Implement a robust detector for the active message pane and a state machine for initializing, loading, extracting, and boundary detection.</div>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-title">02. PERSISTENCE & RESUMABILITY</div>
+                    <div class="roadmap-desc">Move job metadata to local storage to survive service-worker restarts. Keep raw content out of worker memory until final export.</div>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-title">03. LIVE FIXTURE VALIDATION</div>
+                    <div class="roadmap-desc">Add automated tests for date-boundary logic, virtualized scrolling, and selector variants across different WhatsApp Channel states.</div>
+                </div>
+            </div>
+            
+            <div class="right-col">
+                <div class="decision-box">
+                    <div class="decision-label">FINAL DECISION</div>
+                    <div class="decision-text">
+                        Prioritize the controlled load loop. Do not publish broad claims until date-bounded traversal is evidence-backed.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-rule"></div>
+    </div>
+</body>
+</html>
