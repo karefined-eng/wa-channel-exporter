@@ -1,6 +1,6 @@
 {
   "name": "wa-channel-exporter",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Chrome Extension – WhatsApp Channel Exporter (Manifest V3)",
   "private": true,
   "scripts": {

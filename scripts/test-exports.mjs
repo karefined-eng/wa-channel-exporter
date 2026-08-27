@@ -23,4 +23,9 @@ const normalizedFallback = core.validateExportSchemas([{ id: "bad", channel: "",
 assert.equal(normalizedFallback.ok, true);
 assert.equal(normalizedFallback.postCount, 1);
 assert.equal(normalizedFallback.mediaCount, 0);
-console.log(JSON.stringify({ valid: result, normalizedFallback, status: "PASS" }, null, 2));
+assert.equal(core.extensionForMime("image/jpeg"), "jpg");
+assert.equal(core.extensionForMime("image/png"), "png");
+assert.equal(core.extensionForMime("image/gif"), "gif");
+assert.equal(core.mediaFilename("media-1-1", "image/jpeg"), "media-1-1.jpg");
+assert.equal(core.mediaFilename("asset", "", "https://cdn.example/asset.webp?token=1"), "asset.webp");
+console.log(JSON.stringify({ valid: result, normalizedFallback, filenameChecks: "PASS", status: "PASS" }, null, 2));
