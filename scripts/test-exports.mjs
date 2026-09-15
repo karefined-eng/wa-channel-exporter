@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import JSZip from "jszip";
 const source = fs.readFileSync(new URL("../src/core/exporter.js", import.meta.url), "utf8");
 const core = await import(`data:text/javascript,${encodeURIComponent(source)}`);
 
@@ -28,4 +29,11 @@ assert.equal(core.extensionForMime("image/png"), "png");
 assert.equal(core.extensionForMime("image/gif"), "gif");
 assert.equal(core.mediaFilename("media-1-1", "image/jpeg"), "media-1-1.jpg");
 assert.equal(core.mediaFilename("asset", "", "https://cdn.example/asset.webp?token=1"), "asset.webp");
-console.log(JSON.stringify({ valid: result, normalizedFallback, filenameChecks: "PASS", status: "PASS" }, null, 2));
+const zipBlob = await core.createZip(posts, JSZip, { channel: "Pilot Channel", start: "2026-08-19", end: "2026-08-20" }, async () => ({ ok: true, mime: "image/jpeg", buffer: new Uint8Array([255, 216, 255, 217]).buffer }));
+const zip = await JSZip.loadAsync(await zipBlob.arrayBuffer());
+const manifest = JSON.parse(await zip.file("manifest.json").async("string"));
+const mediaReport = JSON.parse(await zip.file("media-report.json").async("string"));
+assert.ok(zip.file("media/0001-1-image.jpg"));
+assert.equal(manifest.mediaReport.downloaded, 1);
+assert.equal(mediaReport.items[0].status, "downloaded");
+console.log(JSON.stringify({ valid: result, normalizedFallback, filenameChecks: "PASS", zipMediaChecks: "PASS", status: "PASS" }, null, 2));

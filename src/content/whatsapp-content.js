@@ -56,7 +56,13 @@ function mediaCandidates(root) {
   const seen = new Set();
   return [...root.querySelectorAll(SELECTORS.media)].map((item) => {
     const tag = item.tagName.toLowerCase();
-    const url = item.currentSrc || item.src || item.href || "";
+    const explicitUrl = ["data-original", "data-media-url", "data-download-url", "data-src", "data-url"]
+      .map((name) => item.getAttribute(name) || "")
+      .find(Boolean) || "";
+    const linkedUrl = item.closest("a[href]")?.getAttribute("href") || "";
+    const renderedUrl = item.currentSrc || item.getAttribute("src") || item.getAttribute("href") || "";
+    const linkedMedia = /\.(?:jpe?g|png|gif|webp|avif|mp4|webm|mp3|m4a|ogg|pdf|docx?|xlsx?|pptx?|zip)(?:[?#]|$)/i.test(linkedUrl) || /\/media(?:\/|[?#])/i.test(linkedUrl);
+    const url = explicitUrl || (linkedMedia ? linkedUrl : renderedUrl);
     const width = Number(item.naturalWidth || item.videoWidth || item.getAttribute("width") || item.style.width?.replace("px", "") || 0);
     const height = Number(item.naturalHeight || item.videoHeight || item.getAttribute("height") || item.style.height?.replace("px", "") || 0);
     const isPixelGif = /^data:image\/gif;base64,R0lGODlhAQABA/.test(url);
@@ -64,7 +70,7 @@ function mediaCandidates(root) {
     const isVisibleMedia = tag !== "img" || width >= 80 || height >= 80 || item.getAttribute("data-media-type") || item.closest("[data-testid*='media'], [data-testid*='image'], [data-testid*='video']");
     if (!url || seen.has(url) || isPixelGif || (!isDocumentLink && !isVisibleMedia)) return null;
     seen.add(url);
-    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "page-blob" : "page-url" };
+    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "rendered-preview" : explicitUrl ? "page-media-attribute" : linkedMedia ? "linked-media" : "page-url", previewUrl: renderedUrl.startsWith("blob:") && renderedUrl !== url ? renderedUrl : "" };
   }).filter(Boolean);
 }
 
@@ -113,7 +119,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (message?.type === "COLLECT_POSTS") sendResponse({ ok: true, ...collectPosts() });
     else if (message?.type === "SCAN_RESET") { session.root = null; session.canceled = false; session.lastSignature = ""; session.steps = 0; sendResponse({ ok: true }); }
     else if (message?.type === "SCAN_CANCEL") { session.canceled = true; sendResponse({ ok: true }); }
-    else if (message?.type === "FETCH_MEDIA") { const url = String(message.url || ""); if (!/^(blob:|https:\/\/)/.test(url)) throw new Error("Unsupported media URL."); const response = await fetch(url, { credentials: "include" }); if (!response.ok) throw new Error(`Media request failed with HTTP ${response.status}.`); sendResponse({ ok: true, mime: response.headers.get("content-type") || "application/octet-stream", buffer: await response.arrayBuffer() }); }
+    else if (message?.type === "FETCH_MEDIA") { const url = String(message.url || ""); if (!/^(blob:|https:\/\/)/.test(url)) throw new Error("Unsupported media URL."); const response = await fetch(url, { credentials: "include", cache: "no-store" }); if (!response.ok) throw new Error(`Media request failed with HTTP ${response.status}.`); const mime = response.headers.get("content-type") || "application/octet-stream"; const buffer = await response.arrayBuffer(); if (!buffer.byteLength) throw new Error("Media response was empty."); sendResponse({ ok: true, mime, bytes: buffer.byteLength, buffer }); }
     else if (message?.type === "SCAN_STEP") { if (session.canceled) return sendResponse({ ok: false, state: "canceled" }); sendResponse({ ok: true, ...(await scanStep(message)) }); }
   })().catch((error) => sendResponse({ ok: false, error: error.message || "Collector failed." }));
   return true;
