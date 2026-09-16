@@ -78,12 +78,12 @@ const posts = [
 
 // 2. Mock what the content script does when receiving FETCH_MEDIA
 const mockPageMediaFetcher = async (media) => {
-  // Test photo: simulates successful blob / in-page image fetch
+  // Test photo: simulates base64 returned across extension boundary (new path)
   if (media.url.includes("sample-photo-blob-id")) {
-    const fakeJpegBytes = new Uint8Array([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46]);
-    return { ok: true, mime: "image/jpeg", buffer: fakeJpegBytes.buffer };
+    const fakeJpegBase64 = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAQFBQkGCQkJCQkKCAkICgsLCgoLCwwKCwoLCgwMDAwND";
+    return { ok: true, mime: "image/jpeg", bytes: 57, base64: fakeJpegBase64 };
   }
-  // Test video: simulates successful mp4 stream fetch
+  // Test video: simulates buffer return
   if (media.url.includes("sample-video.mp4")) {
     const fakeMp4Bytes = new TextEncoder().encode("fake-mp4-video-stream-data");
     return { ok: true, mime: "video/mp4", buffer: fakeMp4Bytes.buffer };

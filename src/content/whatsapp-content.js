@@ -66,11 +66,11 @@ function mediaCandidates(root) {
     const width = Number(item.naturalWidth || item.videoWidth || item.getAttribute("width") || item.style.width?.replace("px", "") || 0);
     const height = Number(item.naturalHeight || item.videoHeight || item.getAttribute("height") || item.style.height?.replace("px", "") || 0);
     const isPixelGif = /^data:image\/gif;base64,R0lGODlhAQABA/.test(url);
-    const isDocumentLink = tag === "a" && /\.(pdf|docx?|xlsx?|pptx?|zip|txt|csv)([?#]|$)/i.test(url);
+    const isDocumentLink = tag === "a" && linkedMedia;
     const isVisibleMedia = tag !== "img" || width >= 80 || height >= 80 || item.getAttribute("data-media-type") || item.closest("[data-testid*='media'], [data-testid*='image'], [data-testid*='video']");
-    if (!url || seen.has(url) || isPixelGif || (!isDocumentLink && !isVisibleMedia)) return null;
+    if (!url || seen.has(url) || isPixelGif || (!isDocumentLink && tag === "a") || (tag !== "a" && !isVisibleMedia)) return null;
     seen.add(url);
-    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "rendered-preview" : explicitUrl ? "page-media-attribute" : linkedMedia ? "linked-media" : "page-url", previewUrl: renderedUrl.startsWith("blob:") && renderedUrl !== url ? renderedUrl : "" };
+    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "rendered-preview" : url.startsWith("data:") ? "data-url" : explicitUrl ? "page-media-attribute" : linkedMedia ? "linked-media" : "page-url", previewUrl: renderedUrl.startsWith("blob:") && renderedUrl !== url ? renderedUrl : "" };
   }).filter(Boolean);
 }
 
@@ -119,7 +119,45 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (message?.type === "COLLECT_POSTS") sendResponse({ ok: true, ...collectPosts() });
     else if (message?.type === "SCAN_RESET") { session.root = null; session.canceled = false; session.lastSignature = ""; session.steps = 0; sendResponse({ ok: true }); }
     else if (message?.type === "SCAN_CANCEL") { session.canceled = true; sendResponse({ ok: true }); }
-    else if (message?.type === "FETCH_MEDIA") { const url = String(message.url || ""); if (!/^(blob:|https:\/\/)/.test(url)) throw new Error("Unsupported media URL."); const response = await fetch(url, { credentials: "include", cache: "no-store" }); if (!response.ok) throw new Error(`Media request failed with HTTP ${response.status}.`); const mime = response.headers.get("content-type") || "application/octet-stream"; const buffer = await response.arrayBuffer(); if (!buffer.byteLength) throw new Error("Media response was empty."); sendResponse({ ok: true, mime, bytes: buffer.byteLength, buffer }); }
+    else if (message?.type === "FETCH_MEDIA") {
+      const url = String(message.url || "");
+      if (url.startsWith("data:")) {
+        const match = url.match(/^data:([^;,]+)(?:;charset=[^;,]+)?(?:;(base64))?,(.*)$/i);
+        if (!match) throw new Error("Malformed data URL.");
+        const mime = match[1] || "image/jpeg";
+        const isBase64 = Boolean(match[2]);
+        const dataStr = match[3];
+        let base64 = "";
+        let byteLength = 0;
+        if (isBase64) {
+          base64 = dataStr;
+          byteLength = Math.floor((dataStr.length * 3) / 4);
+        } else {
+          const raw = decodeURIComponent(dataStr);
+          base64 = btoa(raw);
+          byteLength = raw.length;
+        }
+        sendResponse({ ok: true, mime, bytes: byteLength, base64 });
+        return;
+      }
+      if (!/^(blob:|https?:\/\/)/.test(url)) throw new Error("Unsupported media URL.");
+      const response = await fetch(url, { credentials: "include", cache: "no-store" });
+      if (!response.ok) throw new Error(`Media request failed with HTTP ${response.status}.`);
+      const mime = response.headers.get("content-type") || "application/octet-stream";
+      const blob = await response.blob();
+      if (!blob.size) throw new Error("Media response was empty.");
+      const reader = new FileReader();
+      const base64 = await new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          const res = String(reader.result || "");
+          const comma = res.indexOf(",");
+          resolve(comma >= 0 ? res.slice(comma + 1) : res);
+        };
+        reader.onerror = () => reject(new Error("Failed to read media buffer."));
+        reader.readAsDataURL(blob);
+      });
+      sendResponse({ ok: true, mime, bytes: blob.size, base64 });
+    }
     else if (message?.type === "SCAN_STEP") { if (session.canceled) return sendResponse({ ok: false, state: "canceled" }); sendResponse({ ok: true, ...(await scanStep(message)) }); }
   })().catch((error) => sendResponse({ ok: false, error: error.message || "Collector failed." }));
   return true;
