@@ -6,8 +6,34 @@ const MAX_RUNTIME_MS = 5 * 60 * 1000;
 const NO_PROGRESS_LIMIT = 4;
 const state = { phase: "idle", channel: "WhatsApp Channel", posts: new Map(), observed: 0, media: 0, unavailable: 0, diagnostics: null, tabId: null, startedAt: 0, step: 0, noProgress: 0, boundaryReached: false, reason: "" };
 const now = new Date();
-$("startDate").value = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
-$("endDate").value = now.toISOString().slice(0, 10);
+
+function setDates(startIso, endIso) {
+  $("startDate").value = startIso;
+  $("endDate").value = endIso;
+  if (state.posts.size > 0) updateSummary();
+}
+
+function setThisMonth() {
+  const s = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
+  const e = now.toISOString().slice(0, 10);
+  setDates(s, e);
+}
+
+function setLast7Days() {
+  const past = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  setDates(past.toISOString().slice(0, 10), now.toISOString().slice(0, 10));
+}
+
+function setAllLoaded() {
+  const dates = [...state.posts.values()].map((p) => p.date?.iso).filter(Boolean).sort();
+  if (dates.length) setDates(dates[0], dates[dates.length - 1]);
+  else setDates("2020-01-01", now.toISOString().slice(0, 10));
+}
+
+setThisMonth();
+$("presetThisMonth")?.addEventListener("click", setThisMonth);
+$("presetLast7Days")?.addEventListener("click", setLast7Days);
+$("presetAllLoaded")?.addEventListener("click", setAllLoaded);
 
 function setStatus(title, detail, error = false) { $("statusTitle").textContent = title; $("statusDetail").textContent = detail; $("statusDot").classList.toggle("error", error); }
 function setProgress(label, value) { $("progressWrap").classList.remove("hidden"); $("progressLabel").textContent = label; $("progressValue").textContent = `${Math.round(value)}%`; $("progressBar").value = Math.max(0, Math.min(100, value)); }
@@ -55,7 +81,52 @@ async function runScan() {
 async function cancelScan() { if (!state.tabId) return; state.phase = "canceled"; await collector(state.tabId, { type: "SCAN_CANCEL" }).catch(() => {}); setProgress("Canceled", 100); setStatus("Scan canceled", "The records collected so far remain available for export."); }
 async function downloadBlob(blob, filename) { const url = URL.createObjectURL(blob); const jobId = crypto.randomUUID(); try { const result = await new Promise((resolve, reject) => chrome.runtime.sendMessage({ type: "DOWNLOAD_EXPORT", url, filename, jobId }, (response) => { if (chrome.runtime.lastError || !response?.ok) reject(new Error(chrome.runtime.lastError?.message || response?.error || "Could not start download.")); else resolve(response); })); for (let i = 0; i < 60; i += 1) { const status = await new Promise((resolve) => chrome.runtime.sendMessage({ type: "GET_DOWNLOAD_STATUS", jobId }, resolve)); if (status?.state === "complete") return status; if (status?.state === "interrupted") throw new Error(status.error || "Download interrupted."); await new Promise((resolve) => setTimeout(resolve, 500)); } return result; } finally { setTimeout(() => URL.revokeObjectURL(url), 5000); } }
 $("scanButton").addEventListener("click", () => runScan()); $("cancelButton").addEventListener("click", () => cancelScan());
+$("startDate").addEventListener("change", () => updateSummary());
+$("endDate").addEventListener("change", () => updateSummary());
 $("jsonButton").addEventListener("click", async () => { try { await downloadBlob(new Blob([toJsonl(includedPosts())], { type: "application/x-ndjson" }), makeExportName(state.channel)); setStatus("JSONL download complete", "The bounded archive was saved locally."); } catch (error) { setStatus("Download failed", error.message, true); } });
-$("zipButton").addEventListener("click", async () => { $("zipButton").disabled = true; try { const posts = includedPosts(); const blob = await createZip(posts, window.JSZip, { channel: state.channel, start: $("startDate").value, end: $("endDate").value, phase: state.phase, reason: state.reason, boundaryReached: state.boundaryReached, observedPosts: state.observed, includedPosts: posts.length, unavailable: state.unavailable, scanSteps: state.step }, (media) => collector(state.tabId, { type: "FETCH_MEDIA", url: media.url })); await downloadBlob(blob, makeExportName(state.channel, "zip")); setStatus("ZIP download complete", "The bounded archive was saved locally."); } catch (error) { setStatus("Archive failed", error.message, true); } finally { $("zipButton").disabled = false; } });
+$("zipButton").addEventListener("click", async () => {
+  $("zipButton").disabled = true;
+  try {
+    const posts = includedPosts();
+    setProgress("Preparing archive…", 5);
+    setStatus("Creating ZIP archive…", `Retrieving media files for ${posts.length} posts.`);
+    const blob = await createZip(
+      posts,
+      window.JSZip,
+      { channel: state.channel, start: $("startDate").value, end: $("endDate").value, phase: state.phase, reason: state.reason, boundaryReached: state.boundaryReached, observedPosts: state.observed, includedPosts: posts.length, unavailable: state.unavailable, scanSteps: state.step },
+      (media) => collector(state.tabId, { type: "FETCH_MEDIA", url: media.url }),
+      (progress) => {
+        if (progress.phase === "media") {
+          const pct = Math.min(90, Math.round((progress.current / Math.max(1, progress.total)) * 85) + 5);
+          setProgress(`Retrieving media (${progress.current}/${progress.total})`, pct);
+          setStatus("Downloading media…", `${progress.current} of ${progress.total} items retrieved.`);
+        } else if (progress.phase === "compressing") {
+          setProgress(`Compressing ZIP · ${progress.percent}%`, Math.min(99, 90 + Math.round(progress.percent * 0.09)));
+          setStatus("Compressing archive…", "Bundling posts, manifests, and media into ZIP.");
+        }
+      }
+    );
+    setProgress("Saving archive…", 100);
+    await downloadBlob(blob, makeExportName(state.channel, "zip"));
+    setStatus("ZIP download complete", "The bounded archive was saved locally.");
+  } catch (error) {
+    setStatus("Archive failed", error.message, true);
+  } finally {
+    $("zipButton").disabled = false;
+  }
+});
 $("receiptButton").addEventListener("click", async () => { try { const posts = includedPosts(); const receipt = makeReceiptHtml({ channel: state.channel, start: $("startDate").value, end: $("endDate").value, phase: state.phase, reason: state.reason, boundaryReached: state.boundaryReached, observed: state.observed, included: posts.length, media: state.media, unavailable: state.unavailable, steps: state.step }); await downloadBlob(new Blob([receipt], { type: "text/html" }), makeExportName(state.channel, "html")); setStatus("Receipt download complete", "The archive receipt was saved locally."); } catch (error) { setStatus("Receipt failed", error.message, true); } });
-$("diagnosticButton").addEventListener("click", async () => { const report = { product: "wa-channel-exporter", version: "1.3.0", generatedAt: new Date().toISOString(), phase: state.phase, reason: state.reason, channel: state.channel, observed: state.observed, included: includedPosts().length, boundaryReached: state.boundaryReached, step: state.step, diagnostics: state.diagnostics }; await navigator.clipboard.writeText(JSON.stringify(report, null, 2)); setStatus("Diagnostic copied", "The report is redacted and contains no post text or media URLs."); });
+$("diagnosticButton").addEventListener("click", async () => { const report = { product: "wa-channel-exporter", version: "1.3.1", generatedAt: new Date().toISOString(), phase: state.phase, reason: state.reason, channel: state.channel, observed: state.observed, included: includedPosts().length, boundaryReached: state.boundaryReached, step: state.step, diagnostics: state.diagnostics }; await navigator.clipboard.writeText(JSON.stringify(report, null, 2)); setStatus("Diagnostic copied", "The report is redacted and contains no post text or media URLs."); });
+
+// Initial channel auto-detection on open
+(async () => {
+  try {
+    const tab = await activeTab();
+    state.tabId = tab.id;
+    const initial = await collector(tab.id, { type: "COLLECT_POSTS" }).catch(() => null);
+    if (initial?.channel && initial.channel !== "WhatsApp Channel") {
+      state.channel = initial.channel;
+      setStatus(`Ready: ${initial.channel}`, "Set your date range or choose a preset, then scan history.");
+    }
+  } catch {}
+})();
