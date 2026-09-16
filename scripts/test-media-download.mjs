@@ -73,6 +73,22 @@ const posts = [
         status: "unavailable"
       }
     ]
+  },
+  {
+    id: "post-audio-5",
+    channel: "Tech Channel",
+    publishedAt: "2:00 PM, 9/15/2026",
+    date: { iso: "2026-09-15", status: "parsed" },
+    text: "Voice announcement",
+    media: [
+      {
+        mediaId: "m-audio-5",
+        type: "audio",
+        url: "blob:https://web.whatsapp.com/sample-voice-note-id",
+        filename: "announcement-5",
+        status: "observed"
+      }
+    ]
   }
 ];
 
@@ -87,6 +103,11 @@ const mockPageMediaFetcher = async (media) => {
   if (media.url.includes("sample-video.mp4")) {
     const fakeMp4Bytes = new TextEncoder().encode("fake-mp4-video-stream-data");
     return { ok: true, mime: "video/mp4", buffer: fakeMp4Bytes.buffer };
+  }
+  // Test audio / voice note: simulates audio/ogg (Opus) returned across extension boundary
+  if (media.url.includes("sample-voice-note-id")) {
+    const fakeOggBase64 = Buffer.from("OggS\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00fake-opus-voice-stream-data").toString("base64");
+    return { ok: true, mime: "audio/ogg; codecs=opus", bytes: 42, base64: fakeOggBase64 };
   }
   // Test failed network request
   if (media.url.includes("expired-key.jpg")) {
@@ -121,23 +142,27 @@ console.log("Media Report Summary:", {
 // Assertions
 assert.equal(mediaReport.channel, "Tech Channel");
 assert.equal(mediaReport.exportScope, "all");
-assert.equal(mediaReport.observed, 4, "Total media observed should be 4");
-assert.equal(mediaReport.downloaded, 2, "2 media files should have downloaded");
+assert.equal(mediaReport.observed, 5, "Total media observed should be 5");
+assert.equal(mediaReport.downloaded, 3, "3 media files should have downloaded");
 assert.equal(mediaReport.failed, 1, "1 media file should fail");
 assert.equal(mediaReport.unavailable, 1, "1 media file should be unavailable");
 
-// Verify the actual image and video files are inside media/
+// Verify the actual image, video, and audio files are inside media/
 const photoFile = zip.file("media/0001-1-photo-1.jpg");
 const videoFile = zip.file("media/0002-1-recording-2.mp4");
+const audioFile = zip.file("media/0005-1-announcement-5.ogg");
 
 assert.ok(photoFile, "media/0001-1-photo-1.jpg must exist in the ZIP");
 assert.ok(videoFile, "media/0002-1-recording-2.mp4 must exist in the ZIP");
+assert.ok(audioFile, "media/0005-1-announcement-5.ogg must exist in the ZIP");
 
 console.log("\nFound image in ZIP:", photoFile.name);
 console.log("Found video in ZIP:", videoFile.name);
+console.log("Found audio in ZIP:", audioFile.name);
 
 // Verify media-report items
 console.log("\nDetailed Media Items in media-report.json:");
 console.table(mediaReport.items);
 
-console.log("\n✅ ALL VERIFICATIONS PASSED: Photos and videos are successfully captured, fetched in-page, typed, and saved into the ZIP archive with full auditing.");
+console.log("\n✅ ALL VERIFICATIONS PASSED: Photos, videos, and audio are successfully captured, fetched in-page, typed, and saved into the ZIP archive with full auditing.");
+

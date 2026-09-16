@@ -3,7 +3,7 @@ const SELECTORS = {
   title: '[data-testid="conversation-header"] span[dir="auto"], header span[dir="auto"], span[dir="auto"][title]',
   messageRoots: '[data-pre-plain-text], [data-testid="msg-container"], [data-testid^="conv-msg-"]',
   text: '[data-testid="selectable-text"], [data-testid="last-msg-status"], span[dir="ltr"], span[dir="auto"]',
-  media: 'img[src], video[src], audio[src], a[href]'
+  media: 'img[src], video, video[src], audio, audio[src], source[src], a[href]'
 };
 const session = { root: null, canceled: false, lastSignature: "", steps: 0 };
 const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
@@ -110,21 +110,25 @@ function mediaCandidates(root) {
   const seen = new Set();
   return [...root.querySelectorAll(SELECTORS.media)].map((item) => {
     const tag = item.tagName.toLowerCase();
+    let type = tag;
+    if (tag === "source") {
+      type = item.parentElement?.tagName.toLowerCase() || "media";
+    }
     const explicitUrl = ["data-original", "data-media-url", "data-download-url", "data-src", "data-url"]
       .map((name) => item.getAttribute(name) || "")
       .find(Boolean) || "";
     const linkedUrl = item.closest("a[href]")?.getAttribute("href") || "";
-    const renderedUrl = item.currentSrc || item.getAttribute("src") || item.getAttribute("href") || "";
-    const linkedMedia = /\.(?:jpe?g|png|gif|webp|avif|mp4|webm|mp3|m4a|ogg|pdf|docx?|xlsx?|pptx?|zip)(?:[?#]|$)/i.test(linkedUrl) || /\/media(?:\/|[?#])/i.test(linkedUrl);
+    const renderedUrl = item.currentSrc || item.src || item.getAttribute("src") || item.getAttribute("href") || item.getAttribute("poster") || "";
+    const linkedMedia = /\.(?:jpe?g|png|gif|webp|avif|mp4|webm|mov|3gp|mp3|m4a|ogg|opus|wav|aac|pdf|docx?|xlsx?|pptx?|zip)(?:[?#]|$)/i.test(linkedUrl) || /\/media(?:\/|[?#])/i.test(linkedUrl);
     const url = explicitUrl || (linkedMedia ? linkedUrl : renderedUrl);
     const width = Number(item.naturalWidth || item.videoWidth || item.getAttribute("width") || item.style.width?.replace("px", "") || 0);
     const height = Number(item.naturalHeight || item.videoHeight || item.getAttribute("height") || item.style.height?.replace("px", "") || 0);
     const isPixelGif = /^data:image\/gif;base64,R0lGODlhAQABA/.test(url);
     const isDocumentLink = tag === "a" && linkedMedia;
-    const isVisibleMedia = tag !== "img" || width >= 80 || height >= 80 || item.getAttribute("data-media-type") || item.closest("[data-testid*='media'], [data-testid*='image'], [data-testid*='video']");
+    const isVisibleMedia = tag !== "img" || width >= 80 || height >= 80 || item.getAttribute("data-media-type") || item.closest("[data-testid*='media'], [data-testid*='image'], [data-testid*='video'], [data-testid*='audio']");
     if (!url || seen.has(url) || isPixelGif || (!isDocumentLink && tag === "a") || (tag !== "a" && !isVisibleMedia)) return null;
     seen.add(url);
-    return { type: tag, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "rendered-preview" : url.startsWith("data:") ? "data-url" : explicitUrl ? "page-media-attribute" : linkedMedia ? "linked-media" : "page-url", previewUrl: renderedUrl.startsWith("blob:") && renderedUrl !== url ? renderedUrl : "" };
+    return { type, url, filename: `media-${seen.size}`, width, height, source: url.startsWith("blob:") ? "rendered-preview" : url.startsWith("data:") ? "data-url" : explicitUrl ? "page-media-attribute" : linkedMedia ? "linked-media" : "page-url", previewUrl: renderedUrl.startsWith("blob:") && renderedUrl !== url ? renderedUrl : "" };
   }).filter(Boolean);
 }
 
