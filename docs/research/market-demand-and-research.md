@@ -46,10 +46,11 @@ Community discussions across Reddit show that users repeatedly search for ways t
   *Finding:* Unofficial scraping approaches frequently suffer from fragile selectors, session timeouts, and rate limits.
 
 ### 1b. Update: Recent Post-2024 Market Pulse (2024-2026)
-Recent web indexing and community queries verify that this problem persists with no official mitigation in sight:
-- **No Native "Export" Mechanism Extended to Channels:** Despite frequent updates to WhatsApp, the "Export Chat" functionality strictly excludes Channels. The one-to-many broadcast architecture deliberately walls off historical archiving.
-- **The "Request Channels Report" Fallacy:** Users frequently confuse the native "Settings > Account > Request account info > Request Channels report" with a data export. Recent support threads emphasize that this report *only provides account activity and channel metadata* (like who you follow), containing **zero** post text and **zero** media.
-- **Commercial Scrapers (e.g., Apify) Fail at Private/Authenticated Feeds:** Paid commercial data scrapers can only index basic public channel metadata (names, follower counts, bios) from the web directory. They cannot reliably authenticate to export the private media blobs, voice notes, or full historical timelines that a logged-in user can see. This reinforces the absolute necessity of our local-first, session-authenticated approach.
+Recent web indexing and community queries across multiple platforms (Quora, X/Twitter, Medium, and general tech forums) verify that this problem persists universally with no official mitigation in sight:
+- **Broad Platform Consensus (Quora, Medium, X):** Discussions outside of Reddit echo the same frustration. Users explicitly asking "how to export WhatsApp channels" on Quora or X are consistently met with the reality that the "Export Chat" functionality strictly excludes Channels. The one-to-many broadcast architecture deliberately walls off historical archiving across all device types (iOS, Android, Web).
+- **The "Request Channels Report" Fallacy:** Users frequently confuse the native "Settings > Account > Request account info > Request Channels report" with a data export. Recent tech blog articles and support threads emphasize that this report *only provides account activity and channel metadata* (like who you follow), containing **zero** post text and **zero** media.
+- **Commercial Scrapers (e.g., Apify) Fail at Private/Authenticated Feeds:** Paid commercial data scrapers can only index basic public channel metadata (names, follower counts, bios) from the web directory. They cannot reliably authenticate to export the private media blobs, voice notes, or full historical timelines that a logged-in user can see. 
+- **The Core Distinction:** Tech community guides (2024-2026) repeatedly stress the structural difference: standard chats are bidirectional and can be exported as `.txt` files; Channels are a broadcast feed isolated in the "Updates" tab with no built-in transcript or bulk download option. This reinforces the absolute necessity of our local-first, session-authenticated approach.
 
 ---
 
