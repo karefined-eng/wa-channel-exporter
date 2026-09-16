@@ -152,6 +152,14 @@ h1 {
   color: #138a5b;
   border-color: #138a5b;
 }
+.icon-btn.spinning {
+  animation: spin .5s linear infinite;
+  pointer-events: none;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
 /* Date Filters */
 .filters {

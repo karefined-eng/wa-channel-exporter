@@ -9,36 +9,64 @@ const session = { root: null, canceled: false, lastSignature: "", steps: 0 };
 const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
 
 function channelName() {
-  const header = document.querySelector('header, [data-testid="conversation-header"], [role="banner"]');
-  if (header) {
-    const titled = header.querySelector('[data-testid="conversation-info-header-chat-title"][title], span[dir="auto"][title], div[role="button"] [title], [title]');
-    const titledText = clean(titled?.getAttribute("title"));
-    if (titledText && !/followers?|verified/i.test(titledText)) return titledText;
+  // 1. Locate the ACTIVE conversation container (#main or [role="main"])
+  const main = document.getElementById("main") || document.querySelector('[role="main"], [data-testid="conversation-panel-wrapper"]');
+  if (main) {
+    const header = main.querySelector("header, [data-testid='conversation-header'], [role='banner']");
+    if (header) {
+      // 1a. Explicit title attributes on header chat title elements
+      const titledCandidates = [
+        ...header.querySelectorAll('[data-testid="conversation-info-header-chat-title"][title], span[dir="auto"][title], [role="heading"] [title], div[role="button"] [title]')
+      ];
+      for (const el of titledCandidates) {
+        const val = clean(el.getAttribute("title"));
+        if (val && !/followers?|verified|menu|search|profile|info|status|click to/i.test(val)) {
+          return val.replace(/…|\.{3}$/, "");
+        }
+      }
 
-    const chatTitle = header.querySelector('[data-testid="conversation-info-header-chat-title"], [data-testid="chat-title"]');
-    if (chatTitle) {
-      const text = clean(chatTitle.getAttribute("title") || chatTitle.textContent);
-      if (text) return text.replace(/…|\.{3}$/, "");
-    }
+      // 1b. Chat title element inside the active conversation header
+      const chatTitle = header.querySelector('[data-testid="conversation-info-header-chat-title"], [data-testid="chat-title"], [role="heading"]');
+      if (chatTitle) {
+        const textVal = clean(chatTitle.getAttribute("title") || chatTitle.textContent);
+        if (textVal && !/followers?/i.test(textVal)) {
+          return textVal.replace(/…|\.{3}$/, "");
+        }
+      }
 
-    const headerBtn = header.querySelector('div[role="button"], [role="heading"]');
-    if (headerBtn) {
-      const span = headerBtn.querySelector('span[dir="auto"]');
-      const text = clean(span?.getAttribute("title") || span?.textContent);
-      if (text) return text.replace(/…|\.{3}$/, "");
+      // 1c. Header clickable info button (Channel info trigger)
+      const headerBtn = header.querySelector('div[role="button"]');
+      if (headerBtn) {
+        const span = headerBtn.querySelector('span[dir="auto"]');
+        const textVal = clean(span?.getAttribute("title") || span?.textContent);
+        if (textVal && !/followers?/i.test(textVal)) {
+          return textVal.replace(/…|\.{3}$/, "");
+        }
+      }
     }
   }
 
-  const activeCellCandidate = document.querySelector('[data-testid="cell-frame-title"] span[dir="auto"][title], [data-testid="cell-frame-title"] span[dir="auto"]');
-  if (activeCellCandidate) {
-    const text = clean(activeCellCandidate.getAttribute("title") || activeCellCandidate.textContent);
-    if (text) return text.replace(/…|\.{3}$/, "");
+  // 2. Active selected cell in the chat list (MUST have aria-selected="true")
+  const selectedCell = document.querySelector(
+    '#side [aria-selected="true"], [data-testid="chat-list"] [aria-selected="true"], div[role="listitem"][aria-selected="true"]'
+  );
+  if (selectedCell) {
+    const titleEl = selectedCell.querySelector('[data-testid="cell-frame-title"] span[dir="auto"][title], [data-testid="cell-frame-title"] span[dir="auto"], span[dir="auto"][title]');
+    const textVal = clean(titleEl?.getAttribute("title") || titleEl?.textContent);
+    if (textVal && !/followers?/i.test(textVal)) return textVal.replace(/…|\.{3}$/, "");
   }
 
-  const followerContainer = [...document.querySelectorAll('div[role="button"], header, [data-testid="conversation-header"]')].find((node) => /followers?/i.test(node.textContent || ""));
-  const candidate = followerContainer?.querySelector('span[dir="auto"][title], span[dir="auto"]') || document.querySelector(SELECTORS.title);
-  const result = clean(candidate?.getAttribute("title") || candidate?.textContent) || "WhatsApp Channel";
-  return result.replace(/…|\.{3}$/, "");
+  // 3. Document title fallback (e.g. "(1) VOU Election Command Centre - WhatsApp" or "Channel Name | WhatsApp")
+  const docTitle = document.title || "";
+  const titleMatch = docTitle.match(/^(?:\(\d+\)\s*)?([^–—\-|]+?)\s*[-|–—]\s*WhatsApp/i);
+  if (titleMatch && titleMatch[1]) {
+    const parsed = clean(titleMatch[1]);
+    if (parsed && !/^(whatsapp|chats?|channels?)$/i.test(parsed)) {
+      return parsed;
+    }
+  }
+
+  return "WhatsApp Channel";
 }
 
 function findScrollRoot() {
@@ -174,7 +202,8 @@ async function scanStep({ startDate = "", stepPx = 650 } = {}) {
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   (async () => {
-    if (message?.type === "COLLECT_POSTS") sendResponse({ ok: true, ...collectPosts() });
+    if (message?.type === "GET_CHANNEL_NAME") sendResponse({ ok: true, channel: channelName() });
+    else if (message?.type === "COLLECT_POSTS") sendResponse({ ok: true, ...collectPosts() });
     else if (message?.type === "SCAN_RESET") { session.root = null; session.canceled = false; session.lastSignature = ""; session.steps = 0; sendResponse({ ok: true }); }
     else if (message?.type === "SCAN_CANCEL") { session.canceled = true; sendResponse({ ok: true }); }
     else if (message?.type === "FETCH_MEDIA") {

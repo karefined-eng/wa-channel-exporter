@@ -96,19 +96,35 @@ $("channelInput")?.addEventListener("input", (e) => {
   setChannel(val || "WhatsApp Channel", true);
 });
 
-$("refreshChannelBtn")?.addEventListener("click", async () => {
+async function detectChannel(force = false) {
+  if (state.channelManual && !force) return null;
   try {
     const tab = await activeTab();
     state.tabId = tab.id;
-    const initial = await collector(tab.id, { type: "COLLECT_POSTS" }).catch(() => null);
-    if (initial?.channel && initial.channel !== "WhatsApp Channel") {
-      setChannel(initial.channel, false);
-      setStatus(`Detected: ${initial.channel}`, "Channel confirmed from WhatsApp Web.");
+    const res = await collector(tab.id, { type: "GET_CHANNEL_NAME" }).catch(() => null);
+    if (res?.channel && res.channel !== "WhatsApp Channel") {
+      setChannel(res.channel, false);
+      return res.channel;
+    }
+  } catch {}
+  return null;
+}
+
+$("refreshChannelBtn")?.addEventListener("click", async () => {
+  const btn = $("refreshChannelBtn");
+  btn.classList.add("spinning");
+  state.channelManual = false;
+  try {
+    const detected = await detectChannel(true);
+    if (detected) {
+      setStatus(`Detected: ${detected}`, "Target channel updated from WhatsApp Web.");
     } else {
-      setStatus("Channel not detected", "Make sure a WhatsApp Channel conversation is open in WhatsApp Web.", true);
+      setStatus("Channel not detected", "Open an active WhatsApp Channel, then click refresh.", true);
     }
   } catch (err) {
     setStatus("Detection failed", err.message, true);
+  } finally {
+    setTimeout(() => btn.classList.remove("spinning"), 400);
   }
 });
 
@@ -252,14 +268,24 @@ async function runScan() {
       if (state.noProgress >= NO_PROGRESS_LIMIT) { state.phase = "partial"; state.reason = "no_progress"; break; }
       await persist();
     }
+    const count = includedPosts().length;
     if (state.phase === "complete") {
       setProgress("Boundary reached", 100);
-      setStatus("Complete boundary reached", `${state.channel}: ${includedPosts().length} included posts from the requested range.`);
+      setStatus("Complete boundary reached", `${state.channel}: ${count} posts included from the requested range.`);
+      if (count > 0) {
+        setTimeout(() => $("actions")?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);
+      }
     } else if (state.phase === "partial") {
       setProgress("Partial archive", 100);
-      setStatus("Partial archive", `${state.channel}: ${includedPosts().length} included of ${state.observed} observed. Reason: ${state.reason}.`, false);
+      setStatus("Partial archive", `${state.channel}: ${count} included of ${state.observed} observed. Reason: ${state.reason}.`, false);
+      if (count > 0) {
+        setTimeout(() => $("actions")?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);
+      }
     } else if (state.phase === "canceled") {
-      setStatus("Scan canceled", `${includedPosts().length} posts preserved from the partial scan.`);
+      setStatus("Scan canceled", `${count} posts preserved from the partial scan.`);
+    }
+    if (count === 0 && state.observed > 0) {
+      setStatus("No posts in chosen date range", `${state.observed} posts observed, but none matched From/Through dates. Click [All Loaded] above to include them.`, true);
     }
     await persist();
   } catch (error) {
@@ -429,14 +455,15 @@ $("diagnosticButton").addEventListener("click", async () => {
 // Initial setup
 updateScopeUI();
 
+window.addEventListener("focus", async () => {
+  if (!state.channelManual && state.posts.size === 0 && state.phase === "idle") {
+    await detectChannel();
+  }
+});
+
 (async () => {
-  try {
-    const tab = await activeTab();
-    state.tabId = tab.id;
-    const initial = await collector(tab.id, { type: "COLLECT_POSTS" }).catch(() => null);
-    if (initial?.channel && initial.channel !== "WhatsApp Channel" && !state.channelManual) {
-      setChannel(initial.channel, false);
-      setStatus(`Ready: ${initial.channel}`, "Set your date range or choose a preset, then scan history.");
-    }
-  } catch {}
+  const detected = await detectChannel();
+  if (detected) {
+    setStatus(`Ready: ${detected}`, "Channel detected. Set your date range or choose a preset, then scan history.");
+  }
 })();
