@@ -45,6 +45,12 @@ Community discussions across Reddit show that users repeatedly search for ways t
   [Source Link](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEERW97wlU_b-IdH-pPX4tSmuXY_fOZs64MmYQwEKklX7R83R1CcZcvPCu-kbcXaW9rF16Dh5EJsZutGn7f677y_pEXZLZzQQxjQsPj-24t9qm64Wdpn3BbeUTUBDL26PFVkIkpydz0MzMO5E6C4uTBQdy4PJVL2ODVOoqyDcizmRaf5dKG4bB8QdH36w==)  
   *Finding:* Unofficial scraping approaches frequently suffer from fragile selectors, session timeouts, and rate limits.
 
+### 1b. Update: Recent Post-2024 Market Pulse (2024-2026)
+Recent web indexing and community queries verify that this problem persists with no official mitigation in sight:
+- **No Native "Export" Mechanism Extended to Channels:** Despite frequent updates to WhatsApp, the "Export Chat" functionality strictly excludes Channels. The one-to-many broadcast architecture deliberately walls off historical archiving.
+- **The "Request Channels Report" Fallacy:** Users frequently confuse the native "Settings > Account > Request account info > Request Channels report" with a data export. Recent support threads emphasize that this report *only provides account activity and channel metadata* (like who you follow), containing **zero** post text and **zero** media.
+- **Commercial Scrapers (e.g., Apify) Fail at Private/Authenticated Feeds:** Paid commercial data scrapers can only index basic public channel metadata (names, follower counts, bios) from the web directory. They cannot reliably authenticate to export the private media blobs, voice notes, or full historical timelines that a logged-in user can see. This reinforces the absolute necessity of our local-first, session-authenticated approach.
+
 ---
 
 ### 2. GitHub Ecosystem Analysis: Current Projects & Technical Gaps
