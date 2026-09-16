@@ -27,12 +27,15 @@ WA Channel Exporter is intentionally **not** a generic bulk scraper. It is a use
 
 | Capability | What it means |
 |---|---|
-| **Date-bounded scans** | Choose the current month or a custom range for an event or campaign. |
-| **ZIP-first export** | Download one portable archive containing structured records, readable post files, a manifest, and successfully retrieved media. |
-| **Archive manifest** | Review the Channel, date range, post counts, media counts, scan steps, and completion reason. |
-| **Missing-item reporting** | Distinguish downloaded, unavailable, failed, skipped, observed, and included items instead of silently pretending the archive is complete. |
-| **Machine-readable records** | Keep `posts.jsonl` and `posts.csv` inside the ZIP for analysis or later conversion. |
-| **Local-first handling** | The extension does not ask for a WhatsApp password or upload post content to a product server. |
+| **Offline HTML viewer (`index.html`)** | Double-click to browse the entire channel offline with an authentic WhatsApp dark theme, inline image/video/audio players, and image lightbox. |
+| **Date-organized media (`media/YYYY-MM-DD/`)** | Photos, videos, and voice notes saved into date-stamped subfolders for intuitive, calendar-like browsing. |
+| **Export scope selector** | Choose between **All** (full archive), **Media Only** (photos/videos/audio), or **Posts Only** (lightweight text export). |
+| **Enriched Markdown** | `posts.md` contains chronological posts with relative inline image embeds (`![photo.jpg](media/...)`), ready for Obsidian or Notion. |
+| **Channel auto-detection** | Automatically reads the active Channel name from the conversation header, complete with a live filename preview (`{channel}_{scope}_{start}_to_{end}.zip`). |
+| **Date-bounded scans & presets** | Pick custom start/end dates or use one-click presets (**This Month**, **Last 7 Days**, **All Loaded**). |
+| **Honest missing-item audit** | `manifest.json` and `media-report.json` document downloaded, unavailable, failed, and skipped items instead of silently pretending the archive is complete. |
+| **Machine-readable records** | Keep `posts.jsonl` (schema v2) and `posts.csv` alongside individual per-post text/Markdown files for AI, data analysis, and spreadsheets. |
+| **100% Local-first handling** | Zero server uploads, zero logins, zero telemetry. All processing and authenticated blob retrieval happens directly inside your browser session. |
 
 ## Quick Start: How to Install in 30 Seconds
 
@@ -43,26 +46,34 @@ WA Channel Exporter is intentionally **not** a generic bulk scraper. It is a use
 
 ## The workflow
 
-1. Build the extension and load `dist/` as an unpacked extension at `chrome://extensions`.
+1. Build the extension (`npm run build`) and load `dist/` as an unpacked extension at `chrome://extensions`.
 2. Open [WhatsApp Web](https://web.whatsapp.com/) and open the Channel you are authorized to view.
-3. Open **WA Channel Exporter**, choose a start and end date, and select **Scan history**.
-4. Let the extension load older posts incrementally. It deduplicates repeated DOM observations and stops at the requested boundary—or reports why the boundary was not verified.
-5. Review the counts, then choose **Download ZIP archive**. The ZIP is the primary deliverable; JSONL, CSV, and the receipt remain available inside it for inspection and downstream workflows.
+3. Open **WA Channel Exporter** in Chrome's side panel. The channel name auto-detects from the open conversation header.
+4. Select your export scope (**All**, **Media Only**, or **Posts Only**) and choose your date boundary or preset.
+5. Watch the live filename preview update dynamically, then click **Scan history**.
+6. Let the extension load older posts incrementally. It deduplicates repeated DOM observations and stops at the requested boundary—or reports why the boundary was not verified.
+7. Review the live counters, then choose **Download ZIP archive**. Double-click `index.html` inside the ZIP to view your offline archive immediately.
 
 ## Archive layout
 
-A successful ZIP archive contains a structure like this:
+A successful ZIP archive contains a clean, human- and machine-friendly structure:
 
 ```text
-channel-name-2026-09-15.zip
-├── manifest.json          # counts, range, status, and completion reason
-├── media-report.json      # downloaded, unavailable, and failed media
-├── posts.jsonl            # one normalized record per included post
-├── posts.csv              # compact tabular companion
-├── posts.md               # readable combined archive
-├── README.txt             # archive interpretation and limitations
-├── posts/                 # one readable text/Markdown file per post
-└── media/                 # successfully retrieved original media files
+{channel}_{scope}_{start}_to_{end}.zip
+├── index.html             # offline browser viewer with embedded media & lightbox (scope: All)
+├── manifest.json          # counts, date range, status, completion reason, and scope
+├── media-report.json      # downloaded, unavailable, failed, and skipped media audit
+├── posts.jsonl            # newline-delimited JSON (schema v2) for developers & AI
+├── posts.csv              # spreadsheet-compatible tabular export
+├── posts.md               # readable Markdown archive with inline media embeds
+├── README.txt             # archive interpretation and field guide
+├── posts/                 # individual text (.txt) and Markdown (.md) post files
+└── media/                 # retrieved media organized by publication date
+    ├── 2026-09-01/
+    │   ├── 0001-01-photo.jpg
+    │   └── 0002-01-briefing.mp4
+    └── 2026-09-15/
+        └── 0003-01-announcement.jpg
 ```
 
 The ZIP is designed to be the useful hand-off artifact. You should not need to separately download a JSONL file or an HTML receipt just to understand the archive. `manifest.json`, `media-report.json`, and the readable post files travel with the ZIP.

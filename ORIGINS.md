@@ -1,4 +1,4 @@
-﻿# ORIGINS.md — The Idea Ledger
+# ORIGINS.md — The Idea Ledger
 
 > *"I'd like to call it an origins file or an idea ledger. That's my way of documenting the build process — vibe-coder to agent, or vibe-coder with my voice preserved — and the exact words I used, grammar-corrected though, in there. I think the other thing is AI and agent handoff. I guess I don't know, but I've done something like that with my other projects."*
 > — Builder, September 16, 2026
@@ -162,30 +162,48 @@ Voice notes in WhatsApp Channels are typically `audio/ogg; codecs=opus`. These a
 
 ---
 
-## Pending — Chapter 8: The HTML Viewer and Date-Organized Media
+## Shipped — Chapter 8: The HTML Viewer and Date-Organized Media
 
-*Upcoming implementation.*
+> *"Yess I guess! Anything to be great and strong."*
 
-**Planned output structure:**
+**What was shipped:**
+1. **Offline HTML Viewer (`index.html`):**
+   - Self-contained, single-file viewer generated directly inside the ZIP when exporting with `scope: "all"`.
+   - Styled with an authentic WhatsApp-style dark theme (`#0f1923` background, `#111b21` cards, `#25d366` emerald accents, `#00a884` details).
+   - Sticky channel header displaying the channel name, date range, post count, and media tally.
+   - Posts grouped by date with sticky date divider pills (`September 15, 2026`).
+   - Native inline responsive embeds for images, video player (`<video controls>`), and audio player (`<audio controls>`).
+   - Full-screen image lightbox: click any photo to expand into an overlay; dismiss by clicking anywhere or pressing the `Esc` key.
+   - Zero internet or external CDN dependencies. Fully functional offline.
+
+2. **Date-Organized `media/` Subfolders:**
+   - Media files are systematically filed into `media/YYYY-MM-DD/` directories (e.g. `media/2026-09-15/0001-01-photo.jpg`).
+   - Undated posts fall back cleanly to `media/undated/`.
+   - Browsing in macOS Finder or Windows File Explorer feels like flipping through a calendar.
+
+3. **Enriched Markdown (`posts.md`):**
+   - Transformed from a plain text list into a media-rich document with relative inline image links (`![photo.jpg](media/2026-09-15/0001-01-photo.jpg)`).
+   - Ready for drop-in use in Obsidian, Notion, Logseq, or GitHub previews.
+
+**Resulting ZIP output structure:**
 ```
-📁 vou-election-command-centre_archive_2026-09-01_to_2026-09-16/
+📁 vou-election-command-centre_archive_2026-09-01_to_2026-09-16.zip
 ├── 🌐 index.html                 ← Double-click to view full archive offline
 ├── 📄 posts.md                   ← Inline image links for Obsidian / Notion
 ├── 📊 posts.csv                  ← Excel / Sheets compatible
-├── 📦 posts.jsonl                ← Structured data for developers / AI
+├── 📦 posts.jsonl                ← Structured data for developers / AI (schema v2)
 ├── 📋 manifest.json              ← Export metadata and audit
-├── 📋 media-report.json          ← Per-item download audit
+├── 📋 media-report.json          ← Per-item download audit (downloaded/unavailable/failed)
 ├── 📄 README.txt                 ← Human-readable guide
+├── 📁 posts/                     ← Individual post text & markdown files
 └── 📁 media/
       ├── 📁 2026-09-01/
-      │     ├── 01-photo.jpg
-      │     └── 02-video.mp4
-      ├── 📁 2026-09-15/
-      │     ├── 01-press-conference.jpg
-      │     ├── 02-speech-recording.ogg
-      │     └── 03-results-chart.png
-      └── 📁 2026-09-16/
-            └── 01-victory-statement.jpg
+      │     ├── 0001-01-photo.jpg
+      │     └── 0002-01-video.mp4
+      └── 📁 2026-09-15/
+            ├── 0003-01-press-conference.jpg
+            ├── 0004-01-speech-recording.ogg
+            └── 0005-01-results-chart.png
 ```
 
 ---
