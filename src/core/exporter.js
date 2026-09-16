@@ -1,7 +1,31 @@
 const text = (value) => (value == null ? "" : String(value)).trim();
 
 export function normalizePost(raw, index = 0) {
-  return { schemaVersion: 2, postId: text(raw.id || raw.postId) || `post-${index + 1}`, channel: { name: text(raw.channel?.name || raw.channel) || "WhatsApp Channel" }, publishedAt: { raw: text(raw.publishedAt?.raw || raw.publishedAt), iso: text(raw.publishedAt?.iso || raw.date?.iso), timezone: text(raw.publishedAt?.timezone) || Intl.DateTimeFormat().resolvedOptions().timeZone, status: raw.publishedAt?.status || raw.date?.status || "unknown" }, text: text(raw.text), media: Array.isArray(raw.media) ? raw.media.map((item, mediaIndex) => ({ mediaId: text(item.mediaId) || `media-${index + 1}-${mediaIndex + 1}`, type: text(item.type) || "unknown", url: text(item.url), sourceUrlPresent: Boolean(item.url), filename: text(item.filename) || `media-${index + 1}-${mediaIndex + 1}`, status: item.status || "observed", errorCode: item.errorCode || null })) : [], capture: { source: "WhatsApp Web", observedAt: new Date().toISOString(), sequence: index + 1 } };
+  return {
+    schemaVersion: 2,
+    postId: text(raw.id || raw.postId) || `post-${index + 1}`,
+    channel: { name: text(raw.channel?.name || raw.channel) || "WhatsApp Channel" },
+    publishedAt: {
+      raw: text(raw.publishedAt?.raw || raw.publishedAt),
+      iso: text(raw.publishedAt?.iso || raw.date?.iso),
+      timezone: text(raw.publishedAt?.timezone) || Intl.DateTimeFormat().resolvedOptions().timeZone,
+      status: raw.publishedAt?.status || raw.date?.status || "unknown"
+    },
+    text: text(raw.text),
+    media: Array.isArray(raw.media)
+      ? raw.media.map((item, mediaIndex) => ({
+          mediaId: text(item.mediaId) || `media-${index + 1}-${mediaIndex + 1}`,
+          type: text(item.type) || "unknown",
+          url: text(item.url),
+          fallbackUrl: text(item.previewUrl || item.fallbackUrl),
+          sourceUrlPresent: Boolean(item.url),
+          filename: text(item.filename) || `media-${index + 1}-${mediaIndex + 1}`,
+          status: item.status || "observed",
+          errorCode: item.errorCode || null
+        }))
+      : [],
+    capture: { source: "WhatsApp Web", observedAt: new Date().toISOString(), sequence: index + 1 }
+  };
 }
 export function toJsonl(posts) { return posts.map(normalizePost).map((post) => JSON.stringify(post)).join("\n") + (posts.length ? "\n" : ""); }
 export function toCsv(posts) { const rows = [["post_id", "channel", "published_at", "date_iso", "text", "media_count"]]; for (const post of posts.map(normalizePost)) rows.push([post.postId, post.channel.name, post.publishedAt.raw, post.publishedAt.iso, post.text, post.media.length]); return rows.map((row) => row.map((value) => `"${text(value).replace(/"/g, '""')}"`).join(",")).join("\n") + "\n"; }

@@ -44,11 +44,40 @@ function parseDisplayedTime(root) {
 }
 
 function parseDate(raw) {
-  const match = String(raw || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  const str = String(raw || "");
+  const isoMatch = str.match(/(\d{4})[/-](\d{1,2})[/-](\d{1,2})/);
+  if (isoMatch) {
+    const [, y, m, d] = isoMatch;
+    const date = new Date(Number(y), Number(m) - 1, Number(d));
+    if (date.getFullYear() === Number(y) && date.getMonth() === Number(m) - 1 && date.getDate() === Number(d)) {
+      return { iso: date.toISOString().slice(0, 10), status: "parsed" };
+    }
+  }
+
+  const match = str.match(/(\d{1,2})[/-](\d{1,2})[/-](\d{4})/);
   if (!match) return { iso: "", status: "unknown" };
-  const [, month, day, year] = match;
-  const date = new Date(Number(year), Number(month) - 1, Number(day));
-  if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 || date.getDate() !== Number(day)) return { iso: "", status: "unknown" };
+
+  const num1 = Number(match[1]);
+  const num2 = Number(match[2]);
+  const year = Number(match[3]);
+
+  let month;
+  let day;
+  if (num1 > 12) {
+    day = num1;
+    month = num2;
+  } else if (num2 > 12) {
+    month = num1;
+    day = num2;
+  } else {
+    month = num1;
+    day = num2;
+  }
+
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return { iso: "", status: "unknown" };
+  }
   return { iso: date.toISOString().slice(0, 10), status: "parsed" };
 }
 

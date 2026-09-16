@@ -94,7 +94,15 @@ $("zipButton").addEventListener("click", async () => {
       posts,
       window.JSZip,
       { channel: state.channel, start: $("startDate").value, end: $("endDate").value, phase: state.phase, reason: state.reason, boundaryReached: state.boundaryReached, observedPosts: state.observed, includedPosts: posts.length, unavailable: state.unavailable, scanSteps: state.step },
-      (media) => collector(state.tabId, { type: "FETCH_MEDIA", url: media.url }),
+      async (media) => {
+        const primary = await collector(state.tabId, { type: "FETCH_MEDIA", url: media.url }).catch(() => null);
+        if (primary?.ok) return primary;
+        if (media.fallbackUrl) {
+          const fallback = await collector(state.tabId, { type: "FETCH_MEDIA", url: media.fallbackUrl }).catch(() => null);
+          if (fallback?.ok) return fallback;
+        }
+        return primary || { ok: false, error: "Media retrieval failed." };
+      },
       (progress) => {
         if (progress.phase === "media") {
           const pct = Math.min(90, Math.round((progress.current / Math.max(1, progress.total)) * 85) + 5);

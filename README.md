@@ -34,6 +34,13 @@ WA Channel Exporter is intentionally **not** a generic bulk scraper. It is a use
 | **Machine-readable records** | Keep `posts.jsonl` and `posts.csv` inside the ZIP for analysis or later conversion. |
 | **Local-first handling** | The extension does not ask for a WhatsApp password or upload post content to a product server. |
 
+## Quick Start: How to Install in 30 Seconds
+
+1. Download **`wa-channel-exporter.zip`** from the latest release and unzip it to a folder on your computer.
+2. In Google Chrome, go to `chrome://extensions` and turn on **Developer mode** (top right switch).
+3. Click **Load unpacked** (top left) and choose the unzipped folder (or the `dist` directory if building from source).
+4. Pin **WA Channel Exporter** to your Chrome toolbar, open [WhatsApp Web](https://web.whatsapp.com/), and click the icon to open the Side Panel!
+
 ## The workflow
 
 1. Build the extension and load `dist/` as an unpacked extension at `chrome://extensions`.
