@@ -119,6 +119,8 @@ console.log("Media Report Summary:", {
 });
 
 // Assertions
+assert.equal(mediaReport.channel, "Tech Channel");
+assert.equal(mediaReport.exportScope, "all");
 assert.equal(mediaReport.observed, 4, "Total media observed should be 4");
 assert.equal(mediaReport.downloaded, 2, "2 media files should have downloaded");
 assert.equal(mediaReport.failed, 1, "1 media file should fail");

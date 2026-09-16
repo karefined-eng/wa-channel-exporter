@@ -47,69 +47,161 @@ export function validateExportSchemas(posts) {
   csvRows.slice(1).forEach((row, index) => { if (row.length !== expectedHeader.length) errors.push(`CSV row ${index + 1}: expected ${expectedHeader.length} columns, got ${row.length}`); if (!row[0]) errors.push(`CSV row ${index + 1}: post_id is required`); if (!/^\d+$/.test(row[5] || "")) errors.push(`CSV row ${index + 1}: media_count must be an integer`); });
   return { ok: errors.length === 0, errors, postCount: normalized.length, mediaCount: normalized.reduce((total, post) => total + post.media.length, 0), jsonlRows: jsonlRows.length, csvRows: Math.max(0, csvRows.length - 1) };
 }
-export function makeExportName(channelName, extension = "jsonl") { const safeName = text(channelName || "whatsapp-channel").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() || "whatsapp-channel"; return `${safeName}-${new Date().toISOString().slice(0, 10)}.${extension}`; }
+export function makeExportName(channelName, extension = "jsonl", options = {}) {
+  const opts = typeof options === "string" ? { scope: options } : (options || {});
+  const safeName = text(channelName || "whatsapp-channel")
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase() || "whatsapp-channel";
+
+  const scope = opts.scope || "all";
+  const scopeTag = scope === "media" ? "media" : scope === "posts" ? "posts" : "archive";
+
+  let dateTag = "";
+  if (opts.start && opts.end) {
+    dateTag = opts.start === opts.end ? opts.start : `${opts.start}_to_${opts.end}`;
+  } else if (opts.start) {
+    dateTag = `from_${opts.start}`;
+  } else if (opts.end) {
+    dateTag = `through_${opts.end}`;
+  } else {
+    dateTag = new Date().toISOString().slice(0, 10);
+  }
+
+  return `${safeName}_${scopeTag}_${dateTag}.${extension}`;
+}
+
 export function makeReceiptHtml(meta) { const esc = (value) => text(value).replace(/[&<>\"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c])); const complete = meta.boundaryReached === true; const status = complete ? "COMPLETE BOUNDARY REACHED" : meta.phase === "canceled" ? "CANCELED — PARTIAL RESULTS" : "PARTIAL ARCHIVE"; return `<!doctype html><html><head><meta charset="utf-8"><title>Archive receipt</title><style>body{font:16px Arial,sans-serif;color:#17202a;max-width:820px;margin:40px auto;line-height:1.45}h1{font-size:28px}h2{font-size:16px;color:#138a5b;border-top:1px solid #dbe7e0;padding-top:18px;margin-top:28px}table{border-collapse:collapse;width:100%}td{border-bottom:1px solid #e5e9eb;padding:10px 0}td:first-child{color:#65717d;width:42%}.status{font-weight:800;color:${complete ? "#138a5b" : "#a92d3c"}}.note{background:#f7f8fa;padding:14px}</style></head><body><h1>WhatsApp Channel Archive Receipt</h1><p><strong>${esc(meta.channel)}</strong></p><p class="status">${status}</p><table><tr><td>Requested range</td><td>${esc(meta.start)} through ${esc(meta.end)}</td></tr><tr><td>Boundary reached</td><td>${complete ? "Yes" : "No"}</td></tr><tr><td>Posts observed</td><td>${meta.observed}</td></tr><tr><td>Posts included</td><td>${meta.included}</td></tr><tr><td>Media observed</td><td>${meta.media}</td></tr><tr><td>Unavailable updates</td><td>${meta.unavailable}</td></tr><tr><td>Scan steps</td><td>${meta.steps}</td></tr><tr><td>Completion reason</td><td>${esc(meta.reason || "not reported")}</td></tr><tr><td>Generated</td><td>${new Date().toISOString()}</td></tr></table><h2>Interpretation</h2><div class="note">This receipt describes what WhatsApp Web made available to the authorized browser session. A partial archive does not imply that missing posts or media do not exist; it means they were not verified as captured in this scan.</div><h2>Local-first handling</h2><p>No post content is uploaded by WA Channel Exporter. The receipt and archive files are saved locally by the browser.</p></body></html>`; }
-export async function createZip(posts, JSZip, manifest = {}, pageMediaFetcher = null, onProgress = null) {
+
+export async function createZip(posts, JSZip, manifest = {}, pageMediaFetcher = null, onProgress = null, options = {}) {
   const validation = validateExportSchemas(posts);
   if (!validation.ok) throw new Error(`Export validation failed: ${validation.errors.join("; ")}`);
   const zip = new JSZip();
   const normalized = posts.map(normalizePost);
-  const totalMedia = normalized.reduce((acc, p) => acc + p.media.filter((m) => m.url).length, 0);
-  let processedMedia = 0;
-  const mediaReport = { observed: validation.mediaCount, downloaded: 0, unavailable: 0, failed: 0, items: [] };
-  zip.file("posts.jsonl", toJsonl(posts));
-  zip.file("posts.csv", toCsv(posts));
-  zip.file("posts.md", toMarkdown(posts, manifest));
-  for (const [index, post] of posts.entries()) {
-    const stem = postFileStem(post, index);
-    zip.file(`posts/${stem}.md`, toMarkdown([post], manifest));
-    zip.file(`posts/${stem}.txt`, toPostText(post));
+  const scope = options.scope || manifest.scope || "all";
+  const channelName = text(manifest.channel || normalized[0]?.channel?.name || "WhatsApp Channel");
+
+  const includePosts = scope === "all" || scope === "posts";
+  const includeMedia = scope === "all" || scope === "media";
+
+  if (includePosts) {
+    zip.file("posts.jsonl", toJsonl(posts));
+    zip.file("posts.csv", toCsv(posts));
+    zip.file("posts.md", toMarkdown(posts, manifest));
+    for (const [index, post] of posts.entries()) {
+      const stem = postFileStem(post, index);
+      zip.file(`posts/${stem}.md`, toMarkdown([post], manifest));
+      zip.file(`posts/${stem}.txt`, toPostText(post));
+    }
   }
-  zip.file("README.txt", "This ZIP is the primary WA Channel Exporter deliverable. Review manifest.json and media-report.json before relying on completeness.\n");
-  for (const [postIndex, post] of normalized.entries()) {
-    for (const [mediaIndex, media] of post.media.entries()) {
-      if (media.url) {
-        processedMedia += 1;
-        if (typeof onProgress === "function") {
-          onProgress({ phase: "media", current: processedMedia, total: totalMedia, filename: media.filename });
-        }
-        const itemReport = { postId: post.postId, mediaId: media.mediaId, requestedUrlType: media.sourceUrlPresent ? "page-context" : "missing", status: "failed", bytes: 0, error: null };
-        try {
-          if (!pageMediaFetcher) throw new Error("A page-context media fetcher is required.");
-          const fetched = await pageMediaFetcher(media);
-          if (!fetched?.ok) throw new Error(fetched?.error || "Media was not returned by WhatsApp Web.");
-          const filename = mediaFilename(media.filename, fetched.mime || "application/octet-stream", media.url);
-          const zipPath = `media/${String(postIndex + 1).padStart(4, "0")}-${mediaIndex + 1}-${filename}`;
-          if (fetched.base64) {
-            let b64 = String(fetched.base64).trim();
-            const remainder = b64.length % 4;
-            if (remainder > 0) b64 = b64.padEnd(b64.length + (4 - remainder), "=");
-            zip.file(zipPath, b64, { base64: true });
-            itemReport.bytes = fetched.bytes || Math.floor((b64.length * 3) / 4);
-          } else if (fetched.buffer) {
-            const bytes = fetched.buffer.byteLength ?? fetched.buffer.length ?? 0;
-            if (!bytes) throw new Error("Media response was empty.");
-            zip.file(zipPath, fetched.buffer);
-            itemReport.bytes = bytes;
-          } else {
-            throw new Error("Media response was empty.");
+
+  const mediaReport = {
+    channel: channelName,
+    exportScope: scope,
+    dateRange: { start: text(manifest.start), end: text(manifest.end) },
+    exportedAt: new Date().toISOString(),
+    observed: validation.mediaCount,
+    downloaded: 0,
+    unavailable: 0,
+    failed: 0,
+    items: []
+  };
+
+  if (!includeMedia) {
+    for (const post of normalized) {
+      for (const media of post.media) {
+        mediaReport.items.push({
+          postId: post.postId,
+          mediaId: media.mediaId,
+          requestedUrlType: "skipped",
+          status: "skipped_scope_posts_only",
+          bytes: 0,
+          error: null
+        });
+      }
+    }
+  } else {
+    const totalMedia = normalized.reduce((acc, p) => acc + p.media.filter((m) => m.url).length, 0);
+    let processedMedia = 0;
+    for (const [postIndex, post] of normalized.entries()) {
+      for (const [mediaIndex, media] of post.media.entries()) {
+        if (media.url) {
+          processedMedia += 1;
+          if (typeof onProgress === "function") {
+            onProgress({ phase: "media", current: processedMedia, total: totalMedia, filename: media.filename });
           }
-          itemReport.status = "downloaded";
-          mediaReport.downloaded += 1;
-        } catch (error) {
-          itemReport.error = error.message || "Media retrieval failed";
-          mediaReport.failed += 1;
+          const itemReport = { postId: post.postId, mediaId: media.mediaId, requestedUrlType: media.sourceUrlPresent ? "page-context" : "missing", status: "failed", bytes: 0, error: null };
+          try {
+            if (!pageMediaFetcher) throw new Error("A page-context media fetcher is required.");
+            const fetched = await pageMediaFetcher(media);
+            if (!fetched?.ok) throw new Error(fetched?.error || "Media was not returned by WhatsApp Web.");
+            const filename = mediaFilename(media.filename, fetched.mime || "application/octet-stream", media.url);
+            const zipPath = `media/${String(postIndex + 1).padStart(4, "0")}-${mediaIndex + 1}-${filename}`;
+            if (fetched.base64) {
+              let b64 = String(fetched.base64).trim();
+              const remainder = b64.length % 4;
+              if (remainder > 0) b64 = b64.padEnd(b64.length + (4 - remainder), "=");
+              zip.file(zipPath, b64, { base64: true });
+              itemReport.bytes = fetched.bytes || Math.floor((b64.length * 3) / 4);
+            } else if (fetched.buffer) {
+              const bytes = fetched.buffer.byteLength ?? fetched.buffer.length ?? 0;
+              if (!bytes) throw new Error("Media response was empty.");
+              zip.file(zipPath, fetched.buffer);
+              itemReport.bytes = bytes;
+            } else {
+              throw new Error("Media response was empty.");
+            }
+            itemReport.status = "downloaded";
+            mediaReport.downloaded += 1;
+          } catch (error) {
+            itemReport.error = error.message || "Media retrieval failed";
+            mediaReport.failed += 1;
+          }
+          mediaReport.items.push(itemReport);
+        } else {
+          mediaReport.unavailable += 1;
+          mediaReport.items.push({ postId: post.postId, mediaId: media.mediaId, requestedUrlType: "missing", status: "unavailable", bytes: 0, error: "No retrievable media URL was present." });
         }
-        mediaReport.items.push(itemReport);
-      } else {
-        mediaReport.unavailable += 1;
-        mediaReport.items.push({ postId: post.postId, mediaId: media.mediaId, status: "unavailable", bytes: 0, error: "No retrievable media URL was present." });
       }
     }
   }
+
+  const scopeDescription = scope === "media" ? "Media Only (Images, Videos, Audio, Documents)" : scope === "posts" ? "Posts Only (Text, CSV, JSONL, Markdown)" : "All (Posts, Text, and Media)";
+  const dateRangeStr = (manifest.start && manifest.end) ? `${manifest.start} through ${manifest.end}` : "All loaded dates";
+  const readme = [
+    "============================================================",
+    "WHATSAPP CHANNEL EXPORT ARCHIVE",
+    "============================================================",
+    `Channel:         ${channelName}`,
+    `Export Scope:    ${scopeDescription}`,
+    `Date Range:      ${dateRangeStr}`,
+    `Exported At:     ${new Date().toISOString()}`,
+    `Posts Observed:  ${normalized.length}`,
+    `Media Observed:  ${validation.mediaCount}`,
+    `Media Saved:     ${mediaReport.downloaded}`,
+    `Boundary:        ${manifest.boundaryReached ? "Boundary reached" : "Partial scan"}`,
+    "",
+    "ARCHIVE CONTENTS:",
+    "- manifest.json: Full export metadata, schema verification, and configuration.",
+    "- media-report.json: Audit of every media item attempted, downloaded, or skipped.",
+    ...(includePosts ? [
+      "- posts.jsonl: Line-delimited JSON with schemaVersion 2.",
+      "- posts.csv: Spreadsheet-compatible table of posts.",
+      "- posts.md: Chronological readable Markdown transcript.",
+      "- posts/: Individual post text (.txt) and Markdown (.md) records."
+    ] : []),
+    ...(includeMedia ? [
+      "- media/: Downloaded photos, videos, and media files."
+    ] : []),
+    "",
+    "Local-first export by WA Channel Exporter.",
+    "============================================================"
+  ].join("\n");
+  zip.file("README.txt", readme + "\n");
+
   if (typeof onProgress === "function") onProgress({ phase: "compressing", percent: 0 });
   zip.file("media-report.json", JSON.stringify(mediaReport, null, 2));
-  zip.file("manifest.json", JSON.stringify({ format: "wa-channel-exporter", schemaVersion: 2, exportedAt: new Date().toISOString(), postCount: normalized.length, mediaCount: normalized.reduce((total, post) => total + post.media.length, 0), exportValidation: validation, mediaReport, ...manifest }, null, 2));
+  zip.file("manifest.json", JSON.stringify({ format: "wa-channel-exporter", schemaVersion: 2, exportScope: scope, channel: channelName, exportedAt: new Date().toISOString(), postCount: normalized.length, mediaCount: validation.mediaCount, exportValidation: validation, mediaReport, ...manifest }, null, 2));
   return zip.generateAsync(
     { type: "blob", compression: "DEFLATE", compressionOptions: { level: 6 } },
     (metadata) => {

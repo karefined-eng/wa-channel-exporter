@@ -9,11 +9,36 @@ const session = { root: null, canceled: false, lastSignature: "", steps: 0 };
 const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
 
 function channelName() {
-  const headerCandidate = document.querySelector('header span[dir="auto"][title], [data-testid="conversation-header"] span[dir="auto"][title]');
+  const header = document.querySelector('header, [data-testid="conversation-header"], [role="banner"]');
+  if (header) {
+    const titled = header.querySelector('[data-testid="conversation-info-header-chat-title"][title], span[dir="auto"][title], div[role="button"] [title], [title]');
+    const titledText = clean(titled?.getAttribute("title"));
+    if (titledText && !/followers?|verified/i.test(titledText)) return titledText;
+
+    const chatTitle = header.querySelector('[data-testid="conversation-info-header-chat-title"], [data-testid="chat-title"]');
+    if (chatTitle) {
+      const text = clean(chatTitle.getAttribute("title") || chatTitle.textContent);
+      if (text) return text.replace(/…|\.{3}$/, "");
+    }
+
+    const headerBtn = header.querySelector('div[role="button"], [role="heading"]');
+    if (headerBtn) {
+      const span = headerBtn.querySelector('span[dir="auto"]');
+      const text = clean(span?.getAttribute("title") || span?.textContent);
+      if (text) return text.replace(/…|\.{3}$/, "");
+    }
+  }
+
   const activeCellCandidate = document.querySelector('[data-testid="cell-frame-title"] span[dir="auto"][title], [data-testid="cell-frame-title"] span[dir="auto"]');
+  if (activeCellCandidate) {
+    const text = clean(activeCellCandidate.getAttribute("title") || activeCellCandidate.textContent);
+    if (text) return text.replace(/…|\.{3}$/, "");
+  }
+
   const followerContainer = [...document.querySelectorAll('div[role="button"], header, [data-testid="conversation-header"]')].find((node) => /followers?/i.test(node.textContent || ""));
-  const candidate = headerCandidate || activeCellCandidate || followerContainer?.querySelector('span[dir="auto"][title], span[dir="auto"]') || document.querySelector(SELECTORS.title);
-  return clean(candidate?.getAttribute("title") || candidate?.textContent) || "WhatsApp Channel";
+  const candidate = followerContainer?.querySelector('span[dir="auto"][title], span[dir="auto"]') || document.querySelector(SELECTORS.title);
+  const result = clean(candidate?.getAttribute("title") || candidate?.textContent) || "WhatsApp Channel";
+  return result.replace(/…|\.{3}$/, "");
 }
 
 function findScrollRoot() {
