@@ -4,7 +4,8 @@
   "description": "Local-first Chrome extension for exporting WhatsApp Channel posts from WhatsApp Web into portable archives.",
   "private": true,
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "node scripts/generate-icons.js && node scripts/build.js",
+    "test": "node scripts/test-mv3.js && node scripts/test-exports.mjs && node scripts/test-media-download.mjs",
     "lint": "eslint src/**/*.js"
   },
   "dependencies": {

@@ -15,6 +15,8 @@ async function sendDownload(message, sendResponse) {
   sendResponse({ ok: true, jobId, downloadId, state: "in_progress" });
 }
 
+chrome.sidePanel?.setPanelBehavior?.({ openPanelOnActionClick: true }).catch(() => {});
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message?.type === "DOWNLOAD_EXPORT") { sendDownload(message, sendResponse).catch((error) => sendResponse({ ok: false, error: error.message || "Could not start download." })); return true; }
   if (message?.type === "GET_DOWNLOAD_STATUS") { readStatus(message.jobId).then((status) => sendResponse(status ? { ok: true, ...status } : { ok: false, error: "Download job not found." })).catch((error) => sendResponse({ ok: false, error: error.message })); return true; }
