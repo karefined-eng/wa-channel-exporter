@@ -147,14 +147,24 @@ assert.equal(mediaReport.downloaded, 3, "3 media files should have downloaded");
 assert.equal(mediaReport.failed, 1, "1 media file should fail");
 assert.equal(mediaReport.unavailable, 1, "1 media file should be unavailable");
 
-// Verify the actual image, video, and audio files are inside media/
-const photoFile = zip.file("media/0001-1-photo-1.jpg");
-const videoFile = zip.file("media/0002-1-recording-2.mp4");
-const audioFile = zip.file("media/0005-1-announcement-5.ogg");
+// Verify the actual image, video, and audio files are inside media/YYYY-MM-DD/
+const photoFile = zip.file("media/2026-09-15/0001-01-photo-1.jpg");
+const videoFile = zip.file("media/2026-09-15/0002-01-recording-2.mp4");
+const audioFile = zip.file("media/2026-09-15/0005-01-announcement-5.ogg");
 
-assert.ok(photoFile, "media/0001-1-photo-1.jpg must exist in the ZIP");
-assert.ok(videoFile, "media/0002-1-recording-2.mp4 must exist in the ZIP");
-assert.ok(audioFile, "media/0005-1-announcement-5.ogg must exist in the ZIP");
+assert.ok(photoFile, "media/2026-09-15/0001-01-photo-1.jpg must exist in the ZIP");
+assert.ok(videoFile, "media/2026-09-15/0002-01-recording-2.mp4 must exist in the ZIP");
+assert.ok(audioFile, "media/2026-09-15/0005-01-announcement-5.ogg must exist in the ZIP");
+
+// Verify index.html (offline viewer) is present in full-scope archive
+assert.ok(zip.file("index.html"), "index.html offline viewer must exist in full-scope archive");
+const htmlContent = await zip.file("index.html").async("string");
+assert.ok(htmlContent.includes("Tech Channel"), "index.html must include channel name");
+assert.ok(htmlContent.includes("media/2026-09-15/0001-01-photo-1.jpg"), "index.html must embed saved image path");
+
+// Verify enriched posts.md has inline image link
+const postsMd = await zip.file("posts.md").async("string");
+assert.ok(postsMd.includes("![photo-1.jpg](media/2026-09-15/0001-01-photo-1.jpg)"), "posts.md must have inline image embed");
 
 console.log("\nFound image in ZIP:", photoFile.name);
 console.log("Found video in ZIP:", videoFile.name);

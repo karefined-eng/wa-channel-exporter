@@ -33,13 +33,16 @@ const zipBlob = await core.createZip(posts, JSZip, { channel: "Pilot Channel", s
 const zip = await JSZip.loadAsync(await zipBlob.arrayBuffer());
 const manifest = JSON.parse(await zip.file("manifest.json").async("string"));
 const mediaReport = JSON.parse(await zip.file("media-report.json").async("string"));
-assert.ok(zip.file("media/0001-1-image.jpg"));
+assert.ok(zip.file("media/2026-08-19/0001-01-image.jpg"), "media file must exist in date folder");
 assert.ok(zip.file("posts.csv"));
 assert.ok(zip.file("posts.jsonl"));
+assert.ok(zip.file("posts.md"), "enriched posts.md must exist");
+assert.ok(zip.file("index.html"), "offline viewer index.html must exist in full archive");
 assert.ok(zip.file("README.txt"));
 assert.equal(manifest.mediaReport.downloaded, 1);
 assert.equal(mediaReport.channel, "Pilot Channel");
 assert.equal(mediaReport.items[0].status, "downloaded");
+assert.equal(mediaReport.items[0].requestedUrlType, "page-context");
 
 // Test makeExportName with scope and date range options
 const allName = core.makeExportName("Pilot Channel", "zip", { scope: "all", start: "2026-08-19", end: "2026-08-20" });
@@ -63,7 +66,7 @@ const postsOnlyZipBlob = await core.createZip(
 );
 assert.equal(mediaFetcherCalled, false, "Media fetcher should not be called in posts-only scope");
 const postsZip = await JSZip.loadAsync(await postsOnlyZipBlob.arrayBuffer());
-assert.equal(postsZip.file("media/0001-1-image.jpg"), null, "Media should not exist in posts-only zip");
+assert.equal(postsZip.file("media/2026-08-19/0001-01-image.jpg"), null, "Media should not exist in posts-only zip");
 assert.ok(postsZip.file("posts.csv"), "posts.csv must exist in posts-only zip");
 assert.ok(postsZip.file("posts.jsonl"), "posts.jsonl must exist in posts-only zip");
 const postsMediaReport = JSON.parse(await postsZip.file("media-report.json").async("string"));
@@ -79,9 +82,10 @@ const mediaOnlyZipBlob = await core.createZip(
   { scope: "media" }
 );
 const mediaZip = await JSZip.loadAsync(await mediaOnlyZipBlob.arrayBuffer());
-assert.ok(mediaZip.file("media/0001-1-image.jpg"), "Media must exist in media-only zip");
+assert.ok(mediaZip.file("media/2026-08-19/0001-01-image.jpg"), "Media must exist in date-organised folder in media-only zip");
 assert.equal(mediaZip.file("posts.csv"), null, "posts.csv should not exist in media-only zip");
 assert.equal(mediaZip.file("posts.jsonl"), null, "posts.jsonl should not exist in media-only zip");
+assert.equal(mediaZip.file("index.html"), null, "index.html must NOT be generated in media-only scope");
 assert.ok(mediaZip.file("manifest.json"), "manifest.json must exist in media-only zip");
 assert.ok(mediaZip.file("media-report.json"), "media-report.json must exist in media-only zip");
 
