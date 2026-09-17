@@ -13,11 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.glass-card');
   
   cards.forEach(card => {
-    // Add the spotlight element inside the card
-    const spotlight = document.createElement('div');
-    spotlight.classList.add('spotlight');
-    card.appendChild(spotlight);
-    
     // Track mouse movement
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
@@ -27,5 +22,25 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
     });
+  });
+
+  // Intersection Observer for Scroll Animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Run once
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in-up, .text-gradient-reveal').forEach(el => {
+    observer.observe(el);
   });
 });
