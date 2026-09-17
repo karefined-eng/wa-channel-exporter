@@ -312,3 +312,106 @@ export async function createZip(posts, JSZip, manifest = {}, pageMediaFetcher = 
     }
   );
 }
+
+export async function exportPdf(posts, pdfMake, manifest = {}, pageMediaFetcher = null, onProgress = null) {
+  const normalized = posts.map(normalizePost);
+  const channelName = text(manifest.channel || normalized[0]?.channel?.name || "WhatsApp Channel");
+  
+  const content = [];
+  
+  // Header
+  content.push({ text: channelName, style: 'header', alignment: 'center', margin: [0, 0, 0, 10] });
+  const dateRangeStr = (manifest.start && manifest.end) ? `${manifest.start} through ${manifest.end}` : "All loaded dates";
+  content.push({ text: `Date Range: ${dateRangeStr}`, alignment: 'center', margin: [0, 0, 0, 2] });
+  content.push({ text: `Posts: ${normalized.length}`, alignment: 'center', margin: [0, 0, 0, 20] });
+  
+  const totalMedia = normalized.reduce((acc, p) => acc + p.media.filter((m) => m.url).length, 0);
+  let processedMedia = 0;
+
+  for (const [index, post] of normalized.entries()) {
+    // Post Header (Date)
+    const dateStr = post.publishedAt?.raw || post.publishedAt?.iso || "Date not available";
+    content.push({ text: dateStr, style: 'postDate', margin: [0, 15, 0, 5] });
+    
+    // Post Text
+    if (post.text) {
+      content.push({ text: post.text, margin: [0, 0, 0, 10] });
+    }
+    
+    // Post Media
+    if (post.media && post.media.length > 0) {
+      for (const media of post.media) {
+        if (media.url && pageMediaFetcher) {
+          processedMedia += 1;
+          if (typeof onProgress === "function") {
+            onProgress({ phase: "media", current: processedMedia, total: totalMedia, filename: media.filename });
+          }
+          
+          const isImage = /\.(jpg|jpeg|png|webp)$/i.test(media.filename || media.url);
+          
+          if (isImage) {
+            try {
+              const fetched = await pageMediaFetcher(media);
+              if (fetched?.ok && fetched.base64) {
+                let mime = fetched.mime || "image/jpeg";
+                // Some WEBP files cause issues with jsPDF/pdfMake if not supported by the environment, 
+                // but pdfmake generally supports JPEG/PNG out of the box. 
+                // Let's assume pdfmake supports standard images if converted properly.
+                const dataUrl = `data:${mime};base64,${fetched.base64}`;
+                content.push({ image: dataUrl, fit: [500, 500], margin: [0, 5, 0, 10] });
+              } else {
+                content.push({ text: `[Image: ${media.filename} - failed to load]`, color: 'gray', italics: true, margin: [0, 0, 0, 5] });
+              }
+            } catch (err) {
+              content.push({ text: `[Image: ${media.filename} - error]`, color: 'gray', italics: true, margin: [0, 0, 0, 5] });
+            }
+          } else {
+            // Not an image, PDF can't play videos
+            content.push({ text: `[Attachment: ${media.filename}]`, color: '#138a5b', margin: [0, 0, 0, 5] });
+          }
+        }
+      }
+    }
+    
+    // Separator line
+    if (index < normalized.length - 1) {
+      content.push({ canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e5e9eb' }], margin: [0, 15, 0, 15] });
+    }
+  }
+
+  const docDefinition = {
+    content,
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true,
+        color: '#17202a'
+      },
+      postDate: {
+        fontSize: 12,
+        bold: true,
+        color: '#65717d'
+      }
+    },
+    defaultStyle: {
+      fontSize: 11,
+      lineHeight: 1.4,
+      color: '#17202a'
+    }
+  };
+
+  if (typeof onProgress === "function") {
+    onProgress({ phase: "generating" });
+  }
+
+  return new Promise((resolve, reject) => {
+    try {
+      const pdf = pdfMake.createPdf(docDefinition);
+      pdf.getBlob((blob) => {
+        resolve(blob);
+      });
+    } catch (err) {
+      reject(new Error("Failed to generate PDF: " + err.message));
+    }
+  });
+}

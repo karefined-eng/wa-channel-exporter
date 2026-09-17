@@ -40,10 +40,18 @@ function updateScopeUI() {
   });
 
   const zipBtn = $("zipButton");
-  if (zipBtn) {
-    if (state.scope === "media") zipBtn.textContent = "Download Media Only (ZIP)";
-    else if (state.scope === "posts") zipBtn.textContent = "Download Posts Only (ZIP)";
-    else zipBtn.textContent = "Download Complete Archive (ZIP)";
+  const pdfBtn = $("pdfButton");
+  if (zipBtn && pdfBtn) {
+    if (state.scope === "pdf") {
+      zipBtn.classList.add("hidden");
+      pdfBtn.classList.remove("hidden");
+    } else {
+      zipBtn.classList.remove("hidden");
+      pdfBtn.classList.add("hidden");
+      if (state.scope === "media") zipBtn.textContent = "Download Media Only (ZIP)";
+      else if (state.scope === "posts") zipBtn.textContent = "Download Posts Only (ZIP)";
+      else zipBtn.textContent = "Download Complete Archive (ZIP)";
+    }
   }
   updateFilenamePreview();
 }
@@ -404,6 +412,57 @@ $("zipButton").addEventListener("click", async () => {
     setStatus("Archive failed", error.message, true);
   } finally {
     $("zipButton").disabled = false;
+  }
+});
+
+$("pdfButton").addEventListener("click", async () => {
+  $("pdfButton").disabled = true;
+  try {
+    const posts = includedPosts();
+    const start = $("startDate").value;
+    const end = $("endDate").value;
+    setProgress("Preparing PDF document…", 10);
+    setStatus("Generating PDF…", `Structuring ${posts.length} text posts for print.`);
+
+    const manifest = {
+      channel: state.channel,
+      start,
+      end
+    };
+
+    // Assuming we'll add exportPdf to exporter.js
+    const { exportPdf } = await import("../core/exporter.js");
+    
+    // For media in PDF, we need a fetcher similar to the ZIP export
+    const fetcher = async (media) => {
+      const primary = await collector(state.tabId, { type: "FETCH_MEDIA", url: media.url }).catch(() => null);
+      if (primary?.ok) return primary;
+      if (media.fallbackUrl) {
+        const fallback = await collector(state.tabId, { type: "FETCH_MEDIA", url: media.fallbackUrl }).catch(() => null);
+        if (fallback?.ok) return fallback;
+      }
+      return primary || { ok: false, error: "Media retrieval failed." };
+    };
+
+    const blob = await exportPdf(posts, window.pdfMake, manifest, fetcher, (progress) => {
+      if (progress.phase === "media") {
+        const pct = Math.min(80, Math.round((progress.current / Math.max(1, progress.total)) * 70) + 10);
+        setProgress(`Retrieving media for PDF (${progress.current}/${progress.total})`, pct);
+        setStatus("Downloading media…", `${progress.current} of ${progress.total} items retrieved.`);
+      } else if (progress.phase === "generating") {
+        setProgress("Rendering PDF file…", 95);
+        setStatus("Rendering PDF…", "Compiling document.");
+      }
+    });
+
+    setProgress("Saving document…", 100);
+    const exportFilename = makeExportName(state.channel, "pdf", { scope: "document", start, end });
+    await downloadBlob(blob, exportFilename);
+    setStatus("PDF download complete", `Saved as ${exportFilename}`);
+  } catch (error) {
+    setStatus("PDF Generation failed", error.message, true);
+  } finally {
+    $("pdfButton").disabled = false;
   }
 });
 

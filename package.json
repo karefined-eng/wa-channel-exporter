@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "jszip": "^3.10.1",
+    "pdfmake": "^0.3.11",
     "puppeteer": "^25.3.0"
   },
   "devDependencies": {
