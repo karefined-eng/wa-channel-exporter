@@ -11,14 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="/src/main.js"></script>
     <style>
       .privacy-container {
         max-width: 800px;
-        margin: 120px auto 60px;
+        margin: 60px auto 60px;
         padding: 40px;
-        background: rgba(26, 31, 44, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--glass-bg);
+        border: 1px solid var(--border);
         border-radius: 24px;
         backdrop-filter: blur(12px);
       }
@@ -30,40 +30,46 @@
         font-size: 1.5rem;
         margin-top: 40px;
         margin-bottom: 20px;
-        color: #fff;
+        color: var(--text-primary);
       }
       .privacy-container p {
-        color: #94a3b8;
+        color: var(--text-secondary);
         line-height: 1.8;
         margin-bottom: 16px;
       }
       .privacy-container a {
-        color: #10b981;
+        color: var(--accent);
         text-decoration: none;
       }
     </style>
   </head>
   <body>
     <!-- Background Effects -->
-    <div class="fixed inset-0 z-[-1] bg-[#0B0F19] overflow-hidden">
-      <div class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/10 blur-[120px]"></div>
-      <div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/10 blur-[120px]"></div>
-      <div class="absolute inset-0 bg-[url('/bg-chat-tile.png')] opacity-[0.03] bg-repeat mix-blend-overlay pointer-events-none"></div>
-    </div>
+    <div class="grid-bg"></div>
+    <div class="glow-orb"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0B0F19]/80 backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3">
-          <img src="/icons.svg" alt="Logo" class="w-8 h-8 text-emerald-500" />
-          <span class="font-bold text-xl tracking-tight text-white">WA Exporter</span>
-        </a>
+    <nav class="navbar">
+      <div class="container nav-content">
+        <div class="chat-header-left">
+          <div class="avatar">WA</div>
+          <div class="header-info">
+            <div class="logo">WA Channel Exporter</div>
+            <div class="status">online</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/export-to-pdf.html">PDF Export</a>
+          <a href="/download-media.html">Media Downloader</a>
+          <a href="/documentation.html">Documentation</a>
+          <a href="https://github.com/karefined-eng/wa-channel-exporter" target="_blank" class="github-link">GitHub</a>
+        </div>
       </div>
     </nav>
 
     <!-- Content -->
-    <main class="privacy-container">
-      <h1 class="text-white font-bold tracking-tight">Privacy Policy</h1>
+    <main class="privacy-container glass-card">
+      <h1>Privacy Policy</h1>
       <p>Last updated: September 17, 2026</p>
 
       <h2>1. Introduction</h2>
@@ -74,7 +80,7 @@
       <p>The WA Channel Exporter extension operates entirely on your local device. The extension only reads the DOM of the active WhatsApp Web channel tab in order to extract messages and media for the purpose of generating your offline backup archive.</p>
       
       <h2>3. How Data Is Stored</h2>
-      <p>Any configuration preferences (such as your chosen date ranges for exporting) are stored locally on your device using Chrome's local storage API (`chrome.storage.local`). This data never leaves your computer.</p>
+      <p>Any configuration preferences (such as your chosen date ranges for exporting) are stored locally on your device using Chrome's local storage API. This data never leaves your computer.</p>
       <p>The final exported `.zip` archive is saved directly to your local computer's Downloads folder. We do not host, store, or have access to any of the generated archives.</p>
 
       <h2>4. Third-Party Services</h2>
@@ -87,7 +93,7 @@
       <p>We may update this Privacy Policy from time to time. If we make any material changes, we will update the "Last updated" date at the top of this policy.</p>
 
       <h2>7. Contact Us</h2>
-      <p>If you have any questions about this Privacy Policy or the extension, please contact us at: <a href="mailto:support@example.com">support@example.com</a>.</p>
+      <p>If you have any questions about this Privacy Policy or the extension, please contact us at: <a href="/support.html">Contact Support</a>.</p>
     </main>
   </body>
 </html>

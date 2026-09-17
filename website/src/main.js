@@ -6,25 +6,26 @@ inject();
 injectSpeedInsights();
 
 document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('theme-toggle');
+  // Always set dark theme for the new premium UI
+  document.documentElement.setAttribute('data-theme', 'dark');
   
-  // Check local storage or system preference
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // Spotlight effect for glass cards
+  const cards = document.querySelectorAll('.glass-card');
   
-  // Default to light unless saved as dark or system is dark (and nothing saved)
-  // Actually, let's default to dark if nothing saved, since WhatsApp Web usually defaults to dark or system.
-  // We'll set the initial theme based on what's saved or what the system prefers.
-  let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-  
-  // Apply initial theme
-  document.documentElement.setAttribute('data-theme', currentTheme);
-
-  // Toggle button click handler
-  toggleBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    localStorage.setItem('theme', currentTheme);
+  cards.forEach(card => {
+    // Add the spotlight element inside the card
+    const spotlight = document.createElement('div');
+    spotlight.classList.add('spotlight');
+    card.appendChild(spotlight);
+    
+    // Track mouse movement
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
   });
 });
