@@ -132,4 +132,106 @@ Not Product Hunt. Not Hacker News. Not TechCrunch. The extensions that went vira
 | 🟡 This week | Post to r/whatsapp, r/DataHoarder, r/osint, r/privacy | Organic viral distribution |
 | 🟢 This month | Add `hacktoberfest` topic in October | Free open-source contributors |
 | 🟢 This month | Add GitHub Sponsors page | Sustainable revenue |
-| 🟢 Future | i18n: Spanish, Portuguese, Hindi translations | 3x addressable market |
+---
+
+## Addendum: What uBlock Focus Made Us Miss — Our TRUE Comps
+
+> uBlock is a category legend but completely irrelevant as a playbook. These three repos are our actual DNA.
+
+---
+
+### 🗂️ SingleFile — The Closest Architectural Twin
+**Stars:** 22,412 | **Forks:** 1,410 | **Open Issues:** 99
+**Founded:** 2010 (16 years old!) | **Last Push:** Active daily
+**Has GitHub Discussions:** ✅ | **Has Wiki:** ✅ | **Community Health:** ~75%
+**Homepage:** https://getsinglefile.com
+
+#### Their Full Root-Level File Strategy (Things We Missed)
+SingleFile's repo root reveals a publishing playbook we have not copied:
+```
+README.MD         ← full marketing page
+faq.md            ← standalone FAQ document (NOT buried in README)
+known-issues.md   ← honesty builds trust; they document their own bugs publicly
+privacy.md        ← standalone privacy doc
+contributors.md   ← credits every contributor by name
+_locales/         ← i18n translations built into the extension itself
+```
+
+**What this means for us:** We are missing: a standalone `faq.md`, a `known-issues.md` (our honest completeness philosophy literally demands this), and `_locales/` for i18n.
+
+#### SingleFile's FAQ Reveals User Psychology
+The questions their users ask are a window into what OUR users will ask:
+- *"I am a web archivist, is it ok to use SingleFile?"* → Professional users asking about legality and suitability.
+- *"Does SingleFile upload any data?"* → Privacy is the #1 concern for archiving tools — **we need this FAQ answer front and center.**
+- *"Why can't I save some pages?"* → Users expect 100% capture and need proactive expectation-setting.
+- *"Why aren't images saved on some sites?"* → Referrer/CORS issues are universal to our architecture too.
+
+**Lesson:** Add a `faq.md` file to our root. Our answers about WhatsApp's ephemeral media and privacy architecture should be clearly pre-answered before users even ask.
+
+#### The OSINT Community is How They Hit 22k
+SingleFile has the tag `osint` and is listed in the [OSINT Framework](https://osintframework.com/) — a curated directory used by investigators, journalists, and researchers worldwide. **One listing there is worth thousands of GitHub stars** because OSINT practitioners are highly vocal advocates who write tutorials and post to their networks.
+
+**Lesson:** We need to submit WA Channel Exporter to the OSINT Framework under the "Social Networks" → "WhatsApp" category.
+
+---
+
+### 🎬 cat-catch (猫抓) — The Media Sniffer That Owns Our Feature Set
+**Stars:** 21,903 | **Forks:** 1,911 | **Open Issues:** 566
+**Founded:** Christmas Day 2015 | **Language:** JavaScript
+**Has Discussions:** ✅ | **Has Wiki:** ✅
+**Homepage:** https://cat-catch.94cat.com
+
+#### Why This Matters So Much
+cat-catch is a browser resource sniffer — it intercepts media streams (m3u8, HLS, video/audio) on any webpage and lets you download them. **Our "Download Media" feature is a specialized version of exactly what cat-catch does**, but for WhatsApp Channels specifically.
+
+**21,903 stars — mostly from a Chinese-speaking developer community.** This proves that:
+1. Media downloading tools have MASSIVE global demand.
+2. You do not need English-first content to reach 20k stars.
+3. Non-English-speaking WhatsApp markets (India, Brazil, Nigeria) could be our equivalent unlock.
+
+#### What Their 566 Open Issues Tell Us
+Most of cat-catch's issues are in Chinese (their dominant community). The ones in English reveal cross-platform pain:
+- Users want **external downloader integration** (IDM, aria2, N_m3u8DL).
+- Users want **global auto-download** without confirmation dialogs.
+- Users want an **external API** so other tools can trigger it.
+
+**Lesson:** Long-term, offering a CLI or a simple API endpoint that other tools (like Obsidian plugins or Notion integrations) can trigger WA Channel Exporter through would unlock an entirely different power-user segment.
+
+---
+
+### 🎥 Screenity — The Privacy-First Positioning Blueprint
+**Stars:** 18,702 | **Open Issues:** 8 (!!)
+**Homepage:** https://screenity.io | **License:** GPL-3.0
+**Topics:** `privacy, screen-recorder, annotation, ffmpeg, tensorflow, chrome-extension`
+
+#### What 8 Open Issues at 18k Stars Means
+Screenity has **8 open issues with nearly 19k stars**. That is the most ruthless triage discipline in the entire list. Every issue is closed fast. This creates an extraordinarily strong signal: **this project respects your time.** That reputation alone drives downloads.
+
+#### Their .github/FUNDING.yml
+```yaml
+github: alyssaxuu
+```
+That's it. One line. GitHub Sponsors only. And they built a commercial website at screenity.io.
+
+**Their model:** Free + open source extension → commercial website captures premium intent → GitHub Sponsors for community funding. Same as Dark Reader.
+
+#### THIRD_PARTY_NOTICES.md — The Missing Compliance File
+Screenity has a `THIRD_PARTY_NOTICES.md` file listing all open-source libraries used in the extension. This is a Chrome Web Store **compliance requirement** for GPL/AGPL-licensed dependencies. We use `pdfmake` and `JSZip` — **we need this file before submitting to CWS.**
+
+---
+
+## The Gaps We Need to Close NOW
+
+| Missing Asset | Who Has It | Our Status | Action |
+|---|---|---|---|
+| `faq.md` standalone file | SingleFile | ❌ Missing | Create with WhatsApp-specific answers |
+| `known-issues.md` | SingleFile | ❌ Missing | Create — matches our "honest completeness" brand |
+| `_locales/` i18n | SingleFile, Dark Reader | ❌ Missing | Spanish & Portuguese first |
+| `.github/FUNDING.yml` | Screenity, SponsorBlock | ❌ Missing | Add GitHub Sponsors link |
+| `THIRD_PARTY_NOTICES.md` | Screenity | ❌ Missing | Required for CWS submission |
+| OSINT Framework listing | SingleFile | ❌ Not submitted | Submit to osintframework.com |
+| GitHub Discussions enabled | SingleFile, cat-catch | ❌ Disabled | Enable — replaces need for Discord |
+| GitHub Pages / dedicated site | SingleFile, Screenity | ✅ We have vercel | Already done |
+| Community Health Files | Dark Reader, Screenity | ✅ Added today | Done |
+| GitHub Topics (10 set) | All top repos | ✅ Set today | Done |
+
