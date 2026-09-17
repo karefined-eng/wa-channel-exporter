@@ -8,7 +8,8 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         pdf: resolve(import.meta.dirname, 'export-to-pdf.html'),
         media: resolve(import.meta.dirname, 'download-media.html'),
-        privacy: resolve(import.meta.dirname, 'privacy-policy.html')
+        privacy: resolve(import.meta.dirname, 'privacy-policy.html'),
+        docs: resolve(import.meta.dirname, 'documentation.html')
       }
     }
   }
