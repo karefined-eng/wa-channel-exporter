@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "WA Channel Exporter",
+  "version": "1.3.1",
+  "description": "Export WhatsApp Channel posts from WhatsApp Web into a local ZIP archive with date ranges and missing-item reports.",
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "WA Channel Exporter",
+    "default_icon": {
+      "16": "src/assets/icons/icon16.png",
+      "48": "src/assets/icons/icon48.png",
+      "128": "src/assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "src/assets/icons/icon16.png",
+    "48": "src/assets/icons/icon48.png",
+    "128": "src/assets/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "src/popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["src/content/whatsapp-content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "host_permissions": ["https://web.whatsapp.com/*"],
+  "permissions": ["storage", "downloads", "activeTab", "scripting", "sidePanel", "tabs"],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/core/*", "src/shared/*"],
+      "matches": ["https://web.whatsapp.com/*"]
+    }
+  ]
+}
