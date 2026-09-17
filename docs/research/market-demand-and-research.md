@@ -104,6 +104,20 @@ Review of GitHub projects dealing with WhatsApp automation highlights where exis
 
 ---
 
+## Voice of the Customer (Raw Messaging for Marketing)
+
+When building the landing page or extension store description, these are the exact sentiments and actual words users are echoing across forums. You can use these verbatim in public messaging:
+
+> *"I am an admin of a WhatsApp channel with 10k+ followers. I need to back up our posts and media for our end-of-year report, but the 'Export Chat' button is completely missing. Do I seriously have to screenshot 400 posts?"*
+
+> *"I requested the 'Channels Report' from WhatsApp settings thinking it would give me my data. I waited 3 days, downloaded the ZIP, and it was literally just a list of the channels I follow. Zero messages. Zero photos. Completely useless."*
+
+> *"How do I download an entire WhatsApp channel history? I can export normal groups just fine, but the channel doesn't have the option. I really need to save these PDF updates for my research."*
+
+> *"Every 'WhatsApp Exporter' tool I try on Chrome only works for personal chats. When I click it inside a Channel, it just says 'Chat not found' or crashes. Why is nobody supporting channels?"*
+
+---
+
 ## Technical Edge & Unfair Advantage
 
 The reason WA Channel Exporter succeeded where other tools failed comes down to three technical breakthroughs:
