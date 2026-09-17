@@ -2,3 +2,4 @@ node_modules/
 dist/
 wa-channel-exporter.zip
 .DS_Store
+docs/market_research.md

@@ -12,7 +12,9 @@
 
 </div>
 
-> **WA Channel Exporter** is an independent Chrome extension built specifically to **download WhatsApp Channel messages, videos, and photos** into a portable ZIP archive. It runs entirely in your browser, guaranteeing your data stays on your machine.
+> **WA Channel Exporter** is an independent Chrome extension built specifically to **download WhatsApp Channel messages, videos, and photos** into a portable ZIP archive or a formatted PDF document. It runs entirely in your browser, guaranteeing your data stays on your machine.
+
+🌐 **[Visit the official website for Documentation and Downloads](https://whatsapp-channel-exporter.vercel.app/)**
 
 ---
 
@@ -31,9 +33,10 @@ Faith and ministry teams, community organizers, researchers, media volunteers, a
 
 | Capability | What it means |
 |---|---|
+| **Export to PDF Document** | Generate a professional, paginated PDF document with embedded images and exact timestamps, perfect for compliance, legal, and reporting. |
 | **Offline HTML viewer (`index.html`)** | Double-click to browse the entire channel offline with an authentic WhatsApp dark theme, inline image/video/audio players, and image lightbox. |
 | **Download WhatsApp Channel Media** | Photos, videos, and voice notes are automatically saved into date-stamped subfolders (`media/YYYY-MM-DD/`) for calendar-like browsing. |
-| **Export Scope Selector** | Choose between **All** (full archive), **Media Only** (photos/videos/audio), or **Posts Only** (lightweight text export). |
+| **Export Scope Selector** | Choose between **All** (full archive), **PDF Document**, **Media Only** (photos/videos/audio), or **Posts Only** (lightweight text export). |
 | **Enriched Markdown & CSV** | `posts.md` contains chronological posts with inline image embeds, ready for Obsidian or Notion. `posts.csv` is ready for Excel. |
 | **Channel Auto-Detection** | Automatically reads the active Channel name from the conversation header. |
 | **Date-Bounded Scans** | Pick custom start/end dates or use one-click presets (**This Month**, **Last 7 Days**, **All Loaded**). |
@@ -58,6 +61,8 @@ Your export comes neatly packaged in a `.zip` file containing:
 - A `posts.csv` file for spreadsheet analysis.
 - A `posts.md` file for note-taking apps.
 - A `media/` folder with all images and videos.
+
+Alternatively, you can select the **"PDF"** option to generate a standalone formatted PDF document!
 
 ---
 

@@ -208,6 +208,26 @@ Voice notes in WhatsApp Channels are typically `audio/ogg; codecs=opus`. These a
 
 ---
 
+## Phase 3: The PDF Pivot & Generative Engine Optimization (Sept 2026)
+
+### The "WhatsApp to PDF" Market Reality
+The product team realized a massive uncrowded wedge market: existing third-party WhatsApp PDF exporters all fail on WhatsApp Channels because the native `.txt` export button does not exist. Users were trapped.
+
+**What was built:**
+- Integrated `pdfmake` entirely locally.
+- Added a dedicated "PDF Document" export mode that renders the channel feed into a clean, paginated, and timestamped PDF (complete with embedded base64 images).
+- Perfected the offline zero-server requirement.
+
+### Generative Engine Optimization (GEO)
+To capture the AI search market (ChatGPT Search, Perplexity, Google AI Overviews) that currently tells users exporting is "impossible," we built an advanced GEO strategy on the main website:
+- Designed a semantic `documentation.html` page using 150-word answer passages optimized for AI crawler extraction.
+- Injected `HowTo`, `SoftwareApplication`, and `Article` Schema.org JSON-LD structured data.
+- Configured a dedicated `robots.txt` whitelisting `OAI-SearchBot` and `Claude-SearchBot`.
+- Created an `llms.txt` file specifically instructing AI models about our tool's capabilities.
+- Automated `sitemap.xml` generation and integrated Vercel Analytics.
+
+---
+
 ## Build Methodology Notes
 
 ### How This Was Built
