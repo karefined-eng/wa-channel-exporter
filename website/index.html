@@ -24,7 +24,13 @@
 
     <nav class="navbar">
       <div class="container nav-content">
-        <div class="logo">WA Channel Exporter</div>
+        <div class="chat-header-left">
+          <div class="avatar">WA</div>
+          <div class="header-info">
+            <div class="logo">WA Channel Exporter</div>
+            <div class="status">online</div>
+          </div>
+        </div>
         <div class="nav-links">
           <a href="#features">Features</a>
           <a href="#faq">FAQ</a>
@@ -60,7 +66,7 @@
             If you've searched for <em>"how to export a whatsapp channel"</em>, you probably noticed that popular tools like WAnalysis or WAExport <strong>only work for 1-on-1 chats and standard groups</strong>. They fail completely when trying to read the WhatsApp Channels "Updates" feed.
           </p>
           <p class="solution-text">
-            <strong>WA Channel Exporter is the solution.</strong> It is engineered specifically to act as a WhatsApp Channel scraper and archiver, giving you a clean, timestamped export of the channels you follow.
+            <span class="read-ticks">✓✓</span> <strong>WA Channel Exporter is the solution.</strong> It is engineered specifically to act as a WhatsApp Channel scraper and archiver, giving you a clean, timestamped export of the channels you follow.
           </p>
         </div>
       </section>
@@ -112,31 +118,53 @@
         </div>
       </section>
 
-      <!-- FAQ Section -->
+      <!-- FAQ Section (Chat Style) -->
       <section id="faq" class="faq-section container">
         <div class="section-header fade-in-up">
           <h2>Frequently Asked Questions</h2>
         </div>
-        <div class="faq-grid">
+        <div class="chat-container">
           
-          <div class="faq-item glass-card fade-in-up">
-            <h3>Does this download WhatsApp Channel media (photos and videos)?</h3>
-            <p>Yes! The extension automatically fetches the images, videos, and voice notes visible in the channel and organizes them chronologically in a local <code>media/</code> folder.</p>
+          <div class="chat-message incoming fade-in-up">
+            <div class="bubble">
+              <p>Does this download WhatsApp Channel media (photos and videos)?</p>
+              <span class="time">10:42 AM</span>
+            </div>
           </div>
 
-          <div class="faq-item glass-card fade-in-up">
-            <h3>Why use this instead of standard WhatsApp backup tools?</h3>
-            <p>Standard backup tools and popular Chrome extensions are designed for the "Chats" tab. They cannot read the "Updates" broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels.</p>
+          <div class="chat-message outgoing fade-in-up">
+            <div class="bubble">
+              <p>Yes! The extension automatically fetches the images, videos, and voice notes visible in the channel and organizes them chronologically in a local <code>media/</code> folder.</p>
+              <span class="time">10:43 AM <span class="read-ticks">✓✓</span></span>
+            </div>
           </div>
 
-          <div class="faq-item glass-card fade-in-up">
-            <h3>Is it safe? Does it steal my data?</h3>
-            <p>Absolutely safe. WA Channel Exporter processes everything <strong>locally</strong> in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code to verify.</p>
+          <div class="chat-message incoming fade-in-up">
+            <div class="bubble">
+              <p>Why use this instead of standard WhatsApp backup tools?</p>
+              <span class="time">10:45 AM</span>
+            </div>
           </div>
 
-          <div class="faq-item glass-card fade-in-up">
-            <h3>What format does the WhatsApp Channel export into?</h3>
-            <p>Your export comes neatly packaged in a <code>.zip</code> file containing a beautiful offline HTML viewer, a CSV for spreadsheets, Markdown files, and a folder containing all the saved media files.</p>
+          <div class="chat-message outgoing fade-in-up">
+            <div class="bubble">
+              <p>Standard backup tools and popular Chrome extensions are designed for the "Chats" tab. They cannot read the "Updates" broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels.</p>
+              <span class="time">10:46 AM <span class="read-ticks">✓✓</span></span>
+            </div>
+          </div>
+
+          <div class="chat-message incoming fade-in-up">
+            <div class="bubble">
+              <p>Is it safe? Does it steal my data?</p>
+              <span class="time">11:00 AM</span>
+            </div>
+          </div>
+
+          <div class="chat-message outgoing fade-in-up">
+            <div class="bubble">
+              <p>Absolutely safe. WA Channel Exporter processes everything <strong>locally</strong> in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code to verify.</p>
+              <span class="time">11:01 AM <span class="read-ticks">✓✓</span></span>
+            </div>
           </div>
 
         </div>
