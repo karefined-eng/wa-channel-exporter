@@ -7,7 +7,8 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         pdf: resolve(import.meta.dirname, 'export-to-pdf.html'),
-        media: resolve(import.meta.dirname, 'download-media.html')
+        media: resolve(import.meta.dirname, 'download-media.html'),
+        privacy: resolve(import.meta.dirname, 'privacy-policy.html')
       }
     }
   }
