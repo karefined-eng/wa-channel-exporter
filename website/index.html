@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>WA Channel Exporter | Download WhatsApp Channel Messages</title>
+    <meta name="description" content="The only Chrome extension built specifically to export, download, and archive WhatsApp Channel messages and media directly from WhatsApp Web. 100% local, no data sent to our servers." />
+    <meta name="keywords" content="export whatsapp channel, download whatsapp channel messages, whatsapp channel scraper, save whatsapp channel updates, whatsapp to csv" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Background Effects -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="noise-overlay"></div>
+
+    <nav class="navbar">
+      <div class="container nav-content">
+        <div class="logo">WA Channel Exporter</div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#faq">FAQ</a>
+          <a href="https://github.com/karefined-eng/wa-channel-exporter" target="_blank" class="github-link">GitHub</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero container">
+        <div class="hero-content fade-in-up">
+          <div class="badge">The only tool built specifically for Channels</div>
+          <h1 class="hero-title">Download WhatsApp <span class="highlight">Channel</span> Messages & Media</h1>
+          <p class="hero-subtitle">
+            Securely export the channels you follow into a portable ZIP archive. 
+            Runs entirely inside your browser. <strong>Zero data collection.</strong>
+          </p>
+          <div class="cta-group">
+            <a href="https://chrome.google.com/webstore" class="btn btn-primary">Add to Chrome — It's Free</a>
+            <a href="https://github.com/karefined-eng/wa-channel-exporter" class="btn btn-secondary">View Open Source</a>
+          </div>
+          <p class="trust-text">No login required. Works directly on WhatsApp Web.</p>
+        </div>
+      </section>
+
+      <!-- Problem/Solution Section -->
+      <section class="problem-section container fade-in-up delay-1">
+        <div class="glass-card problem-card">
+          <h2>Can you export a WhatsApp Channel?</h2>
+          <p>
+            If you've searched for <em>"how to export a whatsapp channel"</em>, you probably noticed that popular tools like WAnalysis or WAExport <strong>only work for 1-on-1 chats and standard groups</strong>. They fail completely when trying to read the WhatsApp Channels "Updates" feed.
+          </p>
+          <p class="solution-text">
+            <strong>WA Channel Exporter is the solution.</strong> It is engineered specifically to act as a WhatsApp Channel scraper and archiver, giving you a clean, timestamped export of the channels you follow.
+          </p>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="features-section container">
+        <div class="section-header fade-in-up">
+          <h2>What You Get in Your Archive</h2>
+          <p>Everything you need, packed into a single, clean .zip file.</p>
+        </div>
+        <div class="features-grid">
+          
+          <div class="feature-card glass-card fade-in-up">
+            <div class="feature-icon">📁</div>
+            <h3>Offline HTML Viewer</h3>
+            <p>Double-click <code>index.html</code> to browse the entire channel offline with an authentic WhatsApp dark theme and inline image/video players.</p>
+          </div>
+
+          <div class="feature-card glass-card fade-in-up delay-1">
+            <div class="feature-icon">🖼️</div>
+            <h3>Download Channel Media</h3>
+            <p>Photos, videos, and voice notes are automatically saved into date-stamped subfolders (<code>media/YYYY-MM-DD/</code>) for calendar-like browsing.</p>
+          </div>
+
+          <div class="feature-card glass-card fade-in-up delay-2">
+            <div class="feature-icon">📊</div>
+            <h3>CSV & Markdown</h3>
+            <p>Export to <code>posts.csv</code> for quick spreadsheet analysis, or use the enriched <code>posts.md</code> with inline images for note-taking apps like Notion.</p>
+          </div>
+
+          <div class="feature-card glass-card fade-in-up">
+            <div class="feature-icon">🔒</div>
+            <h3>100% Local Privacy</h3>
+            <p>Zero server uploads, zero logins, zero telemetry. All processing happens directly inside your browser session. Your data stays yours.</p>
+          </div>
+
+          <div class="feature-card glass-card fade-in-up delay-1">
+            <div class="feature-icon">📅</div>
+            <h3>Date-Bounded Scans</h3>
+            <p>Pick custom start/end dates or use one-click presets like <strong>This Month</strong>, <strong>Last 7 Days</strong>, or <strong>All Loaded</strong>.</p>
+          </div>
+
+          <div class="feature-card glass-card fade-in-up delay-2">
+            <div class="feature-icon">✅</div>
+            <h3>Honest Completeness</h3>
+            <p>The archive honestly reports exactly what it found and what it missed in a <code>manifest.json</code> audit file, rather than silently losing posts.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="faq-section container">
+        <div class="section-header fade-in-up">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-grid">
+          
+          <div class="faq-item glass-card fade-in-up">
+            <h3>Does this download WhatsApp Channel media (photos and videos)?</h3>
+            <p>Yes! The extension automatically fetches the images, videos, and voice notes visible in the channel and organizes them chronologically in a local <code>media/</code> folder.</p>
+          </div>
+
+          <div class="faq-item glass-card fade-in-up">
+            <h3>Why use this instead of standard WhatsApp backup tools?</h3>
+            <p>Standard backup tools and popular Chrome extensions are designed for the "Chats" tab. They cannot read the "Updates" broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels.</p>
+          </div>
+
+          <div class="faq-item glass-card fade-in-up">
+            <h3>Is it safe? Does it steal my data?</h3>
+            <p>Absolutely safe. WA Channel Exporter processes everything <strong>locally</strong> in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code to verify.</p>
+          </div>
+
+          <div class="faq-item glass-card fade-in-up">
+            <h3>What format does the WhatsApp Channel export into?</h3>
+            <p>Your export comes neatly packaged in a <code>.zip</code> file containing a beautiful offline HTML viewer, a CSV for spreadsheets, Markdown files, and a folder containing all the saved media files.</p>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <p>&copy; 2026 WA Channel Exporter. Open Source under MIT License.</p>
+        <p class="disclaimer">Independent tool. Not affiliated with or endorsed by WhatsApp or Meta.</p>
+      </div>
+    </footer>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
