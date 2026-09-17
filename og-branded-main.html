@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Branded Main</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 1200px;
+            height: 630px;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: url('./website/og-main.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            bottom: 40px;
+            left: 50px;
+            background: rgba(17, 24, 39, 0.85);
+            padding: 25px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+        .text {
+            color: white;
+        }
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+        p {
+            margin: 5px 0 0 0;
+            font-size: 20px;
+            color: #a7f3d0;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="icon">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        </div>
+        <div class="text">
+            <h1>WA Channel Exporter</h1>
+            <p>100% Local Archive Tool</p>
+        </div>
+    </div>
+</body>
+</html>

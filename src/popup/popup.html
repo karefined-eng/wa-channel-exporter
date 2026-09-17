@@ -57,7 +57,13 @@
   </div>
   <button class="diagnostic" id="diagnosticButton">Copy redacted diagnostic</button>
   <p class="hint">The ZIP is the primary deliverable and includes the JSONL, CSV, manifest, media report, readable files, and successfully retrieved media. The scan stops at the requested start boundary, when WhatsApp stops making progress, or when you cancel.</p>
-  <footer>Local-first. No post content is uploaded by this extension.</footer>
+  <footer>
+    <div>Local-first. No post content is uploaded by this extension.</div>
+    <div style="margin-top: 10px; display: flex; justify-content: center; gap: 15px;">
+      <a href="https://wa-channel-exporter.vercel.app/support.html" target="_blank" style="color: var(--color-brand); text-decoration: none; font-weight: 500;">Get Help & Support</a>
+      <a href="https://github.com/karefined-eng/wa-channel-exporter/issues" target="_blank" style="color: var(--color-text-dim); text-decoration: none;">GitHub</a>
+    </div>
+  </footer>
 </main>
 <script src="../vendor/pdfmake.min.js"></script><script src="../vendor/vfs_fonts.js"></script><script src="../vendor/jszip.min.js"></script><script type="module" src="popup.js"></script>
 </body></html>
