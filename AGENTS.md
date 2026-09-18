@@ -13,3 +13,9 @@
   - When scanning web messaging pages (e.g., WhatsApp Web), strictly distinguish between actual attachment media (`<img>`, `<video>`, direct media URLs) and external article links (`<a href="https://...">`) to prevent cross-origin fetch failures and Content Security Policy (CSP) violations.
 - **Side Panel Responsiveness:**
   - The side panel container width is user-resizable. Extension pages configured for both popup and side panel must use fluid styling (`min-width: 320px`, `max-width: 100%`) rather than fixed viewport dimensions.
+
+## 3. Universal Visual Design (Eleviewer Aesthetic)
+- **Iconography:** Use custom inline SVG logos with a rounded dark container (`#1c1c1c` with a subtle border) and animated `plus-lighter` sweep/glow gradients for a dynamic, premium feel. Avoid standard text-in-circle avatars.
+- **Navbar & Components:** Minimal clutter. Navigation links should be clean and muted, transitioning to primary text on hover. Include a primary solid CTA button with hover effects and explicit external icons for links like GitHub. Do not use decorative "online" tags.
+- **Typography & Layout:** Headings should use `font-semibold` and `tracking-tight` (`-0.02em`). Body text is `text-pretty` and muted. For tags and small labels, use `font-mono text-xs uppercase tracking-widest`.
+- **Glassmorphism:** Use deep dark backgrounds with subtle borders and `backdrop-filter: blur(16px)` instead of heavy box-shadows. Use radial-gradient hover spotlights for interactive card grids.
