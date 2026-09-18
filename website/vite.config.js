@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import Sitemap from 'vite-plugin-sitemap';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [
@@ -18,11 +21,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(import.meta.dirname, 'index.html'),
-        pdf: resolve(import.meta.dirname, 'export-to-pdf.html'),
-        media: resolve(import.meta.dirname, 'download-media.html'),
-        privacy: resolve(import.meta.dirname, 'privacy-policy.html'),
-        docs: resolve(import.meta.dirname, 'documentation.html')
+        main: resolve(__dirname, 'index.html'),
+        pdf: resolve(__dirname, 'export-to-pdf.html'),
+        media: resolve(__dirname, 'download-media.html'),
+        privacy: resolve(__dirname, 'privacy-policy.html'),
+        docs: resolve(__dirname, 'documentation.html')
       }
     }
   }
