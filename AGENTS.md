@@ -25,3 +25,11 @@
   - Vercel deployments often default to Node 18 environments. `import.meta.dirname` was introduced in Node.js v20.11.0.
   - **Trap:** Using `import.meta.dirname` in configuration files (like `vite.config.js`) will cause Vercel builds to fail silently or with `TypeError [ERR_INVALID_ARG_TYPE]` since it resolves to `undefined`.
   - **Workaround:** Always use `const __dirname = dirname(fileURLToPath(import.meta.url));` with `import { fileURLToPath } from 'url'; import { dirname } from 'path';` for ES modules instead.
+- **Windows PowerShell Command Chaining:**
+  - **Trap:** Using `&&` in Windows PowerShell (5.1) results in `The token '&&' is not a valid statement separator`.
+  - **Workaround:** Use `;` to sequence commands in PowerShell.
+- **Dual Lockfile Dependabot Synchronization:**
+  - When both `package-lock.json` and `pnpm-lock.yaml` are present in the repository, Dependabot inspects both.
+  - Running `npm audit fix --package-lock-only` avoids Puppeteer postinstall download errors and file-lock EPERM issues while safely patching `package-lock.json`.
+  - If Dependabot continues to flag high-severity vulnerabilities, run `pnpm up <vulnerable-package> -r` to sync the pnpm lockfile as well.
+
