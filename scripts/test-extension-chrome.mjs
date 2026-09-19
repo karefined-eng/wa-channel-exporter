@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import crypto from 'node:crypto';
 
 const extensionPath = path.resolve(process.argv[2] ?? 'dist');
 const manifest = JSON.parse(await fs.readFile(path.join(extensionPath, 'manifest.json'), 'utf8'));
@@ -43,15 +42,32 @@ for (const page of await browser.pages()) {
   page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));
 }
 
-const extensionId = crypto.createHash('sha256')
-  .update(extensionPath)
-  .digest('hex')
-  .slice(0, 32)
-  .replace(/[0-9a-f]/g, character => String.fromCharCode('a'.charCodeAt(0) + parseInt(character, 16)));
 const popupPath = manifest.side_panel?.default_path || manifest.action?.default_popup;
 if (!popupPath) {
   await browser.close();
   throw new Error('Manifest does not expose a popup or side-panel page');
+}
+const extensionsPage = await browser.newPage();
+await extensionsPage.goto('chrome://extensions/', { waitUntil: 'domcontentloaded' });
+const extensionId = await extensionsPage.evaluate(() => {
+  const findItem = root => {
+    for (const element of root.querySelectorAll('*')) {
+      if (element.tagName === 'EXTENSIONS-ITEM' && element.shadowRoot?.textContent.includes('WA Channel Exporter')) {
+        return element.id;
+      }
+      if (element.shadowRoot) {
+        const nestedId = findItem(element.shadowRoot);
+        if (nestedId) return nestedId;
+      }
+    }
+    return null;
+  };
+  return findItem(document);
+});
+await extensionsPage.close();
+if (!extensionId) {
+  await browser.close();
+  throw new Error('Loaded WA Channel Exporter was not listed on chrome://extensions');
 }
 const page = await browser.newPage();
 page.on('console', message => messages.push(`${message.type()}: ${message.text()}`));
