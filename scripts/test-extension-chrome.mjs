@@ -24,7 +24,7 @@ for (const candidate of browserCandidates) {
 }
 if (!executablePath) throw new Error('No Chrome/Chromium executable was found');
 const browser = await puppeteer.launch({
-  headless: true,
+  headless: process.env.CI ? false : true,
   executablePath,
   args: [
     `--disable-extensions-except=${extensionPath}`,

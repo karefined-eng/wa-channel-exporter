@@ -45,14 +45,14 @@ jobs:
         run: npm test
 
       - name: Verify built distribution in Chromium
-        run: npm run test:chrome
+        run: xvfb-run -a npm run test:chrome
 
       - name: Verify exact ZIP artifact in Chromium
         shell: bash
         run: |
           extracted="$(mktemp -d)"
           unzip -q wa-channel-exporter.zip -d "$extracted"
-          node scripts/test-extension-chrome.mjs "$extracted"
+          xvfb-run -a node scripts/test-extension-chrome.mjs "$extracted"
 
       - name: Publish GitHub Release
         env:
