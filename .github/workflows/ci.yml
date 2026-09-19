@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Chrome for extension smoke tests
+        run: npx puppeteer browsers install chrome
+
       - name: Lint extension source
         run: npm run lint
 

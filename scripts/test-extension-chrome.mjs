@@ -7,11 +7,11 @@ const extensionPath = path.resolve(process.argv[2] ?? 'dist');
 const manifest = JSON.parse(await fs.readFile(path.join(extensionPath, 'manifest.json'), 'utf8'));
 const browserCandidates = [
   process.env.CHROME_BIN,
+  await puppeteer.executablePath(),
   '/usr/bin/google-chrome-stable',
   '/usr/bin/google-chrome',
   '/usr/bin/chromium',
   '/usr/bin/chromium-browser',
-  await puppeteer.executablePath(),
 ].filter(Boolean);
 let executablePath;
 for (const candidate of browserCandidates) {
