@@ -9,6 +9,7 @@
     <title>WA Channel Exporter | Download WhatsApp Channel Messages & Media</title>
     <meta name="description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline HTML, CSV, Markdown, PDF, and ZIP archives." />
     <meta name="keywords" content="how to download WhatsApp Channel history, export WhatsApp Channel messages, download WhatsApp Channel media, WhatsApp Channel archive, WhatsApp Channel to CSV, save WhatsApp Channel updates" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://whatsapp-channel-exporter.vercel.app/" />
     
     <!-- AI / GEO Context -->
@@ -26,11 +27,11 @@
     <meta property="og:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://whatsapp-channel-exporter.vercel.app/" />
-    <meta property="twitter:title" content="WA Channel Exporter | Download WhatsApp Channel Messages & Media" />
-    <meta property="twitter:description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline archives." />
-    <meta property="twitter:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://whatsapp-channel-exporter.vercel.app/" />
+    <meta name="twitter:title" content="WA Channel Exporter | Download WhatsApp Channel Messages & Media" />
+    <meta name="twitter:description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline archives." />
+    <meta name="twitter:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,6 +74,16 @@
     <!-- Vercel Telemetry -->
     <script defer src="/_vercel/insights/script.js"></script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": ["/about.html", "/documentation.html", "/export-to-pdf.html", "/download-media.html"]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- Skip Navigation for Accessibility -->
@@ -330,6 +341,20 @@
             <div class="bubble">
               <p>Absolutely safe. WA Channel Exporter processes everything <strong>locally</strong> in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code on GitHub to verify.</p>
               <span class="time">11:01 AM <span class="read-ticks">✓✓</span></span>
+            </div>
+          </div>
+
+          <div class="chat-message incoming fade-in-up">
+            <div class="bubble">
+              <p>Will my WhatsApp account get banned or flagged for using this?</p>
+              <span class="time">11:15 AM</span>
+            </div>
+          </div>
+
+          <div class="chat-message outgoing fade-in-up">
+            <div class="bubble">
+              <p><strong>No.</strong> Unlike spam bots or bulk-senders that trigger bans, WA Channel Exporter is <strong>100% read-only</strong>. It safely reads the public broadcast posts already loaded on your screen. It never sends automated messages, touches private contacts, or connects to external endpoints.</p>
+              <span class="time">11:16 AM <span class="read-ticks">✓✓</span></span>
             </div>
           </div>
 
