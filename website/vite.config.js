@@ -14,7 +14,10 @@ export default defineConfig({
         '/export-to-pdf.html',
         '/download-media.html',
         '/documentation.html',
-        '/privacy-policy.html'
+        '/privacy-policy.html',
+        '/about.html',
+        '/support.html',
+        '/terms-of-service.html'
       ]
     })
   ],
@@ -25,7 +28,10 @@ export default defineConfig({
         pdf: resolve(__dirname, 'export-to-pdf.html'),
         media: resolve(__dirname, 'download-media.html'),
         privacy: resolve(__dirname, 'privacy-policy.html'),
-        docs: resolve(__dirname, 'documentation.html')
+        docs: resolve(__dirname, 'documentation.html'),
+        about: resolve(__dirname, 'about.html'),
+        support: resolve(__dirname, 'support.html'),
+        terms: resolve(__dirname, 'terms-of-service.html')
       }
     }
   }

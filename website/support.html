@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
-    <title>Support & Feedback | WA Channel Exporter</title>
-    <meta name="description" content="Get help with WA Channel Exporter, report issues, or suggest new features." />
+    <title>Support & Help Center | WA Channel Exporter</title>
+    <meta name="description" content="Get help with WA Channel Exporter, report bugs, ask technical questions, or request new archiving features." />
+    <link rel="canonical" href="https://whatsapp-channel-exporter.vercel.app/support.html" />
+    <link rel="help" type="text/plain" href="/llms.txt" title="LLM Context" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://whatsapp-channel-exporter.vercel.app/support.html" />
+    <meta property="og:title" content="Support & Help Center | WA Channel Exporter" />
+    <meta property="og:description" content="Get help with WA Channel Exporter, report bugs, ask technical questions, or request new archiving features." />
+    <meta property="og:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,121 +27,165 @@
     
     <style>
         .support-container {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 40px;
-            background: var(--glass-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
+            max-width: 860px;
+            margin: 100px auto 60px;
+            padding: 48px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--card-border);
             text-align: center;
+            backdrop-filter: blur(16px);
         }
         .support-container h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary-light), #fff);
+            margin-bottom: 0.75rem;
+            background: linear-gradient(to right, #ffffff, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .support-container p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-        .form-placeholder {
-            width: 100%;
-            height: 600px;
-            background: rgba(0,0,0,0.2);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: var(--text-muted);
+            font-size: 1.05rem;
             margin-bottom: 2rem;
+            line-height: 1.7;
         }
-        .alternative-contact {
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+        .support-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+        .support-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        .support-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        .support-card p {
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
         }
     </style>
-
-    <!-- Vercel Telemetry -->
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
   </head>
 <body>
-    <!-- Background Effects -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="grid-bg"></div>
     <div class="glow-orb"></div>
 
     <nav class="navbar">
-        <div class="nav-brand">
-          <div class="logo">
-            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-          </div>
-          <div class="brand-text">
-            <span class="brand-name">WA Channel Exporter</span>
-            <span class="brand-badge">BETA</span>
-          </div>
-        </div>
+      <div class="container nav-content">
+        <a href="/" class="nav-brand" aria-label="WA Channel Exporter home">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="logoGlow" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="white" stop-opacity="0"/>
+                <stop offset="50%" stop-color="white" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                <animateTransform attributeName="gradientTransform" type="translate" values="-32 -32; 48 48; 48 48" keyTimes="0; 0.6; 1" dur="2.5s" repeatCount="indefinite"/>
+              </linearGradient>
+            </defs>
+            <rect width="32" height="32" rx="7" fill="#1c1c1c"/>
+            <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" stroke="#2c2c2c"/>
+            <path d="M16 8C11.58 8 8 11.13 8 15c0 1.62.63 3.11 1.68 4.28L8.8 22.4l3.38-1.1c1.17.5 2.46.7 3.82.7 4.42 0 8-3.13 8-7S20.42 8 16 8z" fill="#10b981"/>
+            <path d="M14.5 13v4.5h3V13h2L16 9.5 12.5 13h2z" fill="white"/>
+            <g style="mix-blend-mode:plus-lighter">
+              <path d="M16 8C11.58 8 8 11.13 8 15c0 1.62.63 3.11 1.68 4.28L8.8 22.4l3.38-1.1c1.17.5 2.46.7 3.82.7 4.42 0 8-3.13 8-7S20.42 8 16 8z" fill="url(#logoGlow)"/>
+            </g>
+          </svg>
+          <span class="logo">WA Channel Exporter</span>
+        </a>
         <div class="nav-links">
           <a href="/">Home</a>
-          <a href="/#features">Features</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/documentation.html">Documentation</a>
+          <a href="/documentation.html">Docs</a>
+          <a href="/about.html">About</a>
           <a href="/support.html" class="active">Support</a>
-          <a href="https://github.com/karefined-eng/wa-channel-exporter" target="_blank" class="github-link">GitHub</a>
+          <a href="https://github.com/karefined-eng/wa-channel-exporter" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="View WA Channel Exporter on GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.185 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.338c1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.021C22 6.484 17.522 2 12 2z"/></svg>
+            <span>GitHub</span>
+          </a>
         </div>
+      </div>
     </nav>
 
-    <main>
-        <div class="support-container">
-            <h1>We're here to help</h1>
-            <p>Encountered a bug, need help, or want to suggest a feature? Drop us a message below.</p>
+    <main id="main-content" class="container">
+        <div class="support-container glass-card">
+            <h1>We're Here to Help</h1>
+            <p>Encountered an issue with an export, have questions about browser compatibility, or want to suggest a new feature? Reach out directly through any of our channels below.</p>
             
-            <form action="mailto:support@wachannelexporter.com" method="post" enctype="text/plain" class="support-form" style="margin-bottom: 2rem;">
-                <button type="submit" class="primary-btn" style="padding: 12px 24px; border-radius: 8px; border: none; background: var(--primary-color); color: white; font-weight: bold; cursor: pointer; font-size: 1.1rem;">Email Support</button>
-            </form>
+            <div class="support-grid">
+                <div class="support-card">
+                    <h3>Public GitHub Tracker</h3>
+                    <p>Best for bug reports, DOM selector anomalies, or feature requests. Tracked openly with the community.</p>
+                    <a href="https://github.com/karefined-eng/wa-channel-exporter/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.9rem;">Open GitHub Issue</a>
+                </div>
 
-            <div class="alternative-contact">
-                <h3>Technical user?</h3>
-                <p>If you have a GitHub account and prefer tracking your issue publicly, you can <a href="https://github.com/karefined-eng/wa-channel-exporter/issues/new/choose" target="_blank" style="color: var(--primary-color);">submit an issue on our repository</a>.</p>
+                <div class="support-card">
+                    <h3>Email Assistance</h3>
+                    <p>Have general questions or need help setting up the developer mode installation? Drop us an email.</p>
+                    <a href="mailto:support@wachannelexporter.com" class="btn btn-primary" style="font-size: 0.9rem;">Email Support Team</a>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-main);">Troubleshooting Quick Tips</h3>
+                <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-left: 1.5rem;">
+                    <li><strong>WhatsApp Web Updated?</strong> Reload your WhatsApp Web tab to let the content script re-hook the latest DOM elements.</li>
+                    <li><strong>Channel Not Scrolling?</strong> Click once inside the channel message feed area so it gains focus before starting an automated scroll scan.</li>
+                    <li><strong>Large Media Collections:</strong> For channels with hundreds of photos/videos, keep your WhatsApp Web tab active to prevent Chrome from throttling background DOM reads.</li>
+                </ul>
             </div>
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-brand">
-            <h3>WA Channel Exporter</h3>
-            <p>100% local, private, and secure archiving for WhatsApp Channels.</p>
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <span style="font-weight: 700; color: #fff; font-size: 1rem;">WA Channel Exporter</span>
+            <p class="footer-desc">The open-source, client-side browser extension for downloading and archiving WhatsApp Channels to offline HTML, CSV, and media packages.</p>
           </div>
-          <div class="footer-links">
-            <div class="link-group">
-              <h4>Product</h4>
-              <a href="/export-to-pdf.html">Export to PDF</a>
-              <a href="/download-media.html">Download Media</a>
-              <a href="/documentation.html">Documentation</a>
-            </div>
-            <div class="link-group">
-              <h4>Support</h4>
-              <a href="/support.html">Contact Support</a>
-              <a href="https://github.com/karefined-eng/wa-channel-exporter/issues">GitHub Issues</a>
-              <a href="/#faq">FAQ</a>
-            </div>
-            <div class="link-group">
-              <h4>Legal</h4>
-              <a href="/privacy-policy.html">Privacy Policy</a>
-              <a href="https://github.com/karefined-eng/wa-channel-exporter/blob/main/LICENSE">MIT License</a>
-            </div>
+          <div class="footer-col">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="/export-to-pdf.html">Export to PDF</a></li>
+              <li><a href="/download-media.html">Download Media</a></li>
+              <li><a href="/documentation.html">Documentation</a></li>
+              <li><a href="/wa-channel-exporter.zip" download>Download ZIP</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="/support.html">Contact Support</a></li>
+              <li><a href="https://github.com/karefined-eng/wa-channel-exporter/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
+              <li><a href="/#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Trust & Legal</h4>
+            <ul>
+              <li><a href="/about.html">About & Editorial</a></li>
+              <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="/terms-of-service.html">Terms of Service</a></li>
+              <li><a href="https://github.com/karefined-eng/wa-channel-exporter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+            </ul>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 WA Channel Exporter. Open Source.</p>
-          <p class="disclaimer">Independent tool. Not affiliated with or endorsed by WhatsApp or Meta.</p>
-        </div>
+        <p>&copy; 2026 WA Channel Exporter. Open Source under MIT License.</p>
+        <p class="disclaimer">Independent tool. Not affiliated with or endorsed by WhatsApp or Meta.</p>
+      </div>
     </footer>
-
 </body>
 </html>
