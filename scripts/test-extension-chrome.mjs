@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 const extensionPath = path.resolve(process.argv[2] ?? 'dist');
 const manifest = JSON.parse(await fs.readFile(path.join(extensionPath, 'manifest.json'), 'utf8'));
@@ -42,18 +43,11 @@ for (const page of await browser.pages()) {
   page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));
 }
 
-let serviceWorkerTarget;
-for (let attempt = 0; attempt < 20; attempt += 1) {
-  serviceWorkerTarget = browser.targets().find(target => target.type() === 'service_worker' && target.url().startsWith('chrome-extension://'));
-  if (serviceWorkerTarget) break;
-  await new Promise(resolve => setTimeout(resolve, 250));
-}
-if (!serviceWorkerTarget) {
-  await browser.close();
-  throw new Error('Extension service worker did not start');
-}
-
-const extensionId = new URL(serviceWorkerTarget.url()).hostname;
+const extensionId = crypto.createHash('sha256')
+  .update(extensionPath)
+  .digest('hex')
+  .slice(0, 32)
+  .replace(/[0-9a-f]/g, character => String.fromCharCode('a'.charCodeAt(0) + parseInt(character, 16)));
 const popupPath = manifest.side_panel?.default_path || manifest.action?.default_popup;
 if (!popupPath) {
   await browser.close();
@@ -63,6 +57,13 @@ const page = await browser.newPage();
 page.on('console', message => messages.push(`${message.type()}: ${message.text()}`));
 page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));
 await page.goto(`chrome-extension://${extensionId}/${popupPath}`, { waitUntil: 'networkidle0' });
+
+let serviceWorkerTarget;
+for (let attempt = 0; attempt < 40; attempt += 1) {
+  serviceWorkerTarget = browser.targets().find(target => target.type() === 'service_worker' && target.url().startsWith(`chrome-extension://${extensionId}/`));
+  if (serviceWorkerTarget) break;
+  await new Promise(resolve => setTimeout(resolve, 250));
+}
 
 const result = await page.evaluate(() => ({
   title: document.title,
