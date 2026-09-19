@@ -5,6 +5,12 @@
   - When the user asks to "ship today" or publish a release, differentiate between *syntactic readiness* (builds compile, tests pass, linter is clean) and *functional completeness* (live browser verification on realistic workloads).
   - Explicitly ask or verify if live data extraction and real user smoke tests have succeeded on actual, authentic targets before drafting release tags or publication steps.
 
+## 1.1 Git Commit Identity & Attribution
+- **Use the configured Karefined Git identity for every commit in every environment:** `karefined-eng <ka.refined@gmail.com>`.
+- Before committing, verify `git var GIT_AUTHOR_IDENT` and `git var GIT_COMMITTER_IDENT`; do not substitute another local, environment, agent, or platform identity.
+- **Never add co-authors or `Co-authored-by:` trailers.** Commits must contain only the Karefined author and committer identity unless the user explicitly changes this policy.
+- Do not create commits or push them automatically unless the user explicitly requests that action.
+
 ## 2. Chrome Extension Architecture & IPC Invariants
 - **Message Boundary Serialization:**
   - `chrome.runtime.sendMessage` and `chrome.tabs.sendMessage` serialize payloads using JSON. `ArrayBuffer` and `Blob` instances lose their data and degrade to empty objects (`{}`) across this boundary.
@@ -32,4 +38,3 @@
   - When both `package-lock.json` and `pnpm-lock.yaml` are present in the repository, Dependabot inspects both.
   - Running `npm audit fix --package-lock-only` avoids Puppeteer postinstall download errors and file-lock EPERM issues while safely patching `package-lock.json`.
   - If Dependabot continues to flag high-severity vulnerabilities, run `pnpm up <vulnerable-package> -r` to sync the pnpm lockfile as well.
-
