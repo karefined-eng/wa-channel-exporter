@@ -25,8 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Chrome for extension smoke tests
-        run: npx puppeteer browsers install chrome
+      - name: Install Chromium for extension smoke tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium
 
       - name: Lint extension source
         run: npm run lint
@@ -38,6 +40,8 @@ jobs:
         run: npm test
 
       - name: Verify built distribution in Chromium
+        env:
+          CHROME_BIN: /usr/bin/chromium
         run: |
           smoke_dir="$(mktemp -d)"
           node scripts/prepare-extension-smoke.mjs dist "$smoke_dir"
@@ -45,6 +49,8 @@ jobs:
 
       - name: Verify exact ZIP artifact in Chromium
         shell: bash
+        env:
+          CHROME_BIN: /usr/bin/chromium
         run: |
           extracted="$(mktemp -d)"
           unzip -q wa-channel-exporter.zip -d "$extracted"
