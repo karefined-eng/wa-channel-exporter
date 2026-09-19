@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 const extensionPath = path.resolve(process.argv[2] ?? 'dist');
 const manifest = JSON.parse(await fs.readFile(path.join(extensionPath, 'manifest.json'), 'utf8'));
@@ -47,33 +48,15 @@ if (!popupPath) {
   await browser.close();
   throw new Error('Manifest does not expose a popup or side-panel page');
 }
-const extensionsPage = await browser.newPage();
-await extensionsPage.goto('chrome://extensions/', { waitUntil: 'domcontentloaded' });
-let extensionId;
-for (let attempt = 0; attempt < 20; attempt += 1) {
-  extensionId = await extensionsPage.evaluate(() => {
-  const findItem = root => {
-    for (const element of root.querySelectorAll('*')) {
-      if (element.tagName === 'EXTENSIONS-ITEM' && element.shadowRoot?.textContent.includes('WA Channel Exporter')) {
-        return element.id;
-      }
-      if (element.shadowRoot) {
-        const nestedId = findItem(element.shadowRoot);
-        if (nestedId) return nestedId;
-      }
-    }
-    return null;
-  };
-  return findItem(document);
-  });
-  if (extensionId) break;
-  await new Promise(resolve => setTimeout(resolve, 500));
-}
-await extensionsPage.close();
-if (!extensionId) {
+if (!manifest.key) {
   await browser.close();
-  throw new Error('Loaded WA Channel Exporter was not listed on chrome://extensions');
+  throw new Error('Manifest must include a stable public key for extension verification');
 }
+const extensionId = crypto.createHash('sha256')
+  .update(Buffer.from(manifest.key, 'base64'))
+  .digest('hex')
+  .slice(0, 32)
+  .replace(/[0-9a-f]/g, character => String.fromCharCode('a'.charCodeAt(0) + parseInt(character, 16)));
 const page = await browser.newPage();
 page.on('console', message => messages.push(`${message.type()}: ${message.text()}`));
 page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));

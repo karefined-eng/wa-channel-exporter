@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "WA Channel Exporter",
   "version": "1.3.1",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1tzFDRvFu8R+G/GB7zNCnOCoZy99YGsu98a2g2V8oTDFtWYPs1aKxqJDPaFFZ++/9Ys49U2TtqO/7yNQfZwZYUV6SyBH+Vacyhm+Ivco+4PrJIZGqmA0F69x9AbyjticWUtgTqPZLQyM41Pu8qTiQB30T1ZJVERCpBw5oqNV/3vszuZjAYWzwiDmd7cOkFn9UcZfggk3QeGa6IEA8ND+gZ/4i8R24CLesQQKGBIxBpDpzbN+AYC0u2k6EY7erXVkCUSo82hR0gjLa6N9o8bx7qNZlZa+4hQqtzMRMqHohqtAOZ8VaeowlDfk9X9++iDIOteQnedwqoU7AV/bRw/DNwIDAQAB",
   "description": "Export WhatsApp Channel posts from WhatsApp Web into a local ZIP archive with date ranges and missing-item reports.",
   "action": {
     "default_title": "WA Channel Exporter",
