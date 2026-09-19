@@ -60,7 +60,18 @@ const extensionId = crypto.createHash('sha256')
 const page = await browser.newPage();
 page.on('console', message => messages.push(`${message.type()}: ${message.text()}`));
 page.on('pageerror', error => errors.push(`pageerror: ${error.message}`));
-await page.goto(`chrome-extension://${extensionId}/${popupPath}`, { waitUntil: 'networkidle0' });
+let popupLoaded = false;
+for (let attempt = 0; attempt < 8; attempt += 1) {
+  try {
+    await page.goto(`chrome-extension://${extensionId}/${popupPath}`, { waitUntil: 'networkidle0' });
+    popupLoaded = true;
+    break;
+  } catch (error) {
+    if (!String(error.message).includes('ERR_BLOCKED_BY_CLIENT') || attempt === 7) throw error;
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+}
+if (!popupLoaded) throw new Error('Extension popup did not load');
 
 let serviceWorkerTarget;
 for (let attempt = 0; attempt < 40; attempt += 1) {
