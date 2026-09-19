@@ -73,16 +73,27 @@ body {
   align-items: center;
   height: 72px;
 }
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
 .logo {
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
+.nav-links {
+  display: flex;
+  align-items: center;
+}
 .nav-links a {
   color: var(--text-secondary);
   text-decoration: none;
-  margin-left: 32px;
+  margin-left: 24px;
   font-size: 0.9rem;
   font-weight: 500;
   transition: color 0.2s;
@@ -101,6 +112,11 @@ body {
 .nav-links .github-link:hover {
   background: var(--surface-hover);
   border-color: rgba(255, 255, 255, 0.2);
+}
+.nav-links .btn-nav {
+  margin-left: 24px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
 }
 
 /* Hero */
