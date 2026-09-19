@@ -40,5 +40,5 @@ Currently, the extension is packaged for Chromium-based browsers (Google Chrome,
 
 ## How do I report a bug or request a feature?
 Please open an issue on GitHub using the provided templates:
-- [Report a bug](https://github.com/karefined-eng/wa-channel-exporter/issues/new?template=bug_report.md)
-- [Request a feature](https://github.com/karefined-eng/wa-channel-exporter/issues/new?template=feature_request.md)
+- [Report a bug](https://github.com/karefined-eng/whatsapp-channel-exporter/issues/new?template=bug_report.md)
+- [Request a feature](https://github.com/karefined-eng/whatsapp-channel-exporter/issues/new?template=feature_request.md)

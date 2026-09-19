@@ -1,0 +1,54 @@
+name: Extension CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-extension:
+    name: Build and verify extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint extension source
+        run: npm run lint
+
+      - name: Run regression tests
+        run: npm test
+
+      - name: Build extension artifact
+        run: npm run build
+
+      - name: Verify built distribution in Chromium
+        run: npm run test:chrome
+
+      - name: Verify exact ZIP artifact in Chromium
+        shell: bash
+        run: |
+          extracted="$(mktemp -d)"
+          unzip -q wa-channel-exporter.zip -d "$extracted"
+          node scripts/test-extension-chrome.mjs "$extracted"
+
+      - name: Upload extension artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wa-channel-exporter-${{ github.sha }}
+          path: wa-channel-exporter.zip
+          if-no-files-found: error
+          retention-days: 14

@@ -5,14 +5,14 @@ Thank you for taking the time to contribute! This project is built by a small te
 ## How to Contribute
 
 ### Reporting Bugs
-Please open a [Bug Report](https://github.com/karefined-eng/wa-channel-exporter/issues/new?template=bug_report.md) issue and include:
+Please open a [Bug Report](https://github.com/karefined-eng/whatsapp-channel-exporter/issues/new?template=bug_report.md) issue and include:
 - Which Chrome version and OS you are using.
 - The exact WhatsApp Channel you were trying to export (or a description of it).
 - What you expected to happen vs what actually happened.
 - Any error messages from the browser console (`F12 > Console`).
 
 ### Suggesting Features
-Open a [Feature Request](https://github.com/karefined-eng/wa-channel-exporter/issues/new?template=feature_request.md) issue. Please explain:
+Open a [Feature Request](https://github.com/karefined-eng/whatsapp-channel-exporter/issues/new?template=feature_request.md) issue. Please explain:
 - The use case (who benefits and why).
 - Whether you'd be willing to help implement it.
 

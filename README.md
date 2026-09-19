@@ -3,7 +3,7 @@
 # WA Channel Exporter
 ### The Ultimate Chrome Extension to Export WhatsApp Channel Messages & Media
 
-[![Status: pilot](https://img.shields.io/badge/status-pilot-0f766e?style=flat-square)](https://github.com/karefined-eng/wa-channel-exporter)
+[![Status: pilot](https://img.shields.io/badge/status-pilot-0f766e?style=flat-square)](https://github.com/karefined-eng/whatsapp-channel-exporter)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Privacy](https://img.shields.io/badge/data%20handling-local--first-16a34a?style=flat-square)](#privacy-and-rights)
 [![License: MIT](https://img.shields.io/badge/license-MIT-111827?style=flat-square)](LICENSE)
