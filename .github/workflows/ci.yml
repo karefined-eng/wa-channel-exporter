@@ -28,11 +28,11 @@ jobs:
       - name: Lint extension source
         run: npm run lint
 
-      - name: Run regression tests
-        run: npm test
-
       - name: Build extension artifact
         run: npm run build
+
+      - name: Run regression tests
+        run: npm test
 
       - name: Verify built distribution in Chromium
         run: npm run test:chrome
