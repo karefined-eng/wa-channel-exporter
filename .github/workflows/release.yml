@@ -48,14 +48,19 @@ jobs:
         run: npm test
 
       - name: Verify built distribution in Chromium
-        run: xvfb-run -a npm run test:chrome
+        run: |
+          smoke_dir="$(mktemp -d)"
+          node scripts/prepare-extension-smoke.mjs dist "$smoke_dir"
+          xvfb-run -a node scripts/test-extension-chrome.mjs "$smoke_dir"
 
       - name: Verify exact ZIP artifact in Chromium
         shell: bash
         run: |
           extracted="$(mktemp -d)"
           unzip -q wa-channel-exporter.zip -d "$extracted"
-          xvfb-run -a node scripts/test-extension-chrome.mjs "$extracted"
+          smoke_dir="$(mktemp -d)"
+          node scripts/prepare-extension-smoke.mjs "$extracted" "$smoke_dir"
+          xvfb-run -a node scripts/test-extension-chrome.mjs "$smoke_dir"
 
       - name: Publish GitHub Release
         env:
