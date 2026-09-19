@@ -49,7 +49,9 @@ if (!popupPath) {
 }
 const extensionsPage = await browser.newPage();
 await extensionsPage.goto('chrome://extensions/', { waitUntil: 'domcontentloaded' });
-const extensionId = await extensionsPage.evaluate(() => {
+let extensionId;
+for (let attempt = 0; attempt < 20; attempt += 1) {
+  extensionId = await extensionsPage.evaluate(() => {
   const findItem = root => {
     for (const element of root.querySelectorAll('*')) {
       if (element.tagName === 'EXTENSIONS-ITEM' && element.shadowRoot?.textContent.includes('WA Channel Exporter')) {
@@ -63,7 +65,10 @@ const extensionId = await extensionsPage.evaluate(() => {
     return null;
   };
   return findItem(document);
-});
+  });
+  if (extensionId) break;
+  await new Promise(resolve => setTimeout(resolve, 500));
+}
 await extensionsPage.close();
 if (!extensionId) {
   await browser.close();
