@@ -21,7 +21,54 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Structured Data (ContactPage & Organization) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#organization",
+          "name": "Karefined Engineering",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "logo": "https://whatsapp-channel-exporter.vercel.app/favicon.svg",
+          "sameAs": [
+            "https://github.com/karefined-eng",
+            "https://github.com/karefined-eng/whatsapp-channel-exporter"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://whatsapp-channel-exporter.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Support",
+              "item": "https://whatsapp-channel-exporter.vercel.app/support.html"
+            }
+          ]
+        },
+        {
+          "@type": "ContactPage",
+          "name": "Support & Help Center",
+          "description": "Get help with WA Channel Exporter, report bugs, ask technical questions, or request new archiving features.",
+          "url": "https://whatsapp-channel-exporter.vercel.app/support.html",
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- JS & CSS -->
     <script type="module" src="/src/main.js"></script>
@@ -54,7 +101,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             text-align: left;
         }
         .support-card {
@@ -125,6 +172,7 @@
             <h1>We're Here to Help</h1>
             <p>Encountered an issue with an export, have questions about browser compatibility, or want to suggest a new feature? Reach out directly through any of our channels below.</p>
             
+            <h2 style="font-size: 1.4rem; margin-bottom: 1.25rem; color: #fff;">Direct Support Channels</h2>
             <div class="support-grid">
                 <div class="support-card">
                     <h3>Public GitHub Tracker</h3>
@@ -140,7 +188,7 @@
             </div>
 
             <div style="margin-top: 3rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-main);">Troubleshooting Quick Tips</h3>
+                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Troubleshooting Quick Tips</h2>
                 <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-left: 1.5rem;">
                     <li><strong>WhatsApp Web Updated?</strong> Reload your WhatsApp Web tab to let the content script re-hook the latest DOM elements.</li>
                     <li><strong>Channel Not Scrolling?</strong> Click once inside the channel message feed area so it gains focus before starting an automated scroll scan.</li>
@@ -158,7 +206,7 @@
             <p class="footer-desc">The open-source, client-side browser extension for downloading and archiving WhatsApp Channels to offline HTML, CSV, and media packages.</p>
           </div>
           <div class="footer-col">
-            <h4>Product</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Product</h3>
             <ul>
               <li><a href="/export-to-pdf.html">Export to PDF</a></li>
               <li><a href="/download-media.html">Download Media</a></li>
@@ -167,17 +215,18 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Support</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Support</h3>
             <ul>
-              <li><a href="/support.html">Contact Support</a></li>
+              <li><a href="/support.html">Contact Us</a></li>
               <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
               <li><a href="/#faq">FAQ</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Trust & Legal</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Trust & Legal</h3>
             <ul>
-              <li><a href="/about.html">About & Editorial</a></li>
+              <li><a href="/about.html">About Us</a></li>
+              <li><a href="/about.html#editorial-policy">Editorial Policy</a></li>
               <li><a href="/privacy-policy.html">Privacy Policy</a></li>
               <li><a href="/terms-of-service.html">Terms of Service</a></li>
               <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>

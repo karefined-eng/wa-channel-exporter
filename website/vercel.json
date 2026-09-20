@@ -18,6 +18,15 @@
   ],
   "headers": [
     {
+      "source": "/(google.*|yandex_.*)\\.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- SEO Meta Tags -->
@@ -10,11 +10,14 @@
     <meta name="description" content="Detailed documentation and step-by-step user guide on how to export WhatsApp Channels to PDF, download media, and generate offline HTML archives." />
     <meta name="keywords" content="export whatsapp channel to pdf, download whatsapp channel, save whatsapp channel, documentation, user guide, whatsapp channel export tool" />
     <meta name="robots" content="index, follow" />
+    <meta name="date" content="2026-09-20" />
+    <meta name="last-modified" content="2026-09-20" />
     <link rel="canonical" href="https://whatsapp-channel-exporter.vercel.app/documentation.html" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Schema.org Structured Data -->
@@ -23,10 +26,44 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#organization",
+          "name": "Karefined Engineering",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "logo": "https://whatsapp-channel-exporter.vercel.app/favicon.svg",
+          "sameAs": [
+            "https://github.com/karefined-eng",
+            "https://github.com/karefined-eng/whatsapp-channel-exporter"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://whatsapp-channel-exporter.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Documentation",
+              "item": "https://whatsapp-channel-exporter.vercel.app/documentation.html"
+            }
+          ]
+        },
+        {
           "@type": "SoftwareApplication",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#software",
           "name": "WA Channel Exporter",
           "operatingSystem": "Chrome OS, Windows, macOS, Linux",
           "applicationCategory": "BrowserApplication",
+          "datePublished": "2026-09-15",
+          "dateModified": "2026-09-20",
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          },
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -35,41 +72,16 @@
           "description": "A privacy-first Chrome Extension that exports WhatsApp Channels into offline HTML, CSV, and formatted PDF documents."
         },
         {
-          "@type": "HowTo",
-          "name": "How to export a WhatsApp Channel to PDF",
-          "description": "Step-by-step guide to generating a professional PDF archive from any WhatsApp Channel using WA Channel Exporter.",
-          "step": [
-            {
-              "@type": "HowToStep",
-              "name": "Install Extension",
-              "text": "Download the WA Channel Exporter extension and load it into Google Chrome via Developer Mode."
-            },
-            {
-              "@type": "HowToStep",
-              "name": "Open WhatsApp Web",
-              "text": "Navigate to WhatsApp Web and open the specific Channel you wish to export in the 'Updates' tab."
-            },
-            {
-              "@type": "HowToStep",
-              "name": "Select PDF Format",
-              "text": "Click the WA Channel Exporter extension icon, set your date range, and select 'PDF' under the Export Options."
-            },
-            {
-              "@type": "HowToStep",
-              "name": "Generate Document",
-              "text": "Click 'Download Document (PDF)' to instantly generate and save the formatted PDF document locally."
-            }
-          ]
-        },
-        {
-          "@type": "Article",
-          "headline": "WA Channel Exporter Documentation",
+          "@type": "TechArticle",
+          "headline": "WA Channel Exporter Documentation & Architectural Specification",
           "author": {
-            "@type": "Organization",
-            "name": "WA Channel Exporter"
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          },
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
           },
           "datePublished": "2026-09-17",
-          "dateModified": "2026-09-17"
+          "dateModified": "2026-09-20"
         }
       ]
     }
@@ -86,18 +98,20 @@
 
     <nav class="navbar">
       <div class="container nav-content">
-        <div class="chat-header-left">
+        <a href="/" class="chat-header-left" style="text-decoration: none;">
           <div class="avatar">WA</div>
           <div class="header-info">
             <div class="logo">WA Channel Exporter</div>
             <div class="status">online</div>
           </div>
-        </div>
+        </a>
         <div class="nav-links">
           <a href="/">Home</a>
           <a href="/export-to-pdf.html">PDF Export</a>
           <a href="/download-media.html">Media Downloader</a>
           <a href="/documentation.html" class="active">Documentation</a>
+          <a href="/about.html">About</a>
+          <a href="/support.html">Contact Us</a>
           <a href="https://github.com/karefined-eng/whatsapp-channel-exporter" target="_blank" class="github-link">GitHub</a>
         </div>
       </div>
@@ -162,6 +176,41 @@
 
     <footer>
       <div class="container footer-content">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700; color: #fff; font-size: 1rem;">WA Channel Exporter</span>
+            </div>
+            <p class="footer-desc">The open-source, client-side browser extension for downloading and archiving WhatsApp Channels to offline HTML, CSV, and media packages.</p>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Product</h3>
+            <ul>
+              <li><a href="/export-to-pdf.html">Export to PDF</a></li>
+              <li><a href="/download-media.html">Download Media</a></li>
+              <li><a href="/documentation.html">Documentation</a></li>
+              <li><a href="/wa-channel-exporter.zip" download>Download ZIP</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Support</h3>
+            <ul>
+              <li><a href="/support.html">Contact Us</a></li>
+              <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
+              <li><a href="/#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Trust & Legal</h3>
+            <ul>
+              <li><a href="/about.html">About Us</a></li>
+              <li><a href="/about.html#editorial-policy">Editorial Policy</a></li>
+              <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="/terms-of-service.html">Terms of Service</a></li>
+              <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+            </ul>
+          </div>
+        </div>
         <p>&copy; 2026 WA Channel Exporter. Open Source under MIT License.</p>
         <p class="disclaimer">Independent tool. Not affiliated with or endorsed by WhatsApp or Meta.</p>
       </div>

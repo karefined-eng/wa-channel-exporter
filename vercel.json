@@ -3,7 +3,29 @@
   "outputDirectory": "website/dist",
   "framework": "vite",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "wa-channel-exporter.vercel.app"
+        }
+      ],
+      "destination": "https://whatsapp-channel-exporter.vercel.app/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
+    {
+      "source": "/(google.*|yandex_.*)\\.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [

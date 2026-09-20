@@ -1,8 +1,19 @@
 User-agent: *
 Allow: /
+Disallow: /google*.html
+Disallow: /yandex_*.html
 
-# Allow AI Search Crawlers for Generative Engine Optimization (GEO)
+# Generative Engine Optimization (GEO) - Explicit Allowance for AI Discovery
+User-agent: GPTBot
+Allow: /
+
 User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-SearchBot
@@ -11,17 +22,31 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-# Disallow model training only crawlers (optional, but good for privacy)
-User-agent: GPTBot
-Disallow: /
+User-agent: Google-Extended
+Allow: /
 
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
+User-agent: GoogleOther
+Allow: /
 
 User-agent: Applebot-Extended
-Disallow: /
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
 
 Sitemap: https://whatsapp-channel-exporter.vercel.app/sitemap.xml

@@ -2,36 +2,99 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- SEO Meta Tags -->
     <title>Download WhatsApp Channel Videos & Photos | Media Extractor</title>
-    <meta name="description" content="The easiest way to extract, download, and save all videos, photos, and voice notes from any WhatsApp Channel directly to your computer." />
+    <meta name="description" content="Extract, download, and archive photos, videos, and audio notes from WhatsApp Channels into organized date folders on your computer." />
     <meta name="keywords" content="download whatsapp channel videos, extract photos from whatsapp channel, whatsapp media downloader, save channel assets, export channel images" />
     <meta name="robots" content="index, follow" />
+    <meta name="date" content="2026-09-20" />
+    <meta name="last-modified" content="2026-09-20" />
     <link rel="canonical" href="https://whatsapp-channel-exporter.vercel.app/download-media.html" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Schema.org Structured Data -->
+    <!-- Schema.org Structured Data (E-E-A-T & HowTo) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "WA Channel Exporter - Media Extractor",
-      "operatingSystem": "Chrome OS, Windows, macOS, Linux",
-      "applicationCategory": "BrowserApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "The easiest way to extract, download, and save all videos, photos, and voice notes from any WhatsApp Channel directly to your computer.",
-      "url": "https://whatsapp-channel-exporter.vercel.app/download-media.html"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#organization",
+          "name": "Karefined Engineering",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "logo": "https://whatsapp-channel-exporter.vercel.app/favicon.svg",
+          "sameAs": [
+            "https://github.com/karefined-eng",
+            "https://github.com/karefined-eng/whatsapp-channel-exporter"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://whatsapp-channel-exporter.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Download Media",
+              "item": "https://whatsapp-channel-exporter.vercel.app/download-media.html"
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Download WhatsApp Channel Media and Videos",
+          "description": "Step-by-step guide to extract and download all photos, videos, and voice notes from any WhatsApp Channel.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "name": "Install the Extension",
+              "text": "Download the WA Channel Exporter ZIP file and load it in Chrome under Developer Mode."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Open Channel in WhatsApp Web",
+              "text": "Navigate to the Updates tab on WhatsApp Web and select the channel you want to archive."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Select Media Scope & Scan",
+              "text": "Choose 'All' or 'Media Only' and execute the automated scan to download all assets into date-stamped folders."
+            }
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/download-media.html#app",
+          "name": "WA Channel Exporter - Media Extractor",
+          "operatingSystem": "Chrome OS, Windows, macOS, Linux",
+          "applicationCategory": "BrowserApplication",
+          "datePublished": "2026-09-15",
+          "dateModified": "2026-09-20",
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Extract, download, and save all videos, photos, and voice notes from any WhatsApp Channel directly to your computer.",
+          "url": "https://whatsapp-channel-exporter.vercel.app/download-media.html"
+        }
+      ]
     }
     </script>
   
@@ -46,18 +109,20 @@
 
     <nav class="navbar">
       <div class="container nav-content">
-        <div class="chat-header-left">
+        <a href="/" class="chat-header-left" style="text-decoration: none;">
           <div class="avatar">WA</div>
           <div class="header-info">
             <div class="logo">WA Channel Exporter</div>
             <div class="status">online</div>
           </div>
-        </div>
+        </a>
         <div class="nav-links">
           <a href="/">Home</a>
           <a href="/export-to-pdf.html">PDF Export</a>
           <a href="/download-media.html" class="active">Media Downloader</a>
           <a href="/documentation.html">Documentation</a>
+          <a href="/about.html">About</a>
+          <a href="/support.html">Contact Us</a>
           <a href="https://github.com/karefined-eng/whatsapp-channel-exporter" target="_blank" class="github-link">GitHub</a>
         </div>
       </div>
@@ -95,15 +160,18 @@
         </div>
       </section>
 
-      <!-- Problem/Solution Section -->
+      <!-- Dedicated Answer-First Section (Deduplicated GEO Optimization) -->
       <section class="problem-section container fade-in-up delay-1" style="margin-top: 2rem;">
         <div class="glass-card problem-card">
-          <h2>Can you export a WhatsApp Channel?</h2>
+          <h2>How to Download WhatsApp Channel Media and Assets</h2>
           <p>
-            If you've searched for <em>"how to export a whatsapp channel"</em>, you probably noticed that popular tools like WAnalysis or WAExport <strong>only work for 1-on-1 chats and standard groups</strong>. They fail completely when trying to read the WhatsApp Channels "Updates" feed.
+            Downloading photos, videos, audio notes, and documents from a broadcast channel requires a dedicated media extraction pipeline because WhatsApp Web does not provide bulk media saving for the Updates feed. Standard methods force users to manually click and save individual images one at a time.
+          </p>
+          <p>
+            <strong>WA Channel Exporter</strong> automates this workflow directly inside your browser. By intercepting authenticated binary blob responses during an active scan, the extension retrieves original high-resolution files without compression artifacts. It systematically categorizes all recovered files into date-stamped subdirectories (<code>media/YYYY-MM-DD/</code>) alongside an exhaustive <code>media-report.json</code> integrity audit.
           </p>
           <p class="solution-text">
-            <span class="read-ticks">✓✓</span> <strong>WA Channel Exporter is the solution.</strong> It is engineered specifically to act as a WhatsApp Channel scraper and archiver, giving you a clean, timestamped export of the channels you follow.
+            <span class="read-ticks">✓✓</span> <strong>Full Fidelity Archiving:</strong> Preserves original metadata, resolution, and audio fidelity with zero cloud transmission.
           </p>
         </div>
       </section>
@@ -210,10 +278,40 @@
 
     <footer>
       <div class="container footer-content">
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1rem;">
-          <a href="/export-to-pdf.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Export to PDF</a>
-          <a href="/download-media.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Download Media</a>
-          <a href="/documentation.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Documentation</a>
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700; color: #fff; font-size: 1rem;">WA Channel Exporter</span>
+            </div>
+            <p class="footer-desc">The open-source, client-side browser extension for downloading and archiving WhatsApp Channels to offline HTML, CSV, and media packages.</p>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Product</h3>
+            <ul>
+              <li><a href="/export-to-pdf.html">Export to PDF</a></li>
+              <li><a href="/download-media.html">Download Media</a></li>
+              <li><a href="/documentation.html">Documentation</a></li>
+              <li><a href="/wa-channel-exporter.zip" download>Download ZIP</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Support</h3>
+            <ul>
+              <li><a href="/support.html">Contact Us</a></li>
+              <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
+              <li><a href="/#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Trust & Legal</h3>
+            <ul>
+              <li><a href="/about.html">About Us</a></li>
+              <li><a href="/about.html#editorial-policy">Editorial Policy</a></li>
+              <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="/terms-of-service.html">Terms of Service</a></li>
+              <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>
+            </ul>
+          </div>
         </div>
         <p>&copy; 2026 WA Channel Exporter. Open Source under MIT License.</p>
         <p class="disclaimer">Independent tool. Not affiliated with or endorsed by WhatsApp or Meta.</p>

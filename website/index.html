@@ -6,31 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- SEO Meta Tags -->
-    <title>WA Channel Exporter | Download WhatsApp Channel Messages & Media</title>
-    <meta name="description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline HTML, CSV, Markdown, PDF, and ZIP archives." />
+    <title>WA Channel Exporter | Export Channel Messages & Media</title>
+    <meta name="description" content="Download WhatsApp Channel history, messages, photos, and voice notes from WhatsApp Web into private offline HTML, CSV, Markdown, and ZIP archives." />
     <meta name="keywords" content="how to download WhatsApp Channel history, export WhatsApp Channel messages, download WhatsApp Channel media, WhatsApp Channel archive, WhatsApp Channel to CSV, save WhatsApp Channel updates" />
     <meta name="robots" content="index, follow" />
+    <meta name="date" content="2026-09-20" />
+    <meta name="last-modified" content="2026-09-20" />
     <link rel="canonical" href="https://whatsapp-channel-exporter.vercel.app/" />
     
     <!-- AI / GEO Context -->
     <link rel="help" type="text/plain" href="/llms.txt" title="LLM Context" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="Plaintext LLM Summary" />
 
-    <!-- Performance: Preload LCP Candidate -->
+    <!-- Performance: Preload LCP Candidate & Stylesheets -->
     <link rel="preload" as="image" href="/promo-screenshot-1.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://whatsapp-channel-exporter.vercel.app/" />
-    <meta property="og:title" content="WA Channel Exporter | Download WhatsApp Channel Messages & Media" />
-    <meta property="og:description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline archives." />
+    <meta property="og:title" content="WA Channel Exporter | Export Channel Messages & Media" />
+    <meta property="og:description" content="Download WhatsApp Channel history, messages, photos, and voice notes from WhatsApp Web into private offline HTML, CSV, Markdown, and ZIP archives." />
     <meta property="og:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://whatsapp-channel-exporter.vercel.app/" />
-    <meta name="twitter:title" content="WA Channel Exporter | Download WhatsApp Channel Messages & Media" />
-    <meta name="twitter:description" content="Learn how to download WhatsApp Channel history, messages, media, and voice notes from WhatsApp Web into private offline archives." />
+    <meta name="twitter:title" content="WA Channel Exporter | Export Channel Messages & Media" />
+    <meta name="twitter:description" content="Download WhatsApp Channel history, messages, photos, and voice notes from WhatsApp Web into private offline HTML, CSV, Markdown, and ZIP archives." />
     <meta name="twitter:image" content="https://whatsapp-channel-exporter.vercel.app/og-main.png" />
     
     <!-- Fonts -->
@@ -38,36 +41,99 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Schema.org Structured Data with E-E-A-T Entity Mapping -->
+    <!-- Schema.org Unified Graph Structured Data (E-E-A-T & AI Citability) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "WA Channel Exporter",
-      "operatingSystem": "Chrome OS, Windows, macOS, Linux",
-      "applicationCategory": "BrowserApplication",
-      "softwareVersion": "1.3.1",
-      "datePublished": "2026-09-15",
-      "dateModified": "2026-09-19",
-      "author": {
-        "@type": "Organization",
-        "name": "Karefined Engineering",
-        "url": "https://github.com/karefined-eng"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Karefined Engineering",
-        "url": "https://github.com/karefined-eng"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "Export and archive WhatsApp Channel messages, media, and voice notes directly from WhatsApp Web to offline HTML, CSV, and local ZIP packages.",
-      "url": "https://whatsapp-channel-exporter.vercel.app/",
-      "downloadUrl": "https://whatsapp-channel-exporter.vercel.app/wa-channel-exporter.zip",
-      "license": "https://opensource.org/licenses/MIT"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#organization",
+          "name": "Karefined Engineering",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "logo": "https://whatsapp-channel-exporter.vercel.app/favicon.svg",
+          "sameAs": [
+            "https://github.com/karefined-eng",
+            "https://github.com/karefined-eng/whatsapp-channel-exporter",
+            "https://twitter.com/karefined",
+            "https://www.reddit.com/r/whatsapp/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#website",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "name": "WA Channel Exporter",
+          "description": "Download WhatsApp Channel history, messages, photos, and voice notes from WhatsApp Web into private offline archives.",
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#software",
+          "name": "WA Channel Exporter",
+          "operatingSystem": "Chrome OS, Windows, macOS, Linux",
+          "applicationCategory": "BrowserApplication",
+          "applicationSubCategory": "Communication Utilities",
+          "softwareVersion": "1.3.1",
+          "datePublished": "2026-09-15",
+          "dateModified": "2026-09-20",
+          "author": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          },
+          "publisher": {
+            "@id": "https://whatsapp-channel-exporter.vercel.app/#organization"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Export and archive WhatsApp Channel messages, media, and voice notes directly from WhatsApp Web to offline HTML, CSV, and local ZIP packages.",
+          "url": "https://whatsapp-channel-exporter.vercel.app/",
+          "downloadUrl": "https://whatsapp-channel-exporter.vercel.app/wa-channel-exporter.zip",
+          "license": "https://opensource.org/licenses/MIT"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://whatsapp-channel-exporter.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I download WhatsApp Channel history and broadcast media?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Install the extension, open the WhatsApp Channel in WhatsApp Web, choose your date and media filters, and start the scan. The extension captures the visible history progressively, then automatically fetches images, videos, and voice notes into a chronological local media folder."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why use this instead of standard WhatsApp backup tools?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standard backup tools and popular Chrome extensions are designed for the Chats tab. They cannot read the Updates broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe? Does it steal my data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely safe. WA Channel Exporter processes everything locally in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code on GitHub to verify."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will my WhatsApp account get banned or flagged for using this?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Unlike spam bots or bulk-senders that trigger bans, WA Channel Exporter is 100% read-only. It safely reads the public broadcast posts already loaded on your screen. It never sends automated messages, touches private contacts, or connects to external endpoints."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
   
@@ -120,8 +186,11 @@
         </a>
         <div class="nav-links">
           <a href="#features">Features</a>
+          <a href="#comparison">Comparison</a>
           <a href="#architecture">How It Works</a>
           <a href="/documentation.html">Docs</a>
+          <a href="/about.html">About</a>
+          <a href="/support.html">Contact Us</a>
           <a href="https://github.com/karefined-eng/whatsapp-channel-exporter" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="View WA Channel Exporter on GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.185 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.338c1.909-1.296 2.747-1.026 2.747-1.026.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.021C22 6.484 17.522 2 12 2z"/></svg>
             <span>GitHub</span>
@@ -152,14 +221,14 @@
           <!-- E-E-A-T Author & Publication Metadata -->
           <div>
             <div class="meta-byline">
-              <time datetime="2026-09-19">Updated September 19, 2026</time> · Engineered by <a href="/about.html">Karefined Engineering</a> · 100% Open Source MIT
+              <time datetime="2026-09-20">Updated September 20, 2026</time> · Engineered by <a href="/about.html">Karefined Engineering</a> · 100% Open Source MIT
             </div>
           </div>
           
           <div class="hero-image-wrapper" style="margin-top: 3rem; position: relative;">
             <picture>
               <source srcset="/promo-screenshot-1.webp" type="image/webp" />
-              <img src="/promo-screenshot-1.jpg" alt="WA Channel Exporter Interface showing offline archive controls" width="1376" height="768" fetchpriority="high" decoding="async" style="width: 100%; max-width: 900px; height: auto; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);" />
+              <img src="/promo-screenshot-1.webp" srcset="/promo-screenshot-1.webp 1x" alt="WA Channel Exporter Interface showing offline archive controls" width="1376" height="768" fetchpriority="high" decoding="async" style="width: 100%; max-width: 900px; height: auto; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);" />
             </picture>
           </div>
         </div>
@@ -175,13 +244,13 @@
           <div class="glass-card" style="padding: 1rem;">
             <picture>
               <source srcset="/actual-ui-1.webp" type="image/webp" />
-              <img src="/actual-ui-1.png" alt="Extension date range and media filter configuration" width="379" height="686" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);" />
+              <img src="/actual-ui-1.webp" srcset="/actual-ui-1.webp 1x" alt="Extension date range and media filter configuration" width="379" height="686" loading="eager" decoding="async" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);" />
             </picture>
           </div>
           <div class="glass-card" style="padding: 1rem;">
             <picture>
               <source srcset="/actual-ui-2.webp" type="image/webp" />
-              <img src="/actual-ui-2.png" alt="Extension scan and extraction progress indicator" width="376" height="688" loading="lazy" decoding="async" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);" />
+              <img src="/actual-ui-2.webp" srcset="/actual-ui-2.webp 1x" alt="Extension scan and extraction progress indicator" width="376" height="688" loading="eager" decoding="async" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);" />
             </picture>
           </div>
         </div>
@@ -202,16 +271,80 @@
         </div>
       </section>
 
-      <!-- Problem/Solution & Comparison Section -->
+      <!-- Answer-First Citability Block (GEO AI Optimization) -->
       <section class="problem-section container fade-in-up delay-1" style="margin-top: 2rem;">
         <div class="glass-card problem-card">
-          <h2 class="text-gradient-reveal">How to download WhatsApp Channel history</h2>
+          <h2 class="text-gradient-reveal">What is WA Channel Exporter?</h2>
           <p>
-            If you are searching for how to download WhatsApp Channel history, standard chat exporters like WAnalysis or WAExport are not designed for the Updates feed. They <strong>only work for conversational chats</strong> in your inbox and typically fail on Channels because the broadcast feed uses a distinct virtualized stream architecture.
+            <strong>WA Channel Exporter</strong> is an open-source, client-side Chromium extension built exclusively to save, archive, and download public broadcast updates from WhatsApp Web. Because standard conversational backup utilities only support traditional peer-to-peer or group messaging, they fail when attempting to read the virtualized DOM stream powering the WhatsApp Channels Updates feed.
+          </p>
+          <p>
+            Operating completely within your active browser session without remote servers, phone number logins, or cloud databases, this tool progressively captures published announcements, recovers original full-resolution media blobs, and compiles a comprehensive offline ZIP package. Each archive contains an offline dark-mode HTML reader, structured CSV spreadsheet, enriched Markdown for Notion or Obsidian, and chronologically organized asset subfolders.
           </p>
           <p class="solution-text">
-            <span class="read-ticks">✓✓</span> <strong>WA Channel Exporter is the solution.</strong> Engineered specifically to act as a client-side broadcast archiver, it provides a clean, timestamped export of the public feeds you follow.
+            <span class="read-ticks">✓✓</span> <strong>Zero Cloud Exposure:</strong> 100% client-side execution ensures your data remains completely private on your local machine.
           </p>
+        </div>
+      </section>
+
+      <!-- Structured Feature Comparison Table (GEO & Search Intent) -->
+      <section id="comparison" class="container fade-in-up delay-1" style="margin-top: 3.5rem;">
+        <div class="glass-card" style="padding: 2.5rem; text-align: left;">
+          <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+            <h2 class="text-gradient-reveal" style="font-size: 1.8rem; margin-bottom: 0.5rem;">Comparison: WA Channel Exporter vs Alternatives</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Why traditional chat utilities fail on broadcast feeds and how client-side archiving excels.</p>
+          </div>
+          
+          <div style="overflow-x: auto;">
+            <table class="comparison-table" style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--card-border); background: rgba(255,255,255,0.03);">
+                  <th style="padding: 1rem 1.25rem; color: var(--text-main); font-weight: 600;">Feature / Capability</th>
+                  <th style="padding: 1rem 1.25rem; color: #10b981; font-weight: 700;">WA Channel Exporter (Local)</th>
+                  <th style="padding: 1rem 1.25rem; color: var(--text-muted); font-weight: 500;">Native WhatsApp "Export Chat"</th>
+                  <th style="padding: 1rem 1.25rem; color: var(--text-muted); font-weight: 500;">Third-Party Cloud Scrapers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">WhatsApp Channels Support</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ Dedicated Updates Engine</td>
+                  <td style="padding: 1rem 1.25rem; color: #ef4444;">✗ Unsupported (Chats Only)</td>
+                  <td style="padding: 1rem 1.25rem; color: #f59e0b;">⚠ Inconsistent / Fails</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">Data Privacy & Security</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ 100% In-Browser (Zero Cloud)</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399;">✓ Local Device Processing</td>
+                  <td style="padding: 1rem 1.25rem; color: #ef4444;">✗ Cloud Servers / Third-Party</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">Bulk Media Extraction</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ Chronological Subfolders</td>
+                  <td style="padding: 1rem 1.25rem; color: #f59e0b;">⚠ Manual 1-by-1 Only</td>
+                  <td style="padding: 1rem 1.25rem; color: #f59e0b;">⚠ Throttled / Incomplete</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">Export Format Diversity</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ HTML Viewer, CSV, MD, ZIP</td>
+                  <td style="padding: 1rem 1.25rem; color: var(--text-muted);">Plain Unformatted .TXT</td>
+                  <td style="padding: 1rem 1.25rem; color: var(--text-muted);">Proprietary Cloud Format</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">Account Suspension Risk</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ 0% Ban Risk (Passive DOM)</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399;">✓ Safe (First-Party Feature)</td>
+                  <td style="padding: 1rem 1.25rem; color: #ef4444;">✗ High Risk (Automated API Calls)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 1rem 1.25rem; font-weight: 500; color: var(--text-main);">Pricing & Open Source</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399; font-weight: 600;">✓ Free & MIT Open-Source</td>
+                  <td style="padding: 1rem 1.25rem; color: #34d399;">✓ Free</td>
+                  <td style="padding: 1rem 1.25rem; color: #ef4444;">✗ Paid Monthly Subscription</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -226,7 +359,7 @@
           <div class="feature-card glass-card fade-in-up">
             <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></div>
             <h3>Offline HTML Viewer</h3>
-            <p>Double-click <code>index.html</code> to browse past updates offline with an authentic WhatsApp dark theme and embedded media players.</p>
+            <p>Double-click <code>index.html</code> to browse past updates offline with an authentic dark messenger theme and embedded media players.</p>
           </div>
 
           <div class="feature-card glass-card fade-in-up delay-1">
@@ -274,21 +407,21 @@
             <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 12px;">
               <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.5rem;">1. DOM Virtualization Reader</h3>
               <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-                WhatsApp Web recycles DOM nodes to preserve device memory. Our content script hooks the scroll container to capture historical updates progressively without triggering browser memory leaks.
+                WhatsApp Web recycles DOM nodes to preserve device memory. Our content script hooks the scroll container to capture historical updates progressively without triggering browser memory leaks. Each rendered card is parsed for timestamps, verified badges, and text payloads before being unmounted from the active viewport.
               </p>
             </div>
 
             <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 12px;">
               <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.5rem;">2. Local Blob Rehydration</h3>
               <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-                Media files are fetched directly through the authenticated browser session as raw blobs, converted to base64 for message passing, and bundled with MIME preservation.
+                Media files are fetched directly through the authenticated browser session as raw blobs, converted to base64 for message passing, and bundled with MIME preservation. By leveraging existing session credentials, extraction bypasses rate limits and avoids external API calls.
               </p>
             </div>
 
             <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 1.5rem; border-radius: 12px;">
               <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.5rem;">3. In-Browser ZIP Assembly</h3>
               <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
-                Using JSZip inside your browser, the tool generates a self-contained folder containing an authentic dark-theme HTML viewer, raw CSV, formatted Markdown, and your downloaded media.
+                Using JSZip inside your browser, the tool generates a self-contained archive containing an authentic dark-theme HTML viewer, raw CSV, formatted Markdown, and your downloaded media. The resulting bundle requires zero external dependencies and runs completely standalone on any operating system.
               </p>
             </div>
           </div>
@@ -304,28 +437,28 @@
           
           <div class="chat-message incoming fade-in-up">
             <div class="bubble">
-              <p>How do I download WhatsApp Channel history and broadcast media?</p>
+              <p>How do I download channel broadcast history and media?</p>
               <span class="time">10:42 AM</span>
             </div>
           </div>
 
           <div class="chat-message outgoing fade-in-up">
             <div class="bubble">
-              <p>Install the extension, open the WhatsApp Channel in WhatsApp Web, choose your date and media filters, and start the scan. The extension captures the visible history progressively, then automatically fetches images, videos, and voice notes into a chronological local <code>media/</code> folder.</p>
+              <p>Install the extension, open the target feed in WhatsApp Web, choose your date and media filters, and start the scan. The extension captures the visible history progressively, then automatically fetches images, videos, and audio notes into a chronological local <code>media/</code> folder.</p>
               <span class="time">10:43 AM <span class="read-ticks">✓✓</span></span>
             </div>
           </div>
 
           <div class="chat-message incoming fade-in-up">
             <div class="bubble">
-              <p>Why use this instead of standard WhatsApp backup tools?</p>
+              <p>Why use this instead of generic chat backup tools?</p>
               <span class="time">10:45 AM</span>
             </div>
           </div>
 
           <div class="chat-message outgoing fade-in-up">
             <div class="bubble">
-              <p>Standard backup tools and popular Chrome extensions are designed for the "Chats" tab. They cannot read the "Updates" broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels.</p>
+              <p>Standard backup tools and popular Chrome extensions are designed for personal inboxes. They cannot read the "Updates" feed. This extension was built from the ground up exclusively for public broadcast channels.</p>
               <span class="time">10:46 AM <span class="read-ticks">✓✓</span></span>
             </div>
           </div>
@@ -346,7 +479,7 @@
 
           <div class="chat-message incoming fade-in-up">
             <div class="bubble">
-              <p>Will my WhatsApp account get banned or flagged for using this?</p>
+              <p>Will my account get banned or flagged for using this extension?</p>
               <span class="time">11:15 AM</span>
             </div>
           </div>
@@ -393,7 +526,7 @@
             <p class="footer-desc">The open-source, client-side browser extension for downloading and archiving WhatsApp Channels to offline HTML, CSV, and media packages.</p>
           </div>
           <div class="footer-col">
-            <h4>Product</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Product</h3>
             <ul>
               <li><a href="/export-to-pdf.html">Export to PDF</a></li>
               <li><a href="/download-media.html">Download Media</a></li>
@@ -402,17 +535,18 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Support</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Support</h3>
             <ul>
-              <li><a href="/support.html">Contact Support</a></li>
+              <li><a href="/support.html">Contact Us</a></li>
               <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer">Issue Tracker</a></li>
               <li><a href="/#faq">FAQ</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Trust & Legal</h4>
+            <h3 class="footer-heading" style="font-size: 1rem; margin-bottom: 1rem; color: #fff;">Trust & Legal</h3>
             <ul>
-              <li><a href="/about.html">About & Editorial</a></li>
+              <li><a href="/about.html">About Us</a></li>
+              <li><a href="/about.html#editorial-policy">Editorial Policy</a></li>
               <li><a href="/privacy-policy.html">Privacy Policy</a></li>
               <li><a href="/terms-of-service.html">Terms of Service</a></li>
               <li><a href="https://github.com/karefined-eng/whatsapp-channel-exporter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a></li>
