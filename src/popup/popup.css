@@ -222,6 +222,43 @@ h1 {
   gap: 6px;
   margin-top: 8px;
 }
+.privacy-consent {
+  margin-top: 12px;
+  padding: 12px 14px;
+}
+.privacy-consent-title {
+  margin-bottom: 7px;
+  color: #17202a;
+  font-size: 12px;
+  font-weight: 800;
+}
+.privacy-consent-label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: #52606d;
+  font-size: 11px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.privacy-consent-label input {
+  width: 15px;
+  height: 15px;
+  margin: 1px 0 0;
+  flex: 0 0 auto;
+  accent-color: #138a5b;
+}
+.privacy-link {
+  display: inline-block;
+  margin: 8px 0 0 23px;
+  color: #138a5b;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.privacy-link:hover {
+  text-decoration: underline;
+}
 .pill-btn {
   flex: 1;
   border: 1px solid rgba(203, 213, 225, 0.5);

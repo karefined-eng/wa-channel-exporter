@@ -40,6 +40,14 @@
       </button>
     </div>
   </section>
+  <section class="card privacy-consent" aria-labelledby="privacyConsentTitle">
+    <div class="privacy-consent-title" id="privacyConsentTitle">Before you scan</div>
+    <label class="privacy-consent-label" for="privacyConsent">
+      <input id="privacyConsent" type="checkbox">
+      <span>I understand that this extension reads the open WhatsApp Channel view to create a local archive. I am authorized to view and save this content.</span>
+    </label>
+    <a class="privacy-link" href="https://wachannelexporter.me/privacy-policy" target="_blank" rel="noopener noreferrer">Read the Privacy Policy</a>
+  </section>
   <div class="scan-controls"><button class="primary" id="scanButton">Scan history</button><button class="cancel hidden" id="cancelButton">Cancel</button></div>
   <section class="summary hidden" id="summary" aria-live="polite"><div><span id="postCount">0</span><small>included posts</small></div><div><span id="mediaCount">0</span><small>media observed</small></div><div><span id="observedCount">0</span><small>posts observed</small></div><div><span id="failedCount">0</span><small>unavailable items</small></div></section>
   <div class="progress-wrap hidden" id="progressWrap"><div class="progress-label"><span id="progressLabel">Preparing…</span><span id="progressValue">0%</span></div><progress id="progressBar" max="100" value="0"></progress></div>

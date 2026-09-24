@@ -178,32 +178,79 @@
 
     <main id="main-content" class="container">
         <div class="support-container glass-card">
-            <h1>We're Here to Help</h1>
-            <p>Encountered an issue with an export, have questions about browser compatibility, or want to suggest a new feature? Reach out directly through any of our channels below.</p>
-            
-            <h2 style="font-size: 1.4rem; margin-bottom: 1.25rem; color: #fff;">Direct Support Channels</h2>
+            <h1>Support & Help Center</h1>
+            <p>WA Channel Exporter is a local-first, read-only tool for exporting WhatsApp Channel content that is available in your WhatsApp Web session. This page explains the supported workflow, known limitations, and the information needed for a useful support request.</p>
+
+            <h2 style="font-size: 1.4rem; margin-bottom: 1.25rem; color: #fff;">Get Help</h2>
             <div class="support-grid">
                 <div class="support-card">
-                    <h3>Public GitHub Tracker</h3>
-                    <p>Best for bug reports, DOM selector anomalies, or feature requests. Tracked openly with the community.</p>
+                    <h3>Bug reports</h3>
+                    <p>Use GitHub for reproducible problems such as failed scans, incorrect channel detection, missing media, or a broken interface after a WhatsApp Web update.</p>
                     <a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.9rem;">Open GitHub Issue</a>
                 </div>
 
                 <div class="support-card">
-                    <h3>Email Assistance</h3>
-                    <p>Have general questions or need help setting up the developer mode installation? Drop us an email.</p>
+                    <h3>General questions</h3>
+                    <p>For setup questions, privacy questions, accessibility concerns, or other support that should not be public, email the support team.</p>
                     <a href="mailto:support@wachannelexporter.com" class="btn btn-primary" style="font-size: 0.9rem;">Email Support Team</a>
                 </div>
             </div>
 
             <div style="margin-top: 3rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
-                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Troubleshooting Quick Tips</h2>
+                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Quick Start</h2>
+                <ol style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-left: 1.5rem;">
+                    <li>Install WA Channel Exporter from the Chrome Web Store, or follow the <a href="/documentation">development installation guide</a> for an unpacked build.</li>
+                    <li>Open <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer">WhatsApp Web</a> and open the Channel you are authorized to view.</li>
+                    <li>Open the extension side panel, confirm the detected Channel name, choose a date range, and select the export scope.</li>
+                    <li>Start the scan and keep the WhatsApp Web tab available until the scan finishes. Review the completion status and media report before relying on the archive.</li>
+                    <li>Open the downloaded ZIP archive and use <code>index.html</code> for offline browsing. The archive also includes structured formats such as Markdown, JSONL, and CSV.</li>
+                </ol>
+            </div>
+
+            <div style="margin-top: 1.5rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
+                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Troubleshooting</h2>
+                <h3>“No Channel detected”</h3>
+                <p>Confirm that a Channel—not a one-to-one chat or group—is open in WhatsApp Web. Reload the tab, wait for the Channel header and posts to appear, then reopen the side panel. You can also use the re-detect control and edit the Channel name before exporting.</p>
+
+                <h3>“No posts in date range”</h3>
+                <p>WhatsApp Web only exposes content that has loaded in the current session. Try the <strong>All Loaded</strong> preset, scroll the Channel to load more history, and run the scan again. The extension cannot recover deleted or unavailable posts.</p>
+
+                <h3>Media is missing or marked unavailable</h3>
+                <p>Some media may expire, fail to load, or be unavailable to the current WhatsApp Web session. Check <code>media-report.json</code> in the archive for the per-item status. A missing file does not prove that the media never existed.</p>
+
+                <h3>The scan stops or the page does not scroll</h3>
+                <p>Keep the WhatsApp Web tab open and active during large scans. Reload WhatsApp Web before retrying, close duplicate WhatsApp Web tabs, and avoid navigating away while the scan is running. If the problem began after a WhatsApp update, report it using the template below.</p>
+
+                <h3>The download does not appear</h3>
+                <p>Check Chrome’s download shelf and download settings, then confirm that the browser has not blocked multiple downloads. Retry with a smaller date range and verify that the extension has permission to download files.</p>
+            </div>
+
+            <div style="margin-top: 1.5rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
+                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Known Limitations</h2>
                 <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-left: 1.5rem;">
-                    <li><strong>WhatsApp Web Updated?</strong> Reload your WhatsApp Web tab to let the content script re-hook the latest DOM elements.</li>
-                    <li><strong>Channel Not Scrolling?</strong> Click once inside the channel message feed area so it gains focus before starting an automated scroll scan.</li>
-                    <li><strong>Large Media Collections:</strong> For channels with hundreds of photos/videos, keep your WhatsApp Web tab active to prevent Chrome from throttling background DOM reads.</li>
+                    <li>The extension works with WhatsApp Channels in WhatsApp Web. It is not a standard one-to-one or group chat exporter.</li>
+                    <li>Results depend on what WhatsApp Web loads and makes available during the scan. Historical completeness is not guaranteed.</li>
+                    <li>WhatsApp Web changes may temporarily affect Channel detection, scrolling, or media retrieval.</li>
+                    <li>The extension is read-only. It does not send messages, bypass login, recover deleted posts, or guarantee that using a third-party tool will never trigger platform enforcement.</li>
+                    <li>Exports are local archives. They are not automatically tamper-evident and do not guarantee legal admissibility or republication rights.</li>
                 </ul>
             </div>
+
+            <div style="margin-top: 1.5rem; text-align: left; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--card-border);">
+                <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-main);">Bug Report Checklist</h2>
+                <p>Include the following details so the issue can be reproduced:</p>
+                <ul style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-left: 1.5rem;">
+                    <li>Extension version and Chrome version.</li>
+                    <li>Operating system and whether the extension came from the Chrome Web Store or an unpacked build.</li>
+                    <li>The exact steps that led to the problem and the expected result.</li>
+                    <li>Whether the issue affects all Channels or one Channel.</li>
+                    <li>Any visible error text and whether reloading WhatsApp Web changes the result.</li>
+                    <li>Relevant counts or status from <code>manifest.json</code> and <code>media-report.json</code>, with private content removed.</li>
+                </ul>
+                <p><strong>Do not attach phone numbers, login details, private messages, credentials, or unredacted Channel archives to a public issue.</strong></p>
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 0.9rem;">WA Channel Exporter is an independent project and is not affiliated with, endorsed by, or sponsored by WhatsApp or Meta. For data-handling details, read the <a href="/privacy-policy">Privacy Policy</a>.</p>
         </div>
     </main>
 

@@ -335,7 +335,24 @@ async function downloadBlob(blob, filename) {
   }
 }
 
-$("scanButton").addEventListener("click", () => runScan());
+$('privacyConsent')?.addEventListener('change', (event) => {
+  const accepted = Boolean(event.target.checked);
+  $('scanButton').disabled = !accepted;
+  if (accepted) {
+    setStatus('Ready to scan', 'Consent recorded for this session. Set your date range, then scan history.');
+  } else {
+    setStatus('Consent required', 'Review the disclosure and acknowledge it before scanning.');
+  }
+});
+
+$('scanButton').disabled = true;
+$('scanButton').addEventListener('click', () => {
+  if (!$('privacyConsent')?.checked) {
+    setStatus('Consent required', 'Review the disclosure and acknowledge it before scanning.', true);
+    return;
+  }
+  runScan();
+});
 $("cancelButton").addEventListener("click", () => cancelScan());
 $("startDate").addEventListener("change", () => { updateFilenamePreview(); updateSummary(); });
 $("endDate").addEventListener("change", () => { updateFilenamePreview(); updateSummary(); });

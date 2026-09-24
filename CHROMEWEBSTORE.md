@@ -86,7 +86,7 @@ English
 ## Privacy Policy
 
 **Privacy Policy URL** [RECOMMENDED]
-https://whatsapp-channel-exporter.vercel.app/privacy-policy.html
+https://wachannelexporter.me/privacy-policy
 
 
 ## Distribution
@@ -105,10 +105,11 @@ https://whatsapp-channel-exporter.vercel.app/privacy-policy.html
 [Your Email]
 
 **Support URL / Email** [RECOMMENDED]
-[Your Support Email or GitHub Issues Link]
+https://wachannelexporter.me/support
+support@wachannelexporter.com
 
 **Homepage URL** [RECOMMENDED]
-https://whatsapp-channel-exporter.vercel.app/
+https://wachannelexporter.me/
 
 
 ## Version History
@@ -122,7 +123,10 @@ https://whatsapp-channel-exporter.vercel.app/
 
 ### Known Issues / Limitations
 - The extension only works on the "Channels" view, not standard 1-on-1 chats.
-- WhatsApp sometimes rate-limits or unloads old media, which might affect deep historical scans.
+- WhatsApp Web only exposes content that has loaded in the current session, so historical completeness is not guaranteed.
+- WhatsApp sometimes rate-limits, expires, or unloads old media, which might affect deep historical scans.
+- The extension is read-only and does not guarantee immunity from WhatsApp or Meta platform enforcement.
+- WA Channel Exporter is an independent project and is not affiliated with, endorsed by, or sponsored by WhatsApp or Meta.
 
 ### Rejection History
 None yet.

@@ -123,24 +123,56 @@
     <main id="main-content" class="container">
       <article class="privacy-container glass-card">
         <h1>Privacy Policy</h1>
-        <div class="last-updated">Last verified & updated: September 19, 2026</div>
+        <div class="last-updated">Effective: September 24, 2026 · Last verified: September 24, 2026</div>
 
-        <h2>1. Zero-Data Collection Architecture</h2>
-        <p><strong>We do not collect, store, transmit, or monetize any personal data, messages, browsing history, or contact details.</strong></p>
-        <p>WA Channel Exporter operates strictly as a client-side utility executing locally inside your web browser. The extension parses the DOM of your active WhatsApp Web tab solely to generate your requested offline backup files (HTML, CSV, Markdown, Media).</p>
-        
-        <h2>2. Local Storage and Preferences</h2>
-        <p>Any configuration preferences (such as chosen date ranges or media download toggles) are saved locally using Chrome's <code>chrome.storage.local</code> API. This data never leaves your personal device.</p>
-        <p>All exported files and ZIP archives are generated in memory and downloaded directly into your system's default Downloads folder. We operate no database or external storage service.</p>
+        <p><strong>WA Channel Exporter is an independent, local-first browser extension. The extension does not collect, sell, or upload your WhatsApp Channel content to a server operated by us.</strong></p>
+        <p>This policy describes the Chrome extension and the information it accesses to perform an export. It does not change the privacy practices of WhatsApp, Meta, Chrome, your organization, or any other service you use.</p>
 
-        <h2>3. Third-Party Analytics & Network Calls</h2>
-        <p>The WA Channel Exporter extension contains zero tracking pixels, advertising SDKs, or background telemetry network calls. No user information is shared with, sold to, or accessible by third parties.</p>
+        <h2>1. What the extension accesses</h2>
+        <p>When you open the extension on <code>web.whatsapp.com</code> and start a scan, it reads the Channel content that WhatsApp Web makes available in the open Channel view. Depending on what is visible and retrievable, this can include post text, timestamps, channel name, and media such as images, video, or audio.</p>
+        <p>The extension does not bypass WhatsApp login, recover deleted content, access private chats without authorization, send messages, or automate reactions, follows, or other account actions. Use it only for content you are authorized to view and save.</p>
 
-        <h2>4. Open Source Verification</h2>
-        <p>Our commitment to privacy is verifiable. You can review the complete source code on GitHub to verify our local-only execution model.</p>
+        <h2>2. How data is used</h2>
+        <p>The accessed content is used only to create the export you request. The extension processes the content in your browser and creates local archive files such as HTML, Markdown, JSONL, CSV, PDF, media files, and ZIP packages. The extension does not use this content for advertising, profiling, credit decisions, or unrelated purposes.</p>
 
-        <h2>5. Contact</h2>
-        <p>If you have any questions or feedback regarding our privacy practices, please contact us via our <a href="/support">Support page</a> or open an inquiry on our GitHub repository.</p>
+        <h2>3. What is stored locally</h2>
+        <p>The extension may store configuration preferences in Chrome's local extension storage, such as selected date ranges, export options, and interface settings. This preference data remains on your device and is not transmitted to us.</p>
+        <p>Exported archives are downloaded to a location chosen by Chrome or by you. The extension does not operate a database or cloud storage account for your archives. Temporary export data may exist in browser memory while an export is running and is released when the operation ends or the extension is closed.</p>
+
+        <h2>4. Network activity and third parties</h2>
+        <p>The extension has no analytics, advertising SDK, tracking pixel, telemetry service, or external account system. It does not send Channel content, phone numbers, credentials, or export archives to an external server operated by us.</p>
+        <p>WhatsApp Web and Meta remain third-party services. Your browser may communicate with them as part of your normal WhatsApp Web session. We do not control or make promises about their data practices, availability, retention, or platform policies.</p>
+        <p><strong>No Channel content is shared with a third party by WA Channel Exporter.</strong> The content remains in the browser session and local files unless you choose to share an archive yourself. If you contact support by email or submit a GitHub issue, the information you choose to include is sent to the relevant service and may be visible to its operators or, for a public issue, other GitHub users. Do not include private Channel content, credentials, or phone numbers in support requests.</p>
+
+        <h2>5. Chrome permissions</h2>
+        <ul>
+          <li><strong><code>https://web.whatsapp.com/*</code>:</strong> allows the extension to read the open WhatsApp Web Channel view when you use the export workflow.</li>
+          <li><strong><code>activeTab</code> and <code>tabs</code>:</strong> allow the extension to identify and work with the active tab after you invoke it, and to confirm that the tab is WhatsApp Web.</li>
+          <li><strong><code>scripting</code>:</strong> allows the extension to run the extraction logic needed to read the Channel feed.</li>
+          <li><strong><code>storage</code>:</strong> allows local saving of your extension preferences.</li>
+          <li><strong><code>downloads</code>:</strong> allows the extension to save the archive files you request to your local computer.</li>
+          <li><strong><code>sidePanel</code>:</strong> allows the export controls to appear in Chrome's side panel.</li>
+        </ul>
+
+        <h2>6. Retention and deletion</h2>
+        <p>We do not retain your Channel content because we do not receive it. You can delete exported archives using your normal file-management tools. You can remove saved extension preferences through Chrome's extension storage or by uninstalling the extension. Removing an archive or uninstalling the extension does not delete copies you have independently created or shared.</p>
+
+        <h2>7. Chrome Web Store Limited Use compliance</h2>
+        <p>WA Channel Exporter uses information obtained from Chrome and WhatsApp Web only to provide its single purpose: exporting authorized WhatsApp Channel posts and media into local archive files. It does not use the information for advertising, creditworthiness, lending, data brokerage, unrelated profiling, or any other unrelated purpose. It does not sell the information or allow people to read it through a service operated by us.</p>
+        <p>Our handling of user data complies with the Chrome Web Store User Data Policy, including the Limited Use requirements. The extension requests access only for the user-facing export workflow described in the Chrome Web Store listing and in the extension interface.</p>
+
+        <h2>8. Security and limitations</h2>
+        <p>Local processing reduces the need to send your archive to a third party, but no software can guarantee absolute security. Keep Chrome, WhatsApp Web, and your operating system updated. Do not use the extension on a device or account you do not control.</p>
+        <p>Exports reflect what WhatsApp Web makes available during the scan. An archive may be partial if older posts are not loaded, media is unavailable, the scan is canceled, or WhatsApp Web changes. WA Channel Exporter does not guarantee completeness, legal admissibility, or immunity from platform enforcement.</p>
+
+        <h2>9. Independent project</h2>
+        <p>WA Channel Exporter is an independent open-source project and is not affiliated with, endorsed by, or sponsored by WhatsApp or Meta. “WhatsApp” and related marks belong to their respective owners.</p>
+
+        <h2>10. Changes to this policy</h2>
+        <p>We may update this policy when the extension’s behavior or distribution requirements change. The effective date at the top of this page identifies the current version. Material changes will be reflected in the public repository and website.</p>
+
+        <h2>11. Contact</h2>
+        <p>For privacy questions, contact <a href="mailto:support@wachannelexporter.com">support@wachannelexporter.com</a>. For technical support, see the <a href="/support">Support & Help Center</a> or open an issue in the <a href="https://github.com/karefined-eng/whatsapp-channel-exporter/issues" target="_blank" rel="noopener noreferrer">public GitHub issue tracker</a>. Please do not include private messages, phone numbers, credentials, or sensitive archive contents in a public issue.</p>
       </article>
     </main>
 
