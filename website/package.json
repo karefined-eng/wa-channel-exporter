@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/prepare-download.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "postbuild": "node scripts/clean-sitemap.mjs"
