@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/generate-icons.js && node scripts/build.js",
+    "build:store": "STORE_BUILD=true npm run build",
     "test": "node scripts/test-mv3.js && node scripts/test-exports.mjs && node scripts/test-media-download.mjs",
     "test:chrome": "node scripts/test-extension-chrome.mjs dist",
     "lint": "eslint src/**/*.js"

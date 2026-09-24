@@ -89,6 +89,7 @@ Run from the repository root:
 ```bash
 npm ci
 npm run build
+npm run build:store
 node scripts/test-exports.mjs
 node scripts/test-mv3.js
 ```
@@ -96,6 +97,7 @@ node scripts/test-mv3.js
 Then complete the following checks:
 
 - [ ] `npm run build` completes successfully.
+- [ ] Build the submission package with `npm run build:store`; verify the packaged `manifest.json` omits the development-only `key` field before upload.
 - [ ] `node scripts/test-exports.mjs` reports `status: PASS`.
 - [ ] `node scripts/test-mv3.js` reports Manifest V3 and package checks as `PASS`.
 - [ ] Confirm the generated ZIP exists and is non-empty:

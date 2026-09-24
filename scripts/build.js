@@ -6,6 +6,7 @@ const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
 const vendor = path.join(root, "src", "vendor");
 const archive = path.join(root, "wa-channel-exporter.zip");
+const storeBuild = process.env.STORE_BUILD === "true";
 
 function copyTree(source, target) {
   fs.cpSync(source, target, { recursive: true });
@@ -25,7 +26,14 @@ async function build() {
   fs.mkdirSync(dist, { recursive: true });
   fs.mkdirSync(vendor, { recursive: true });
 
-  copyTree(path.join(root, "manifest.json"), path.join(dist, "manifest.json"));
+  const manifestPath = path.join(root, "manifest.json");
+  const builtManifestPath = path.join(dist, "manifest.json");
+  copyTree(manifestPath, builtManifestPath);
+  if (storeBuild) {
+    const manifest = JSON.parse(fs.readFileSync(builtManifestPath, "utf8"));
+    delete manifest.key;
+    fs.writeFileSync(builtManifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  }
   copyTree(path.join(root, "src"), path.join(dist, "src"));
 
   const jszip = require.resolve("jszip/dist/jszip.min.js");

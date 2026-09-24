@@ -13,7 +13,7 @@ Export WhatsApp Channel posts and media directly from WhatsApp Web into an organ
 **Detailed Description** [REQUIRED] (Max 10,000 chars)
 The ultimate tool to safely backup and archive the WhatsApp Channels you follow. 
 
-WA Channel Exporter is specifically engineered to scrape and parse the "Updates" feed on WhatsApp Web, allowing you to instantly extract thousands of posts, videos, images, and voice notes into a clean offline archive or a professional PDF document.
+WA Channel Exporter is specifically engineered to read and export the "Updates" feed on WhatsApp Web, allowing you to save posts, videos, images, and voice notes into a clean offline archive or a professional PDF document.
 
 How to use it:
 1. Open web.whatsapp.com and click on a Channel.
@@ -51,10 +51,10 @@ English (US)
 ## Privacy & Compliance
 
 **Privacy Policy URL**
-https://whatsapp-channel-exporter.vercel.app/privacy-policy.html
+https://wachannelexporter.me/privacy-policy
 
 **Website URL**
-https://whatsapp-channel-exporter.vercel.app/
+https://wachannelexporter.me/
 
 **Does your product require personal information?**
 No.
