@@ -25,7 +25,10 @@ for (const candidate of browserCandidates) {
 }
 if (!executablePath) throw new Error('No Chrome/Chromium executable was found');
 const browser = await puppeteer.launch({
-  headless: process.env.CI ? false : true,
+  // Headless Chromium supports extension service workers in current Chrome.
+  // Keeping this as the CI default avoids display-server startup races; set
+  // HEADLESS=false locally when an interactive browser is useful for debugging.
+  headless: process.env.HEADLESS !== 'false',
   executablePath,
   args: [
     `--disable-extensions-except=${extensionPath}`,
@@ -33,6 +36,8 @@ const browser = await puppeteer.launch({
     '--no-sandbox',
     '--disable-setuid-sandbox',
     '--disable-dev-shm-usage',
+    '--no-first-run',
+    '--no-default-browser-check',
   ],
 });
 

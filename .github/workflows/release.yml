@@ -55,7 +55,7 @@ jobs:
         run: |
           smoke_dir="$(mktemp -d)"
           node scripts/prepare-extension-smoke.mjs dist "$smoke_dir"
-          xvfb-run -a node scripts/test-extension-chrome.mjs "$smoke_dir"
+          node scripts/test-extension-chrome.mjs "$smoke_dir"
 
       - name: Verify exact ZIP artifact in Chromium
         shell: bash
@@ -66,7 +66,7 @@ jobs:
           unzip -q wa-channel-exporter.zip -d "$extracted"
           smoke_dir="$(mktemp -d)"
           node scripts/prepare-extension-smoke.mjs "$extracted" "$smoke_dir"
-          xvfb-run -a node scripts/test-extension-chrome.mjs "$smoke_dir"
+          node scripts/test-extension-chrome.mjs "$smoke_dir"
 
       - name: Publish GitHub Release
         env:
