@@ -30,7 +30,7 @@ Configured enterprise-grade HTTP response headers:
 - `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
 
 ### C. E-E-A-T & Trust Infrastructure
-- **Entity Identification:** Integrated Schema.org `SoftwareApplication` JSON-LD structured data mapping publisher/author `Karefined Engineering`, MIT licensing, free pricing, and application categories.
+- **Entity Identification:** Integrated Schema.org `SoftwareApplication` JSON-LD structured data mapping publisher/author `Karefined Engineering`, AGPL-3.0-or-later licensing, free pricing, and application categories.
 - **New Core Pages:**
   - `website/about.html`: Editorial mission, privacy pledge, architectural philosophy, and open-source credentials.
   - `website/terms-of-service.html`: Clear usage terms, client-side warranty disclaimers, and Meta trademark non-affiliation notices.
