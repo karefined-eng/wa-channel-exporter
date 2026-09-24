@@ -12,7 +12,29 @@
           "value": "wa-channel-exporter.vercel.app"
         }
       ],
-      "destination": "https://whatsapp-channel-exporter.vercel.app/$1",
+      "destination": "https://wachannelexporter.me/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "whatsapp-channel-exporter.vercel.app"
+        }
+      ],
+      "destination": "https://wachannelexporter.me/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.wachannelexporter.me"
+        }
+      ],
+      "destination": "https://wachannelexporter.me/$1",
       "permanent": true
     }
   ],
