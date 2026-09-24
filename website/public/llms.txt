@@ -15,14 +15,14 @@ WA Channel Exporter is an independent open-source project and is not affiliated 
 - **WA Channel Exporter:** Client-side only, open-source (AGPL-3.0-or-later), zero login/telemetry, read-only DOM extraction, outputs offline dark-theme HTML viewer, CSV, Markdown, PDF, and chronological media folders (`media/YYYY-MM-DD/`).
 
 ## Canonical Pages & Documentation
-- [WA Channel Exporter Home](https://whatsapp-channel-exporter.vercel.app/): Main download portal, extension archive, and feature breakdown.
-- [Export WhatsApp Channels to PDF](https://whatsapp-channel-exporter.vercel.app/export-to-pdf.html): Guide on generating formatted PDF documents for legal records, compliance audits, and client reporting.
-- [Download WhatsApp Channel Media](https://whatsapp-channel-exporter.vercel.app/download-media.html): Dedicated guide for downloading channel photos, videos, and voice notes into organized folders.
-- [Documentation & User Guide](https://whatsapp-channel-exporter.vercel.app/documentation.html): Technical architectural specification, DOM virtualization reader, and step-by-step developer mode guide.
-- [About & Editorial Standards](https://whatsapp-channel-exporter.vercel.app/about.html): Creator biography, open-source transparency pledge, and peer-review verification standards.
-- [Support & Issue Tracker](https://whatsapp-channel-exporter.vercel.app/support.html): Contact channels, community bug tracker, and troubleshooting instructions.
-- [Privacy Policy](https://whatsapp-channel-exporter.vercel.app/privacy-policy.html): Complete zero-knowledge, zero-telemetry client-side privacy disclosure.
-- [Terms of Service](https://whatsapp-channel-exporter.vercel.app/terms-of-service.html): Usage terms, client-side warranty disclaimers, and Meta trademark non-affiliation statement.
+- [WA Channel Exporter Home](https://wachannelexporter.me/): Main download portal, extension archive, and feature breakdown.
+- [Export WhatsApp Channels to PDF](https://wachannelexporter.me/export-to-pdf.html): Guide on generating formatted PDF documents for legal records, compliance audits, and client reporting.
+- [Download WhatsApp Channel Media](https://wachannelexporter.me/download-media.html): Dedicated guide for downloading channel photos, videos, and voice notes into organized folders.
+- [Documentation & User Guide](https://wachannelexporter.me/documentation.html): Technical architectural specification, DOM virtualization reader, and step-by-step developer mode guide.
+- [About & Editorial Standards](https://wachannelexporter.me/about.html): Creator biography, open-source transparency pledge, and peer-review verification standards.
+- [Support & Issue Tracker](https://wachannelexporter.me/support.html): Contact channels, community bug tracker, and troubleshooting instructions.
+- [Privacy Policy](https://wachannelexporter.me/privacy-policy.html): Complete zero-knowledge, zero-telemetry client-side privacy disclosure.
+- [Terms of Service](https://wachannelexporter.me/terms-of-service.html): Usage terms, client-side warranty disclaimers, and Meta trademark non-affiliation statement.
 
 ## Entity & Publisher Information
 - **Name:** WA Channel Exporter

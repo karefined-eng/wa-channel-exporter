@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [
     Sitemap({
-      hostname: 'https://whatsapp-channel-exporter.vercel.app',
+      hostname: 'https://wachannelexporter.me',
       dynamicRoutes: [
         '/',
         '/export-to-pdf.html',

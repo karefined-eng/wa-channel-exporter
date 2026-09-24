@@ -49,4 +49,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://whatsapp-channel-exporter.vercel.app/sitemap.xml
+Sitemap: https://wachannelexporter.me/sitemap.xml
