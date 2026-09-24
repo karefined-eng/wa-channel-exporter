@@ -26,7 +26,7 @@
     "chrome-extension",
     "local-first"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "main": "index.js",
   "author": "Karefined Engineering",
   "type": "commonjs"

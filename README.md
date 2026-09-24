@@ -6,13 +6,13 @@
 [![Status: pilot](https://img.shields.io/badge/status-pilot-0f766e?style=flat-square)](https://github.com/karefined-eng/whatsapp-channel-exporter)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Privacy](https://img.shields.io/badge/data%20handling-local--first-16a34a?style=flat-square)](#privacy-and-rights)
-[![License: MIT](https://img.shields.io/badge/license-MIT-111827?style=flat-square)](LICENSE)
+[![License: AGPL--3.0](https://img.shields.io/badge/license-AGPL--3.0-111827?style=flat-square)](LICENSE)
 
-**Securely download WhatsApp Channel history directly to your computer. 100% local, zero data collection.**
+**Download WhatsApp Channel history directly to your computer. Local-first, read-only, and zero cloud uploads.**
 
 </div>
 
-> **WA Channel Exporter** is an independent Chrome extension built specifically to **download WhatsApp Channel messages, videos, and photos** into a portable ZIP archive or a formatted PDF document. It runs entirely in your browser, guaranteeing your data stays on your machine.
+> **WA Channel Exporter** is an independent Chrome extension built specifically to **download WhatsApp Channel messages, videos, and photos** into a portable ZIP archive or a formatted PDF document. It is designed to run entirely in your browser, without sending channel data to an external server.
 
 🌐 **[Visit the official website for Documentation and Downloads](https://whatsapp-channel-exporter.vercel.app/)**
 
@@ -24,7 +24,7 @@ If you've searched for *"how to save messages from a whatsapp channel"*, you pro
 
 Furthermore, popular chat backup tools and web-scraping extensions (like *WAnalysis* or *WA Chat Backup*) only work for 1-on-1 chats and standard groups. They fail completely when trying to read the WhatsApp Channels "Updates" feed.
 
-**WA Channel Exporter is the solution.** It is specifically engineered to act as a ban-safe **WhatsApp Channel archiver and media-downloader**, giving you a clean, timestamped data-extraction of the channels you follow.
+**WA Channel Exporter is the solution.** It is specifically engineered as a read-only **WhatsApp Channel archiver and media downloader**, giving you a clean, timestamped archive of the channels you follow.
 
 ## Who is this for?
 Because there is no official API or export button for Channels, this tool is essential for:
@@ -53,7 +53,7 @@ Because there is no official API or export button for Channels, this tool is ess
 ## FAQ: Frequently Asked Questions
 
 **Q: Will my WhatsApp account get banned or flagged for using this?**
-**No.** Unlike spam bots or bulk-senders that trigger bans, WA Channel Exporter is a **100% read-only** archiving tool. It safely reads the public broadcast posts already loaded on your screen. It never sends automated messages, touches private contacts, or connects to external endpoints.
+WA Channel Exporter is designed to be **read-only**. It reads public broadcast posts already loaded on your screen and does not send automated messages or touch private contacts. No third-party tool can guarantee how a platform will respond, so use it in accordance with WhatsApp's terms.
 
 **Q: Does this Chrome extension download WhatsApp Channel media (photos and videos)?**
 Yes! As a dedicated media-downloader, the extension automatically fetches the images, videos, and voice notes visible in the channel and organizes them chronologically in a local `media/` folder.
@@ -62,7 +62,7 @@ Yes! As a dedicated media-downloader, the extension automatically fetches the im
 Standard chat-backup tools and popular Chrome extensions are designed for the "Chats" tab. They cannot read the "Updates" broadcast feed. This extension was built from the ground up exclusively for WhatsApp Channels.
 
 **Q: Is it safe? Does it steal my data?**
-Absolutely safe. WA Channel Exporter processes everything **locally** in your browser. It does not send your channel data, messages, or phone number to any external server. You can inspect the open-source code in this repository to verify.
+WA Channel Exporter is designed to process everything **locally** in your browser. It does not send your channel data, messages, or phone number to an external server. Review the open-source code and use the extension in accordance with WhatsApp's terms.
 
 **Q: What format does the WhatsApp Channel export into?**
 Your export comes neatly packaged in a `.zip` file containing:
@@ -133,4 +133,4 @@ node scripts/test-browser-fixture.js
 The build creates `wa-channel-exporter.zip` and a loadable `dist/` directory.
 
 ## License
-MIT - **A local archive should be portable, inspectable, and honest about its gaps.**
+This project is licensed under the **GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)**. You may use, modify, and share it under the license terms. If you run a modified version as a network service, you must offer the corresponding source code to its users. See [LICENSE](LICENSE) for the full terms.
