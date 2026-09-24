@@ -26,12 +26,18 @@ Furthermore, popular chat backup tools and web-scraping extensions (like *WAnaly
 
 **WA Channel Exporter is the solution.** It is specifically engineered as a read-only **WhatsApp Channel archiver and media downloader**, giving you a clean, timestamped archive of the channels you follow.
 
-## Who is this for?
-Because there is no official API or export button for Channels, this tool is essential for:
-- **Journalists & OSINT Researchers:** Archiving public statements, news broadcasts, and media before they are deleted or modified.
-- **Marketing Agencies & Dropshipping:** Data-extraction for competitive analysis, market research, and content-reuse workflows.
-- **Legal & Compliance:** Generating defensible, timestamped PDF documents for regulatory record-keeping.
-- **Community Organizers:** Faith, ministry, and NGO teams who need a dated record of campaigns or monthly archives.
+## Who is WA Channel Exporter for?
+
+WA Channel Exporter is for people who need to **preserve, analyze, or document** what was published on WA Channels over time:
+
+- **Journalists and researchers:** Preserve public statements, crisis updates, health information, and other channel posts in time-stamped archives for reporting and research.
+- **OSINT analysts and investigators:** Capture public updates and media consistently for repeatable analysis, internal reports, and documented investigations.
+- **Human-rights NGOs and legal teams:** Keep organized local records of public statements, conflict updates, hate speech, or other material relevant to advocacy and review.
+- **Brands and marketing teams:** Track competitor announcements, product launches, pricing changes, and campaigns shared through WA Channels.
+- **Channel admins and creators:** Maintain an offline copy of your own posts and media for backup, repurposing, newsletters, or long-term archives.
+- **Compliance and records teams:** Export public channel communications into consistent local archives that can be retained and reviewed under your organization’s records process.
+
+Archives document what the browser captured at the time of scanning; they are not automatically tamper-evident and do not guarantee legal admissibility.
 
 ---
 
