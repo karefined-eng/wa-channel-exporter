@@ -225,6 +225,11 @@ The project should preserve the following boundaries as adoption grows:
 | Cloud integrations weaken the privacy position | Users may perceive the tool as another data-collection service | Make integrations opt-in, explicit, and user-controlled; keep local export complete without them |
 | Growth creates support overload | More users expose documentation and compatibility gaps | Invest in FAQs, known issues, issue templates, release notes, and reproducible diagnostics |
 | A sudden external catalyst creates demand | A policy or storage change can produce a support spike | Keep installation and documentation ready before demand arrives and publish operational limits clearly |
+| Multiple accounts, Business accounts, or localized WhatsApp Web UIs behave differently | Selectors, labels, and session assumptions may fail for specific users | Test regular and Business accounts, multiple logged-in accounts, and representative interface languages before broad claims |
+| Maintenance attention drops after launch | WhatsApp Web changes can break the core workflow and reduce ranking and trust | Assign recurring monitoring time, maintain a fast release path, and publish small compatibility updates |
+| Project or account access is lost | Losing source code, signing credentials, domain access, or recovery information can interrupt distribution | Maintain secure, tested backups and separate recovery records for source, signing keys, Chrome account access, and domain ownership |
+| Copycats dilute differentiation | Open-source distribution makes the concept and code easy to reproduce | Compete through active maintenance, transparent communication, reliability, brand trust, and a strong store presence |
+| Monetization conflicts with privacy positioning | Cloud processing or silent telemetry would weaken the core promise | Prefer donations, paid priority support, or fully local optional features; never require Channel data to leave the user’s device |
 
 ## Immediate Next Steps
 
@@ -241,6 +246,81 @@ The recommended first sequence is:
 9. Use activation and repeat-export data to decide which workflow feature comes next.
 
 This sequence addresses the two largest adoption constraints first: **discoverability** and **ease of installation**. Once those constraints are reduced, the project’s existing specialization and local-first archive model become meaningful advantages rather than hidden features.
+
+## Operational Readiness After Launch
+
+### Support capacity
+
+Support demand will arrive before the product is widely adopted. The most common requests are likely to involve WhatsApp Web breakage, installation confusion, privacy and account-risk questions, and feature requests. The project should choose one primary support channel, preferably GitHub Issues for reproducible technical reports, and use email for private or account-specific questions. The website should state response expectations, explain what information a useful bug report contains, and warn users not to post phone numbers, credentials, private messages, or unredacted archives.
+
+### Compatibility matrix
+
+Before making broad compatibility claims, test regular WhatsApp Web, WhatsApp Business Web, multiple logged-in accounts in the same browser, and representative WhatsApp Web interface languages. Record the browser version, operating system, account type, interface language, Channel type, and result status for each test. A small public compatibility matrix is more useful than an unsupported promise that every account configuration works.
+
+### Privacy-preserving measurement
+
+The extension should retain its zero-telemetry position unless a separate product decision changes it. If measurement becomes necessary, website-only, cookieless analytics may be evaluated independently from extension behavior. Any in-extension counter should be optional, anonymous, clearly disclosed, and disabled by default until the privacy policy, store disclosures, and consent flow are updated. Usage measurement must never include Channel content, URLs, account identifiers, or export contents.
+
+### Maintenance and recovery
+
+WhatsApp Web compatibility is an ongoing operating responsibility rather than a one-time release task. Reserve recurring time for monitoring, quick fixes, small maintenance releases, issue triage, and review responses. Maintain secure backups of the source repository, Chrome Web Store developer-account recovery information, signing keys, domain access, and release checksums. Keep recovery information separate from the public repository and periodically verify that backups can actually be restored.
+
+### Differentiation and monetization guardrails
+
+The open-source project should assume that copycats are possible. Its durable advantages are active maintenance, clear communication, transparent privacy practices, reliable archives, recognizable branding, and a trusted Chrome Web Store presence. If monetization is introduced, begin with optional donations, paid priority support, or additional export features that remain fully local. Avoid any model that requires Channel content to be uploaded to a server or silently collected for advertising.
+
+## Localization and Language-Market Rollout
+
+An English-only website creates a meaningful adoption barrier for users in markets where WhatsApp usage is high but English is not the preferred interface language. Localization should follow distribution readiness rather than precede it: first make the ZIP download reliable and publish the Chrome Web Store version, then localize the highest-impact pages and measure demand before translating the entire site.
+
+The market tiers below are planning priorities, not immutable forecasts. User-scale and penetration figures should be verified against current, reputable sources before they are published in marketing copy.
+
+| Tier | Language | Key markets | Planning rationale |
+|---|---|---|---|
+| 1 | Brazilian Portuguese (`pt-BR`) | Brazil | Very large WhatsApp audience, high penetration, and strong potential for Channel-based news, media, and community use |
+| 1 | Spanish (`es`) | Mexico, Argentina, Colombia, Spain, and the rest of Latin America | Broad multi-country reach and a large combined audience; Mexico is an especially important market |
+| 1 | Indonesian (`id`) | Indonesia | Large single-country market with high mobile usage and strong WhatsApp adoption |
+| 2 | Hindi (`hi`) | India | Very large potential audience; English remains common among technical users, but Hindi can expand reach substantially |
+| 2 | Arabic (`ar`) | Egypt, Saudi Arabia, UAE, and the wider Middle East | Strong potential for news, sports, media, and public-information Channels |
+| 2 | Turkish (`tr`) | Turkey | High WhatsApp usage and a concentrated language market |
+| 3 | Urdu and French | Pakistan; parts of Africa and France | Useful later after the first localization wave and support capacity are established |
+
+### Recommended rollout order
+
+The first localization wave should be **Brazilian Portuguese and Spanish**. Together they cover Brazil, most of Latin America, and Spain, while giving the project two high-value markets with reusable page structures and similar support needs. Indonesian should follow as the next single-country expansion. Hindi and Arabic should be evaluated after the first three languages are live and the project has enough support capacity to handle localized issues.
+
+### What to translate first
+
+Do not translate every page at once. Translate the conversion-critical and trust-critical content in this order:
+
+1. Homepage hero, primary benefits, CTA, and FAQ.
+2. Privacy policy and local-processing disclosure.
+3. Installation and documentation instructions.
+4. Support page, known limitations, and bug-report instructions.
+5. About page and specialized PDF and media guides.
+
+The Chrome Web Store listing should remain accurate in English for the initial submission, then add localized listing text through the Developer Dashboard when the corresponding support and privacy pages are ready. A localized listing should not promise support that the extension or support process cannot provide.
+
+### Technical approach
+
+For the current static website, use language-prefixed paths such as `/es/` and `/pt-br/` or their equivalent generated page routes. Start with parallel localized pages rather than introducing a large translation framework. Add a visible language switcher in the navigation, preserve the English fallback, and include reciprocal `hreflang` links on each translated page:
+
+```html
+<link rel="alternate" hreflang="en" href="https://wachannelexporter.me/" />
+<link rel="alternate" hreflang="es" href="https://wachannelexporter.me/es/" />
+<link rel="alternate" hreflang="pt-BR" href="https://wachannelexporter.me/pt-br/" />
+<link rel="alternate" hreflang="x-default" href="https://wachannelexporter.me/" />
+```
+
+Update the sitemap with the language versions, add localized canonical URLs, and ensure translated privacy and support pages are reachable without login. Avoid unreviewed full-site machine translation; poor wording in privacy, account-risk, or installation guidance can reduce trust more than an English-only page.
+
+### Localization acceptance criteria
+
+Before publishing a language version, confirm that a native or highly proficient reviewer has checked the user-facing copy, legal and privacy terminology, date examples, screenshots, navigation labels, installation steps, and support instructions. Verify that the extension’s actual interface is not described as translated if it remains English-only. Record the translation owner, review date, source version, and known untranslated areas.
+
+### Measurement and decision rules
+
+Use website-level, privacy-preserving signals such as localized-page visits, outbound installation clicks, support requests, and search impressions to evaluate demand. Do not add silent in-extension telemetry merely to measure language adoption. Expand to the next language when the current localized pages are accurate, support requests are manageable, and there is evidence of meaningful activation or recurring demand.
 
 ## Chrome Web Store Launch Gate
 
