@@ -79,13 +79,21 @@ function createPng(width, height, r, g, b) {
   return Buffer.concat([signature, ihdrChunk, idatChunk, iendChunk]);
 }
 
-const dir = path.join(__dirname, "..", "src", "assets", "icons");
-fs.mkdirSync(dir, { recursive: true });
+function generateExtensionIcons() {
+  const dir = path.join(__dirname, "..", "src", "assets", "icons");
+  fs.mkdirSync(dir, { recursive: true });
 
-// WhatsApp teal: R=15, G=140, B=91 (#0f8c5b)
-[16, 48, 128].forEach((size) => {
-  const png = createPng(size, size, 15, 140, 91);
-  const file = path.join(dir, `icon${size}.png`);
-  fs.writeFileSync(file, png);
-  console.log(`Generated ${file}`);
-});
+  // WhatsApp teal: R=15, G=140, B=91 (#0f8c5b)
+  [16, 48, 128].forEach((size) => {
+    const png = createPng(size, size, 15, 140, 91);
+    const file = path.join(dir, `icon${size}.png`);
+    fs.writeFileSync(file, png);
+    console.log(`Generated ${file}`);
+  });
+}
+
+if (require.main === module) {
+  generateExtensionIcons();
+}
+
+module.exports = { createPng, generateExtensionIcons };

@@ -1,6 +1,6 @@
 # Microsoft Edge Add-ons Store Listing — WA Channel Exporter
 
-> Last Updated: 2026-09-17
+> Last Updated: 2026-09-24
 
 ## Store Listing Details
 
@@ -42,11 +42,12 @@ English (US)
 
 | Asset | Dimensions | Status |
 |-------|-----------|--------|
-| Store Icon | 300x300 PNG | ⬜ Needs resizing from 128x128 |
-| Promotional Tile | 440x280 PNG | ✅ Created (`store-promo-tile.png`) |
-| Screenshots | 1280x800 or 1920x1080 | ⬜ Awaiting user upload |
+| Store Icon | 300x300 PNG | ✅ Prepared (`store-assets/edge-icon-300.png`) |
+| Promotional Tile | 440x280 PNG | ✅ Prepared (`store-assets/promo-tile-440x280.png`) |
+| Screenshots | 1280x800 or 1920x1080 | ✅ Prepared (`store-assets/screenshot-1-1280x800.png`, `store-assets/screenshot-2-1280x800.png`) |
+| Marquee Tile | 1400x560 PNG | ✅ Prepared (`store-assets/marquee-tile-1400x560.png`) |
 
-*Note: Edge requires slightly different asset sizes than Chrome for the main icon, but accepts the same screenshot resolutions.*
+*Note: Edge requires slightly different asset sizes than Chrome for the main icon, but accepts the same screenshot resolutions. Regenerate the complete set with `npm run prepare:store-assets`.*
 
 ## Privacy & Compliance
 
