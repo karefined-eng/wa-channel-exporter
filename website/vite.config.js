@@ -11,13 +11,13 @@ export default defineConfig({
       hostname: 'https://wachannelexporter.me',
       dynamicRoutes: [
         '/',
-        '/export-to-pdf.html',
-        '/download-media.html',
-        '/documentation.html',
-        '/privacy-policy.html',
-        '/about.html',
-        '/support.html',
-        '/terms-of-service.html'
+        '/export-to-pdf',
+        '/download-media',
+        '/documentation',
+        '/privacy-policy',
+        '/about',
+        '/support',
+        '/terms-of-service'
       ]
     })
   ],
