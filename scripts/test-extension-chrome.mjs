@@ -96,7 +96,7 @@ const checks = {
   serviceWorkerStarted: Boolean(serviceWorkerTarget),
   popupLoaded: result.title.length > 0 && bodyTextLower.includes('wa channel exporter'),
   popupHasControls: result.buttons.length > 0,
-  popupHasSupportLink: result.links.some(link => link.includes('support.html')),
+  popupHasSupportLink: result.links.some(link => link === 'https://wachannelexporter.me/support'),
   noRuntimeErrors: errors.length === 0,
 };
 
