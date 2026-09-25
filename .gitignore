@@ -1,6 +1,8 @@
 node_modules/
 dist/
 wa-channel-exporter.zip
+wa-channel-exporter-chrome.zip
+wa-channel-exporter-edge.zip
 .DS_Store
 docs/market_research.md
 .vercel

@@ -89,7 +89,7 @@ Run from the repository root:
 ```bash
 npm ci
 npm run build
-npm run build:store
+npm run build:stores
 node scripts/test-exports.mjs
 node scripts/test-mv3.js
 ```
@@ -97,19 +97,20 @@ node scripts/test-mv3.js
 Then complete the following checks:
 
 - [ ] `npm run build` completes successfully.
-- [ ] Build the submission package with `npm run build:store`; verify the packaged `manifest.json` omits the development-only `key` field before upload.
+- [ ] Build the Chrome and Edge submission packages with `npm run build:stores`; verify each packaged `manifest.json` omits the development-only `key` field before upload.
 - [ ] `node scripts/test-exports.mjs` reports `status: PASS`.
 - [ ] `node scripts/test-mv3.js` reports Manifest V3 and package checks as `PASS`.
 - [ ] Confirm the generated ZIP exists and is non-empty:
 
 ```bash
-test -s wa-channel-exporter.zip
+test -s wa-channel-exporter-chrome.zip && test -s wa-channel-exporter-edge.zip
 ```
 
 - [ ] Inspect the ZIP file list:
 
 ```bash
-unzip -l wa-channel-exporter.zip
+unzip -l wa-channel-exporter-chrome.zip
+unzip -l wa-channel-exporter-edge.zip
 ```
 
 - [ ] Confirm the ZIP contains `manifest.json`.
@@ -121,7 +122,7 @@ unzip -l wa-channel-exporter.zip
 - [ ] Preserve a checksum for the exact submitted package:
 
 ```bash
-sha256sum wa-channel-exporter.zip
+sha256sum wa-channel-exporter-chrome.zip wa-channel-exporter-edge.zip
 ```
 
 ## 6. Store listing fields

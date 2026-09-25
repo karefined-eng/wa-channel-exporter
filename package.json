@@ -6,6 +6,9 @@
   "scripts": {
     "build": "node scripts/generate-icons.js && node scripts/build.js",
     "build:store": "STORE_BUILD=true npm run build",
+    "build:chrome": "STORE_BUILD=true STORE_TARGET=chrome ARCHIVE_NAME=wa-channel-exporter-chrome.zip npm run build",
+    "build:edge": "STORE_BUILD=true STORE_TARGET=edge ARCHIVE_NAME=wa-channel-exporter-edge.zip npm run build",
+    "build:stores": "npm run build:chrome && npm run build:edge",
     "prepare:store-assets": "node scripts/prepare-store-assets.js",
     "test": "node scripts/test-mv3.js && node scripts/test-exports.mjs && node scripts/test-media-download.mjs",
     "test:chrome": "node scripts/test-extension-chrome.mjs dist",

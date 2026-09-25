@@ -5,8 +5,15 @@ const JSZip = require("jszip");
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
 const vendor = path.join(root, "src", "vendor");
-const archive = path.join(root, "wa-channel-exporter.zip");
 const storeBuild = process.env.STORE_BUILD === "true";
+const storeTarget = process.env.STORE_TARGET || "chrome";
+const archiveName = process.env.ARCHIVE_NAME || "wa-channel-exporter.zip";
+const archive = path.join(root, path.basename(archiveName));
+
+const storeDescriptions = {
+  chrome: "Export WhatsApp Channel posts from WhatsApp Web into a local ZIP archive with date ranges and missing-item reports.",
+  edge: "WA Channel Exporter is a local-first, read-only browser extension for exporting authorized WhatsApp Channel posts and available media from WhatsApp Web. Choose a date range and export posts, media, or both into a portable ZIP archive with an offline viewer, structured JSONL and CSV records, PDF output, and clear reports for unavailable or partial content. No channel content is uploaded to a server, and the extension does not send messages or modify your WhatsApp account.",
+};
 
 function copyTree(source, target) {
   fs.cpSync(source, target, { recursive: true });
@@ -31,7 +38,11 @@ async function build() {
   copyTree(manifestPath, builtManifestPath);
   if (storeBuild) {
     const manifest = JSON.parse(fs.readFileSync(builtManifestPath, "utf8"));
+    if (!storeDescriptions[storeTarget]) {
+      throw new Error(`Unsupported STORE_TARGET: ${storeTarget}. Use chrome or edge.`);
+    }
     delete manifest.key;
+    manifest.description = storeDescriptions[storeTarget];
     fs.writeFileSync(builtManifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   }
   copyTree(path.join(root, "src"), path.join(dist, "src"));
@@ -49,7 +60,7 @@ async function build() {
   addDirectoryToZip(zip, dist);
   const buffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE", compressionOptions: { level: 6 } });
   fs.writeFileSync(archive, buffer);
-  console.log(`Built ${archive}`);
+  console.log(`Built ${archive} (${storeBuild ? storeTarget : "development"} package)`);
 }
 
 build().catch((error) => {
