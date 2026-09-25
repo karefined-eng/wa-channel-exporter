@@ -1,3 +1,7 @@
+# Superseded draft
+
+Use [`docs/STORE-LISTING-COPY.md`](docs/STORE-LISTING-COPY.md) as the canonical Chrome Web Store copy for version `1.3.1`. This document is retained as historical submission planning material and may contain stale asset or package references.
+
 # Chrome Web Store Listing — WA Channel Exporter
 
 > Last Updated: 2026-09-17

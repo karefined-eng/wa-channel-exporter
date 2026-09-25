@@ -1,3 +1,7 @@
+# Superseded draft
+
+Use [`docs/STORE-LISTING-COPY.md`](docs/STORE-LISTING-COPY.md) as the canonical Microsoft Edge Add-ons copy for version `1.3.1`. This document is retained as historical submission planning material and may contain stale asset or package references.
+
 # Microsoft Edge Add-ons Store Listing — WA Channel Exporter
 
 > Last Updated: 2026-09-24
