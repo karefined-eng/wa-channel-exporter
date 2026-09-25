@@ -19,6 +19,16 @@ function copyTree(source, target) {
   fs.cpSync(source, target, { recursive: true });
 }
 
+function sanitizeJsZipBundle(file) {
+  const source = fs.readFileSync(file, "utf8");
+  const fallback = 'e=new Function(""+e)';
+  if (!source.includes(fallback)) {
+    throw new Error(`Expected JSZip setImmediate fallback not found in ${file}`);
+  }
+  const sanitized = source.replaceAll(fallback, 'e=function(){throw new TypeError("Callback must be a function")}');
+  fs.writeFileSync(file, sanitized);
+}
+
 function addDirectoryToZip(zip, directory, prefix = "") {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const absolute = path.join(directory, entry.name);
@@ -48,7 +58,9 @@ async function build() {
   copyTree(path.join(root, "src"), path.join(dist, "src"));
 
   const jszip = require.resolve("jszip/dist/jszip.min.js");
-  fs.copyFileSync(jszip, path.join(dist, "src", "vendor", "jszip.min.js"));
+  const jszipOutput = path.join(dist, "src", "vendor", "jszip.min.js");
+  fs.copyFileSync(jszip, jszipOutput);
+  sanitizeJsZipBundle(jszipOutput);
 
   const popup = path.join(dist, "src", "popup", "popup.html");
   let html = fs.readFileSync(popup, "utf8");

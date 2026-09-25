@@ -39,6 +39,14 @@ check(fs.existsSync(path.join(root, "dist", "manifest.json")), "dist manifest mi
 check(fs.existsSync(path.join(root, "dist", "src", "vendor", "jszip.min.js")), "vendored JSZip missing from dist");
 check(fs.existsSync(path.join(root, "wa-channel-exporter.zip")), "distribution ZIP missing; run npm run build");
 
+for (const file of ["jszip.min.js", "pdfmake.min.js"]) {
+  const vendorPath = path.join(root, "dist", "src", "vendor", file);
+  if (fs.existsSync(vendorPath)) {
+    const source = fs.readFileSync(vendorPath, "utf8");
+    check(!/\beval\s*\(|\bnew\s+Function\s*\(/.test(source), `${file} contains dynamic-code fallback`);
+  }
+}
+
 if (failures.length) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join("\n"));
   process.exit(1);

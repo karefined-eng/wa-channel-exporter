@@ -20,6 +20,8 @@ This creates two local, ignored archives:
 
 Both packages use Manifest V3, remove the development-only `key` field, contain the same extension code and permissions, and are built from the same source commit. Only the store-specific manifest description and archive filename differ.
 
+The build also removes legacy dynamic-code fallbacks from the bundled JSZip and PDFMake files. The extension does not need string callbacks or remote code; the packaged bundles are checked for `eval` and `new Function` patterns by `node scripts/test-mv3.js`.
+
 To build one package independently:
 
 ```sh
